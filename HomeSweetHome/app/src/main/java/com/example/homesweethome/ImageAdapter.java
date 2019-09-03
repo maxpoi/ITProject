@@ -1,0 +1,76 @@
+package com.example.homesweethome;
+
+import android.content.Context;
+import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+
+import java.io.File;
+import java.util.ArrayList;
+
+public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
+
+    private ArrayList<Cell> images;
+    private Context context;
+
+    public ImageAdapter(Context context, ArrayList<Cell> cells) {
+        this.context = context;
+        this.images = cells;
+    }
+
+    @NonNull
+    @Override
+    public ImageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_image, parent, false);
+        return new ImageAdapter.ViewHolder(view);
+    }
+
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        holder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        setImage(position, holder.img);
+        // to do
+        holder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, Grid_image.class);
+                intent.putExtra("id", images.get(position).getTest_src());
+                context.startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return this.images.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private ImageView img;
+
+        public ViewHolder(View view) {
+            super (view);
+            img = (ImageView) view.findViewById(R.id.single_image);
+        }
+    }
+
+    private void setImage(String src, ImageView img) {
+        File imgFile = new File(src);
+        if (img != null) {
+        }
+    }
+
+    private void setImage(int position, ImageView img) {
+        if (img != null) {
+            Glide.with(this.context).load(this.images.get(position).getTest_src()).into(img);
+        }
+    }
+}
