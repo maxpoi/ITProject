@@ -20,9 +20,10 @@
             android:name=".Home"
             android:theme="@style/AppTheme.NoActionBar"
             />
-        <activity android:name=".Grid_image" />
+        <activity android:name=".SingleImage" />
         <activity android:name=".Add" />
         <activity android:name=".Register" />
+        <activity android:name=".OnlyImage" />
 
     </application>
 

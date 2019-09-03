@@ -37,7 +37,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void openGrid() {
-        Intent intent = new Intent(this, com.example.homesweethome.Grid_image.class);
+        Intent intent = new Intent(this, SingleImage.class);
         startActivity(intent);
     }
 

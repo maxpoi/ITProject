@@ -28,7 +28,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     @NonNull
     @Override
     public ImageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_image, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycleview_image, parent, false);
         return new ImageAdapter.ViewHolder(view);
     }
 
@@ -41,7 +41,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, Grid_image.class);
+                Intent intent = new Intent(context, SingleImage.class);
                 intent.putExtra("id", images.get(position).getTest_src());
                 context.startActivity(intent);
             }
@@ -58,7 +58,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
         public ViewHolder(View view) {
             super (view);
-            img = (ImageView) view.findViewById(R.id.single_image);
+            img = (ImageView) view.findViewById(R.id.recycleview_image);
         }
     }
 

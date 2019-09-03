@@ -116,6 +116,9 @@ public class Home extends AppCompatActivity
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.gallery);
         rv.setHasFixedSize(true);
+        rv.setItemViewCacheSize(100);
+        rv.setDrawingCacheEnabled(true);
+        rv.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
         RecyclerView.LayoutManager lm = new GridLayoutManager(getApplicationContext(), 3);
         rv.setLayoutManager(lm);
@@ -123,9 +126,5 @@ public class Home extends AppCompatActivity
         ImageAdapter ia = new ImageAdapter(getApplicationContext(), this.images);
         rv.setAdapter(ia);
 
-        rv.setHasFixedSize(true);
-        rv.setItemViewCacheSize(100);
-        rv.setDrawingCacheEnabled(true);
-        rv.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
     }
 }
