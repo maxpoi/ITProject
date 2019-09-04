@@ -42,7 +42,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, SingleImage.class);
-                intent.putExtra("id", images.get(position).getTest_src());
+                sendInfo(position, intent);
                 context.startActivity(intent);
             }
         });
@@ -62,15 +62,24 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         }
     }
 
-    private void setImage(String src, ImageView img) {
-        File imgFile = new File(src);
-        if (img != null) {
-        }
-    }
-
     private void setImage(int position, ImageView img) {
         if (img != null) {
             Glide.with(this.context).load(this.images.get(position).getTest_src()).into(img);
         }
+    }
+
+    private Intent sendInfo(int position, Intent intent) {
+        // to do
+
+        // test
+        intent.putExtra("id", images.get(position).getTest_src());
+        intent.putExtra("title", "Homemade Coffee");
+        intent.putExtra("desc", "This is a test description. Let's see how long it can be. " +
+                "Let's see how long it can be.Let's see how long it can be.Let's see how long it can be." +
+                "Let's see how long it can be.Let's see how long it can be.Let's see how long it can be." +
+                "Let's see how long it can be.Let's see how long it can be.Let's see how long it can be." +
+                "Let's see how long it can be.Let's see how long it can be.Let's see how long it can be." +
+                "Let's see how long it can be.Let's see how long it can be.");
+        return intent;
     }
 }

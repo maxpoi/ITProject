@@ -4,6 +4,15 @@ public class Cell {
     private String src;
     private int test_src;
     private String title;
+    private String desc;
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
     public Cell(int test_src) {
         this.test_src = test_src;

@@ -2,9 +2,11 @@ package com.example.homesweethome;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,8 +30,18 @@ public class SingleImage extends AppCompatActivity{
 
         Intent intent = getIntent();
         test_src = intent.getIntExtra("id", R.drawable.img_1);
-        img = (ImageView) findViewById(R.id.upload_image_button);
+        String title = intent.getStringExtra("title");
+        String desc = intent.getStringExtra("desc");
+
+        img = (ImageView) findViewById(R.id.image);
         Glide.with(getApplicationContext()).load(test_src).into(img);
+
+        TextView title_content = findViewById(R.id.title);
+        title_content.setText(title);
+
+        TextView desc_content = findViewById(R.id.description);
+        desc_content.setText(desc);
+
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,5 +60,16 @@ public class SingleImage extends AppCompatActivity{
                 finish();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
