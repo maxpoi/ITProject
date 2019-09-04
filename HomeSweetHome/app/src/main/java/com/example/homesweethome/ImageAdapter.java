@@ -19,16 +19,22 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     private ArrayList<Cell> images;
     private Context context;
+    private String class_name;      // this is used to check where the adapter is used, so that it can jump to next activity accordingly
+    private int viewID;
+    private int layoutID;
 
-    public ImageAdapter(Context context, ArrayList<Cell> cells) {
+    public ImageAdapter(Context context, String class_name, ArrayList<Cell> cells, int viewID, int layoutID) {
         this.context = context;
         this.images = cells;
+        this.viewID = viewID;
+        this.layoutID = layoutID;
+        this.class_name = class_name;
     }
 
     @NonNull
     @Override
     public ImageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycleview_image, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(layoutID, parent, false);
         return new ImageAdapter.ViewHolder(view);
     }
 
@@ -41,7 +47,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, SingleImage.class);
+                Intent intent;
+                if (class_name.equals(com.example.homesweethome.SingleImage.class.getName())) {
+                    intent = new Intent(context, OnlyImage.class);
+                } else {
+                    intent = new Intent(context, SingleImage.class);
+                }
+
                 sendInfo(position, intent);
                 context.startActivity(intent);
             }
@@ -58,7 +70,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
         public ViewHolder(View view) {
             super (view);
-            img = (ImageView) view.findViewById(R.id.recycleview_image);
+            img = (ImageView) view.findViewById(viewID);
         }
     }
 

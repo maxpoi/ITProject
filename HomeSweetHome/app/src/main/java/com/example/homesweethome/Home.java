@@ -123,8 +123,7 @@ public class Home extends AppCompatActivity
         RecyclerView.LayoutManager lm = new GridLayoutManager(getApplicationContext(), 3);
         rv.setLayoutManager(lm);
 
-        ImageAdapter ia = new ImageAdapter(getApplicationContext(), this.images);
+        ImageAdapter ia = new ImageAdapter(getApplicationContext(), this.getClass().getName(), this.images, R.id.recycleview_image, R.layout.recycleview_image);
         rv.setAdapter(ia);
-
     }
 }

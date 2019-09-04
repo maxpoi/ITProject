@@ -9,15 +9,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 public class SingleImage extends AppCompatActivity{
 
     private String src;
     private int test_src;
-    ImageView img;
+    private ImageView img;
+    private boolean hasAudio = true;
+
+    // test varaibles
+    private ArrayList<Cell> images;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +42,11 @@ public class SingleImage extends AppCompatActivity{
         String title = intent.getStringExtra("title");
         String desc = intent.getStringExtra("desc");
 
-        img = (ImageView) findViewById(R.id.image);
-        Glide.with(getApplicationContext()).load(test_src).into(img);
+//        img = (ImageView) findViewById(R.id.image);
+//        Glide.with(getApplicationContext()).load(test_src).into(img);
+        images = new ArrayList<>();
+        images.add(new Cell(test_src));
+        test();
 
         TextView title_content = findViewById(R.id.title);
         title_content.setText(title);
@@ -42,14 +54,14 @@ public class SingleImage extends AppCompatActivity{
         TextView desc_content = findViewById(R.id.description);
         desc_content.setText(desc);
 
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), com.example.homesweethome.OnlyImage.class);
-                i.putExtra("id", test_src);
-                startActivity(i);
-            }
-        });
+//        img.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent i = new Intent(getApplicationContext(), com.example.homesweethome.OnlyImage.class);
+//                i.putExtra("id", test_src);
+//                startActivity(i);
+//            }
+//        });
 
         final FloatingActionButton edit_button = (FloatingActionButton) findViewById(R.id.edit_button);
         edit_button.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +72,13 @@ public class SingleImage extends AppCompatActivity{
                 finish();
             }
         });
+
+        final FloatingActionButton audio_play = (FloatingActionButton) findViewById(R.id.audio_play);
+
+        if (this.hasAudio)
+            audio_play.show();
+        else
+            audio_play.hide();
     }
 
     @Override
@@ -71,5 +90,26 @@ public class SingleImage extends AppCompatActivity{
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void test() {
+        images.add(new Cell(R.drawable.img_1));
+        images.add(new Cell(R.drawable.img_2));
+        images.add(new Cell(R.drawable.img_3));
+        images.add(new Cell(R.drawable.img_4));
+        images.add(new Cell(R.drawable.img_5));
+
+        RecyclerView rv = (RecyclerView) findViewById(R.id.gallery);
+        rv.setHasFixedSize(true);
+        rv.setItemViewCacheSize(100);
+        rv.setDrawingCacheEnabled(true);
+        rv.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
+        LinearLayoutManager lm = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+        rv.setLayoutManager(lm);
+
+        ImageAdapter ia = new ImageAdapter(getApplicationContext(), this.getClass().getName(), this.images, R.id.only_image, R.layout.only_image);
+        rv.setAdapter(ia);
+
     }
 }

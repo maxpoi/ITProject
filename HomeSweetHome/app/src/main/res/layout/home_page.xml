@@ -11,10 +11,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/gallery"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:scrollbars="vertical"
-        android:focusable="false"/>
+        android:layout_height="match_parent"/>
 
 
 </RelativeLayout>

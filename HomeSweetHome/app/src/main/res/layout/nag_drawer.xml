@@ -8,7 +8,10 @@
     tools:openDrawer="start">
 
     <!-- drawerlayout is like a stack. -->
-    <include layout="@layout/home_page" />
+    <include layout="@layout/home_page"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
 
     <include layout="@layout/app_bar_with_fab"/>
 
