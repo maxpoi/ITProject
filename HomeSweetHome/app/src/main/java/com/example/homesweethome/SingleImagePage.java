@@ -9,20 +9,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 
-public class OnlyImage extends AppCompatActivity {
+public class SingleImagePage extends AppCompatActivity {
 
-    private String src;
+    private String imageSrc;
     private int test_src;
     ImageView img;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.only_image);
+        setContentView(R.layout.single_image_page);
 
         Intent intent = getIntent();
         test_src = intent.getIntExtra("id", R.drawable.img_1);
-        img = (ImageView) findViewById(R.id.only_image);
+        img = (ImageView) findViewById(R.id.single_image);
         Glide.with(getApplicationContext()).load(test_src).into(img);
     }
 }

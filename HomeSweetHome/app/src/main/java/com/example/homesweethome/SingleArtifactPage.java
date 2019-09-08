@@ -4,21 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class SingleImage extends AppCompatActivity{
+public class SingleArtifactPage extends AppCompatActivity{
 
     private String src;
     private int test_src;
@@ -31,10 +28,10 @@ public class SingleImage extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.single_image);
+        setContentView(R.layout.single_artifact_page);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Add a new artifact");
+        getSupportActionBar().setTitle("AddPage a new artifact");
         getSupportActionBar().setSubtitle("Change/delete this subtitle if needed");
 
         Intent intent = getIntent();
@@ -57,7 +54,7 @@ public class SingleImage extends AppCompatActivity{
 //        img.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                Intent i = new Intent(getApplicationContext(), com.example.homesweethome.OnlyImage.class);
+//                Intent i = new Intent(getApplicationContext(), com.example.homesweethome.SingleImagePage.class);
 //                i.putExtra("id", test_src);
 //                startActivity(i);
 //            }
@@ -67,9 +64,8 @@ public class SingleImage extends AppCompatActivity{
         edit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), com.example.homesweethome.Add.class);
+                Intent i = new Intent(getApplicationContext(), AddPage.class);
                 startActivity(i);
-                finish();
             }
         });
 
@@ -108,7 +104,7 @@ public class SingleImage extends AppCompatActivity{
         LinearLayoutManager lm = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(lm);
 
-        ImageAdapter ia = new ImageAdapter(getApplicationContext(), this.getClass().getName(), this.images, R.id.only_image, R.layout.only_image);
+        ImageAdapter ia = new ImageAdapter(getApplicationContext(), this.getClass().getName(), this.images, R.id.recycleview_image, R.layout.recycleview_image);
         rv.setAdapter(ia);
 
     }

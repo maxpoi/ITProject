@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
@@ -48,10 +47,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             @Override
             public void onClick(View view) {
                 Intent intent;
-                if (class_name.equals(com.example.homesweethome.SingleImage.class.getName())) {
-                    intent = new Intent(context, OnlyImage.class);
+                if (class_name.equals(SingleArtifactPage.class.getName())) {
+                    intent = new Intent(context, SingleImagePage.class);
                 } else {
-                    intent = new Intent(context, SingleImage.class);
+                    intent = new Intent(context, SingleArtifactPage.class);
                 }
 
                 sendInfo(position, intent);

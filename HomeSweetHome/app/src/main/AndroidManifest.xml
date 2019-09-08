@@ -10,20 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Login">
+            android:name=".LoginPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".Home"
+            android:name=".HomePage"
             android:theme="@style/AppTheme.NoActionBar"
             />
-        <activity android:name=".SingleImage" />
-        <activity android:name=".Add" />
-        <activity android:name=".Register" />
-        <activity android:name=".OnlyImage" />
+        <activity android:name=".SingleArtifactPage" />
+        <activity android:name=".AddPage" />
+        <activity android:name=".RegisterPage" />
+        <activity android:name=".SingleImagePage" />
 
     </application>
 

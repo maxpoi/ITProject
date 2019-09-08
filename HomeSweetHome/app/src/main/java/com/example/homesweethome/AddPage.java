@@ -7,15 +7,15 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Add extends AppCompatActivity {
+public class AddPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add);
+        setContentView(R.layout.add_page);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Add a new artifact");
+        getSupportActionBar().setTitle("AddPage a new artifact");
         getSupportActionBar().setSubtitle("Change/delete this subtitle if needed");
 
         Button saveButton = findViewById(R.id.save_button);

@@ -18,7 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-public class Home extends AppCompatActivity
+public class HomePage extends AppCompatActivity
                   implements NavigationView.OnNavigationItemSelectedListener{
 
     private ArrayList<Cell> images;
@@ -67,12 +67,12 @@ public class Home extends AppCompatActivity
     }
 
     private void openHomePage() {
-        Intent intent = new Intent(getApplicationContext(), com.example.homesweethome.Home.class);
+        Intent intent = new Intent(getApplicationContext(), HomePage.class);
         startActivity(intent);
     }
 
     private void openAddPage() {
-        Intent intent = new Intent(getApplicationContext(), Add.class);
+        Intent intent = new Intent(getApplicationContext(), AddPage.class);
         startActivity(intent);
     }
 

@@ -7,12 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Login extends AppCompatActivity {
+public class LoginPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.login_page);
 
         final Button loginButton = findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -32,17 +32,12 @@ public class Login extends AppCompatActivity {
     }
 
     private void openMain() {
-        Intent intent = new Intent(this, com.example.homesweethome.Home.class);
-        startActivity(intent);
-    }
-
-    private void openGrid() {
-        Intent intent = new Intent(this, SingleImage.class);
+        Intent intent = new Intent(this, HomePage.class);
         startActivity(intent);
     }
 
     private void openRegister() {
-        Intent intent = new Intent(getApplicationContext(), com.example.homesweethome.Register.class);
+        Intent intent = new Intent(getApplicationContext(), RegisterPage.class);
         startActivity(intent);
     }
 }
