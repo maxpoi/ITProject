@@ -22,22 +22,10 @@ public class LoginPage extends AppCompatActivity {
             }
         });
 
-        final Button registerButtobn = findViewById(R.id.register_button);
-        registerButtobn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openRegister();
-            }
-        });
     }
 
     private void openMain() {
         Intent intent = new Intent(this, HomePage.class);
-        startActivity(intent);
-    }
-
-    private void openRegister() {
-        Intent intent = new Intent(getApplicationContext(), RegisterPage.class);
         startActivity(intent);
     }
 }
