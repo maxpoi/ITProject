@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">HomeSweetHome</string>
+    <string name="prompt_email">Enter your email address here.</string>
+    <string name="prompt_password">Enter your password here.</string>
+    <string name="login_button">Log In</string>
+    <string name="register_button">Don\'t have an account? Create one!</string>
+    <string name="welcome_word">Welcome!</string>
+    <string name="nav_home">Home</string>
+    <string name="header_text">Replace this with sth else</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="grid_image">Grid Image</string>
+    <string name="upload_page_image">Photo</string>
+    <string name="upload_page_title">Title</string>
+    <string name="upload_page_date">Date to remember</string>
+    <string name="upload_page_text_description">Enter description</string>
+    <string name="upload_page_video">Video</string>
+    <string name="save">SAVE</string>
+</resources>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LoginPage">
+
+    <TextView
+        android:id="@+id/welcome_word"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_word"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:textSize="40sp"
+        android:textColor="@android:color/black"/>
+    <GridLayout
+        android:id="@+id/GridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/grid_frame"
+        android:columnCount="1"
+        android:orientation="horizontal"
+        android:rowCount="2">
+
+        <EditText
+            android:id="@+id/login_email"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill"
+            android:background="@android:color/transparent"
+            android:hint="@string/prompt_email"
+            android:inputType="textEmailAddress"
+            android:selectAllOnFocus="true"
+            android:autofillHints="" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <EditText
+            android:id="@+id/login_password"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill"
+            android:background="@android:color/transparent"
+            android:hint="@string/prompt_password"
+            android:inputType="textPassword"
+            android:selectAllOnFocus="true"
+            android:autofillHints="" />
+    </GridLayout>
+
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:text="@string/login_button"
+
+        android:background="@drawable/login_button_pressed" />
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:text="@string/register_button"
+        android:textAllCaps="false"
+        android:background="@android:color/darker_gray" />
+
+</LinearLayout>
