@@ -22,7 +22,6 @@
             />
         <activity android:name=".SingleArtifactPage" />
         <activity android:name=".AddPage" />
-        <activity android:name=".RegisterPage" />
         <activity android:name=".SingleImagePage" />
 
     </application>
