@@ -1,8 +1,10 @@
 package com.example.homesweethome;
 
+import java.util.ArrayList;
+
 public class Cell {
 
-    private String img;
+    private ArrayList<String> imgs;
     private String video;
     private String audio;
     private int test_src;
@@ -10,11 +12,11 @@ public class Cell {
     private String date;
     private String desc;
 
-    public Cell(String title, String date, String desc, String img, String video, String audio) {
+    public Cell(String title, String date, String desc, ArrayList<String> imgs, String video, String audio) {
         this.title = title;
         this.date = date;
         this.desc = desc;
-        this.img = img;
+        this.imgs = imgs;
         this.video = video;
         this.audio = audio;
     }
@@ -39,13 +41,13 @@ public class Cell {
         this.test_src = test_src;
     }
 
-    public String getImg() {
-        return img;
-    }
+    public ArrayList<String> getImgs() { return imgs; }
+ 
+    public void setImgs(ArrayList<String> img) { this.imgs = imgs; }
 
-    public void setImg(String img) {
-        this.img = img;
-    }
+    public void addImg(String img) { this.imgs.add(img); }
+
+    public String getImg(int position) { return this.imgs.get(position); }
 
     public String getTitle() {
         return title;
