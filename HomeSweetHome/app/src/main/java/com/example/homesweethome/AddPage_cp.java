@@ -6,7 +6,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,18 +16,14 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 
-public class AddPage extends AppCompatActivity {
+public class AddPage_cp extends AppCompatActivity {
 
     private int REQUEST_LOAD_CODE = 1;
-    private TextView title, date, desc, uploadImg;
-    private ImageButton uploadVideo;
-    private ArrayList<Cell> imgs = new ArrayList<>();
+    private TextView title, date, desc;
+    private ImageButton uploadImg, uploadVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,18 +42,6 @@ public class AddPage extends AppCompatActivity {
             }
         });
 
-        RecyclerView rv = (RecyclerView) findViewById(R.id.gallery);
-        rv.setHasFixedSize(true);
-        rv.setItemViewCacheSize(100);
-        rv.setDrawingCacheEnabled(true);
-        rv.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
-        LinearLayoutManager lm = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
-        rv.setLayoutManager(lm);
-
-        ImageAdapter ia = new ImageAdapter(getApplicationContext(), this.getClass().getName(), imgs, R.id.recycleview_image, R.layout.recycleview_image);
-        rv.setAdapter(ia);
-
         // main activities
         title = findViewById(R.id.edit_title);
         date = findViewById(R.id.edit_date);
@@ -73,7 +56,7 @@ public class AddPage extends AppCompatActivity {
                 startActivityForResult(gallery, REQUEST_LOAD_CODE);
                 if (uploadPhoto() == RESULT_OK) {
                     // disable upload
-//                    imgs.add(new Cell())
+                    uploadImg.setClickable(false);
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(), "Fail to upload, try again", Toast.LENGTH_SHORT);
                     toast.show();
@@ -90,14 +73,14 @@ public class AddPage extends AppCompatActivity {
 
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode ==  REQUEST_LOAD_CODE && resultCode == RESULT_OK && data != null) {
-//            Uri img = data.getData();
-//            uploadImg.setImageURI(img);
-//        }
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode ==  REQUEST_LOAD_CODE && resultCode == RESULT_OK && data != null) {
+            Uri img = data.getData();
+            uploadImg.setImageURI(img);
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -111,10 +94,10 @@ public class AddPage extends AppCompatActivity {
     }
 
     private int uploadPhoto() {
-//        Bitmap bitmap = ((BitmapDrawable) uploadImg.getDrawable()).getBitmap();
-//        ByteArrayOutputStream arr = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
-//        String encodedImg = Base64.encodeToString(arr.toByteArray(),  Base64.DEFAULT);
+        Bitmap bitmap = ((BitmapDrawable) uploadImg.getDrawable()).getBitmap();
+        ByteArrayOutputStream arr = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
+        String encodedImg = Base64.encodeToString(arr.toByteArray(),  Base64.DEFAULT);
 
         return RESULT_CANCELED;
     }

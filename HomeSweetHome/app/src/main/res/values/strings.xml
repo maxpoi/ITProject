@@ -11,6 +11,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="grid_image">Grid Image</string>
     <string name="upload_page_image">Photo</string>
+    <string name="upload_page_image_button">Click to upload photos</string>
     <string name="upload_page_title">Title</string>
     <string name="upload_page_date">Date to remember</string>
     <string name="upload_page_text_description">Enter description</string>

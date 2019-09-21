@@ -47,12 +47,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             @Override
             public void onClick(View view) {
                 Intent intent;
-                if (class_name.equals(SingleArtifactPage.class.getName())) {
+                if (class_name.equals(SingleArtifactPage.class.getName())
+                        || class_name.equals(AddPage.class.getName()))
+                {
                     intent = new Intent(context, SingleImagePage.class);
                 } else {
                     intent = new Intent(context, SingleArtifactPage.class);
                 }
-
                 sendInfo(position, intent);
                 context.startActivity(intent);
             }

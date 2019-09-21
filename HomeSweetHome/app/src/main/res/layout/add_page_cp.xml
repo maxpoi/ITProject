@@ -50,17 +50,13 @@
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <include
-            layout="@layout/home_page"
-            android:layout_height="200dp"
-            android:layout_width="match_parent"/>
-
-        <Button
+        <ImageButton
             android:id="@+id/upload_image_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/upload_page_image_button"
-            android:background="@drawable/login_button_pressed"/>
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/input_frame"
+            android:fadingEdge="horizontal|vertical"
+            android:src="@android:drawable/ic_menu_upload_you_tube" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,12 +69,8 @@
         <EditText
             android:id="@+id/edit_desc"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/input_frame"
-            android:gravity="top|start"
-            android:scrollbars="vertical"
-            android:scrollbarStyle="insideInset"
-            android:overScrollMode="always"/>
+            android:layout_height="250dp"
+            android:background="@drawable/input_frame" />
 
         <TextView
             android:layout_width="wrap_content"

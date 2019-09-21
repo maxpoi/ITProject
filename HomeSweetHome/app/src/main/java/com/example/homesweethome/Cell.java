@@ -42,7 +42,7 @@ public class Cell {
     }
 
     public ArrayList<String> getImgs() { return imgs; }
- 
+
     public void setImgs(ArrayList<String> img) { this.imgs = imgs; }
 
     public void addImg(String img) { this.imgs.add(img); }
