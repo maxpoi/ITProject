@@ -24,6 +24,7 @@ public class SingleArtifactPage extends AppCompatActivity{
 
     // test varaibles
     private ArrayList<Cell> images;
+    private ArrayList<String> imgs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class SingleArtifactPage extends AppCompatActivity{
 //        Glide.with(getApplicationContext()).load(test_src).into(img);
         images = new ArrayList<>();
         images.add(new Cell(test_src));
-        test();
+        //setImages();
 
         TextView title_content = findViewById(R.id.title);
         title_content.setText(title);
@@ -88,24 +89,24 @@ public class SingleArtifactPage extends AppCompatActivity{
         }
     }
 
-    private void test() {
-        images.add(new Cell(R.drawable.img_1));
-        images.add(new Cell(R.drawable.img_2));
-        images.add(new Cell(R.drawable.img_3));
-        images.add(new Cell(R.drawable.img_4));
-        images.add(new Cell(R.drawable.img_5));
-
-        RecyclerView rv = (RecyclerView) findViewById(R.id.gallery);
-        rv.setHasFixedSize(true);
-        rv.setItemViewCacheSize(100);
-        rv.setDrawingCacheEnabled(true);
-        rv.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
-        LinearLayoutManager lm = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
-        rv.setLayoutManager(lm);
-
-        ImageAdapter ia = new ImageAdapter(getApplicationContext(), this.getClass().getName(), this.images, R.id.recycleview_image, R.layout.recycleview_image);
-        rv.setAdapter(ia);
-
-    }
+//    private void setImages() {
+//        images.add(new Cell(R.drawable.img_1));
+//        images.add(new Cell(R.drawable.img_2));
+//        images.add(new Cell(R.drawable.img_3));
+//        images.add(new Cell(R.drawable.img_4));
+//        images.add(new Cell(R.drawable.img_5));
+//
+//        RecyclerView rv = (RecyclerView) findViewById(R.id.gallery);
+//        rv.setHasFixedSize(true);
+//        rv.setItemViewCacheSize(100);
+//        rv.setDrawingCacheEnabled(true);
+//        rv.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+//
+//        LinearLayoutManager lm = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+//        rv.setLayoutManager(lm);
+//
+//        ImageAdapter ia = new ImageAdapter(getApplicationContext(), this.getClass().getName(), this.images, R.id.recycleview_image, R.layout.recycleview_image);
+//        rv.setAdapter(ia);
+//
+//    }
 }

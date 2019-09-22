@@ -21,7 +21,8 @@ import java.util.ArrayList;
 public class HomePage extends AppCompatActivity
                   implements NavigationView.OnNavigationItemSelectedListener{
 
-    private ArrayList<Cell> images;
+    private ArrayList<String> images;
+    private CustomTest customTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,8 @@ public class HomePage extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        test();
+        customTest = new CustomTest(this.getApplicationContext());
+        setImages();
     }
 
     @Override
@@ -76,49 +78,12 @@ public class HomePage extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void test() {
-        this.images = new ArrayList<>();
-        images.add(new Cell(R.drawable.img_1));
-        images.add(new Cell(R.drawable.img_2));
-        images.add(new Cell(R.drawable.img_3));
-        images.add(new Cell(R.drawable.img_4));
-        images.add(new Cell(R.drawable.img_5));
-        images.add(new Cell(R.drawable.img_1));
-        images.add(new Cell(R.drawable.img_2));
-        images.add(new Cell(R.drawable.img_3));
-        images.add(new Cell(R.drawable.img_4));
-        images.add(new Cell(R.drawable.img_5));
-        images.add(new Cell(R.drawable.img_1));
-        images.add(new Cell(R.drawable.img_2));
-        images.add(new Cell(R.drawable.img_3));
-        images.add(new Cell(R.drawable.img_4));
-        images.add(new Cell(R.drawable.img_5));
-        images.add(new Cell(R.drawable.img_1));
-        images.add(new Cell(R.drawable.img_2));
-        images.add(new Cell(R.drawable.img_3));
-        images.add(new Cell(R.drawable.img_4));
-        images.add(new Cell(R.drawable.img_5));
-        images.add(new Cell(R.drawable.img_1));
-        images.add(new Cell(R.drawable.img_2));
-        images.add(new Cell(R.drawable.img_3));
-        images.add(new Cell(R.drawable.img_4));
-        images.add(new Cell(R.drawable.img_5));
-        images.add(new Cell(R.drawable.img_1));
-        images.add(new Cell(R.drawable.img_2));
-        images.add(new Cell(R.drawable.img_3));
-        images.add(new Cell(R.drawable.img_4));
-        images.add(new Cell(R.drawable.img_5));
-        images.add(new Cell(R.drawable.img_1));
-        images.add(new Cell(R.drawable.img_2));
-        images.add(new Cell(R.drawable.img_3));
-        images.add(new Cell(R.drawable.img_4));
-        images.add(new Cell(R.drawable.img_5));
+    private void setImages() {
+        this.images = customTest.createCells();
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.gallery);
         rv.setHasFixedSize(true);
-        rv.setItemViewCacheSize(100);
         rv.setDrawingCacheEnabled(true);
-        rv.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
         RecyclerView.LayoutManager lm = new GridLayoutManager(getApplicationContext(), 3);
         rv.setLayoutManager(lm);

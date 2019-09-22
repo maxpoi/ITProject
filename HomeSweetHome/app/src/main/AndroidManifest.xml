@@ -26,6 +26,7 @@
         <activity android:name=".SingleArtifactPage" />
         <activity android:name=".AddPage" />
         <activity android:name=".SingleImagePage" />
+        <activity android:name=".CustomTest" />
 
     </application>
 

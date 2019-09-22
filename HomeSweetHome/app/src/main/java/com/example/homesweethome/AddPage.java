@@ -56,8 +56,8 @@ public class AddPage extends AppCompatActivity {
         LinearLayoutManager lm = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(lm);
 
-        ImageAdapter ia = new ImageAdapter(getApplicationContext(), this.getClass().getName(), imgs, R.id.recycleview_image, R.layout.recycleview_image);
-        rv.setAdapter(ia);
+//        ImageAdapter ia = new ImageAdapter(getApplicationContext(), this.getClass().getName(), imgs, R.id.recycleview_image, R.layout.recycleview_image);
+//        rv.setAdapter(ia);
 
         // main activities
         title = findViewById(R.id.edit_title);
