@@ -1,4 +1,4 @@
-package com.example.register;
+package com.example.homesweethome.register;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.homesweethome.R;
 public class RegisterSuccessDialog  extends AppCompatActivity {
 
     final Context context = this;

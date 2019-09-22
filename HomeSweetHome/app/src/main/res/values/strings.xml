@@ -16,4 +16,32 @@
     <string name="upload_page_text_description">Enter description</string>
     <string name="upload_page_video">Video</string>
     <string name="save">SAVE</string>
+
+
+    <string name="register_password">Password</string>
+    <string name="register_cfn_password">Confirm password</string>
+    <string name="register_email">Email</string>
+    <string name="register">register</string>
+    <string name="return_to_login">login</string>
+    <string name="forget_password">Forget password?</string>
+    <string name="invalid_register_password">Password must be 6-20 characters or digits only</string>
+    <string name="invalid_register_cnf_password">Please enter the same password as above</string>>
+    <string name="invalid_register_email">Not a valid email address</string>
+    <string name="custom">Custom</string>
+    <string name="register_success">Success!</string>
+    <string name="register_fail">Fail!</string>
+    <string name="button_return">Return</string>
+    <string name="retrieve_password">Please Enter the email address you have registered with:</string>
+    <string name="button_retrieve">Email Validation</string>
+    <string name="return_to_register">Register</string>
+    <string name="title_activity_email_validation">Sign in</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="return_">Return"</string>
+    <string name="email_validation">Send an email for you to validate</string>
+    <string name="reset_password">Reset Password</string>
 </resources>

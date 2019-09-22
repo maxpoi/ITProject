@@ -1,5 +1,4 @@
-package com.example.register;
-
+package com.example.homesweethome.register;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.homesweethome.LoginPage;
+import com.example.homesweethome.R;
 public class RegisterSuccessActivity extends AppCompatActivity {
 
     Button mButton;
@@ -26,7 +27,7 @@ public class RegisterSuccessActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // TODO：Page should jump to login page (or automatic login to home page)
 
-                Intent registerIntent = new Intent(RegisterSuccessActivity.this, MainActivity.class);
+                Intent registerIntent = new Intent(RegisterSuccessActivity.this, LoginPage.class);
                 startActivity(registerIntent);
             }
         });

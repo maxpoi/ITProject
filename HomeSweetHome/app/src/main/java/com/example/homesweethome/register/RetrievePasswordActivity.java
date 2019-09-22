@@ -1,4 +1,4 @@
-package com.example.register;
+package com.example.homesweethome.register;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,9 +11,10 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.homesweethome.LoginPage;
+import com.example.homesweethome.R;
 public class RetrievePasswordActivity extends AppCompatActivity implements View.OnClickListener{
 
     EditText mTextEmail;
@@ -67,8 +68,8 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
                 Toast.makeText(this, "jump to login page", Toast.LENGTH_SHORT).show();
 
                 // TODO: Jump to login page
-                //Intent loginIntent = new Intent(RetrievePasswordActivity.this, MainActivity.class);
-                //startActivity(loginIntent);
+                Intent loginIntent = new Intent(RetrievePasswordActivity.this, LoginPage.class);
+                startActivity(loginIntent);
                 break;
             case R.id.button_retrieve:
                 Toast.makeText(this, "retrieve the password", Toast.LENGTH_SHORT).show();
@@ -84,7 +85,7 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
                 break;
             case R.id.return_to_register:
                 Toast.makeText(this, "jump to register page", Toast.LENGTH_SHORT).show();
-                Intent registerIntent = new Intent(RetrievePasswordActivity.this, MainActivity.class);
+                Intent registerIntent = new Intent(RetrievePasswordActivity.this, RegisterActivity.class);
                 startActivity(registerIntent);
                 break;
             default:
@@ -112,10 +113,10 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
         //TODO: check if the email is registered
 
         // Have records
-        // return false
+         return false;
 
         // Not registered
-        return true;
+        //return true;
     }
 
     public void failedByInvalidEmail(){
@@ -142,7 +143,7 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
         builder.setPositiveButton("Enter Again", null);
         builder.setNegativeButton("Register", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Intent registerIntent = new Intent(RetrievePasswordActivity.this, MainActivity.class);
+                Intent registerIntent = new Intent(RetrievePasswordActivity.this, RegisterActivity.class);
                 startActivity(registerIntent);
             }
         });

@@ -73,11 +73,11 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="50dp"
+        android:background="@android:color/darker_gray"
         android:text="@string/register_button"
-        android:textAllCaps="false"
-        android:background="@android:color/darker_gray" />
+        android:textAllCaps="false" />
 
 </LinearLayout>
