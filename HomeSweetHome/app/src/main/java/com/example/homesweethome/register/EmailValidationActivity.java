@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,9 +14,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
@@ -196,70 +201,41 @@ public class EmailValidationActivity extends AppCompatActivity {
     }
 
     public void password_reset(){
-        final Context context = this;
-        ViewGroup viewGroup = findViewById(android.R.id.content);
-        View dialogView = LayoutInflater.from(this).inflate(activity_background_dialog, viewGroup, false);
 
+        final Dialog dialog = new Dialog(EmailValidationActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(activity_background_dialog);
 
+        TextView text = (TextView) dialog.findViewById(R.id.text);
+        //text.setText("Message");
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(dialogView);
-        builder.setPositiveButton(R.id.buttonOk, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent registerIntent = new Intent(EmailValidationActivity.this, LoginPage.class);
-                startActivity(registerIntent);
-            }
+        ImageView image = (ImageView) dialog.findViewById(R.id.image_title);
+        Drawable myDrawable = getResources().getDrawable(R.drawable.ic_launcher_background);
+        //image.setImageResource(R.drawable.img_2);
+
+        Resources resources = getResources();
+        image.setImageDrawable(resources.getDrawable(R.drawable.img_2));
+
+        Button dialogButton1 = (Button) dialog.findViewById(R.id.button_ok);
+        dialogButton1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent MessageIntent = new Intent(getBaseContext(), LoginPage.class);
+                    startActivity(MessageIntent);
+                    //dialog.dismiss();
+                }
         });
-        /*
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                // custom dialog
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(activity_background_dialog);
-                Button dialogButton = (Button) dialog.findViewById(R.id.buttonOk);
-                // if button is clicked, close the custom dialog
-                dialogButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent registerIntent = new Intent(EmailValidationActivity.this, LoginPage.class);
-                        startActivity(registerIntent);
-                        //dialog.dismiss();
-                        //Toast.makeText(getApplicationContext(),"Dismissed..!!",Toast.LENGTH_SHORT).show();
-                    }
-                });
-                dialog.show();
-            }
-        });*/
+        dialog.show();
 
 
-
-        //finally creating the alert dialog and displaying it
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-
-
-/*
+    /*
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Successfully Reset Password");
         builder.setMessage("Your password is reset successfully.");
         builder.setPositiveButton("Return", null);
         AlertDialog dialog = builder.create();
-        dialog.show();*/
-        /*
-        AlertDialog alertDialog = new AlertDialog.Builder(EmailValidationActivity.this).create();
-        alertDialog.setTitle("Successfully Reset Password");
-        alertDialog.setMessage("Your password is reset successfully.");
-
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Return",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        //Intent MessageIntent = new Intent(EmailValidationActivity.this, LoginPage.class);
-                        //startActivity(MessageIntent);
-                    }
-                });
-        alertDialog.show();*/
+        dialog.show();
+        */
     }
 }
