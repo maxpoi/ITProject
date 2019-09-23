@@ -21,9 +21,6 @@ import java.util.ArrayList;
 public class HomePage extends AppCompatActivity
                   implements NavigationView.OnNavigationItemSelectedListener{
 
-    private ArrayList<String> images;
-    private CustomTest customTest;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +45,8 @@ public class HomePage extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        customTest = new CustomTest(this.getApplicationContext());
+        CustomTest customTest = new CustomTest(getApplicationContext());
+        storeUserCache(customTest.createCells());
         setImages();
     }
 
@@ -78,9 +76,10 @@ public class HomePage extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void setImages() {
-        this.images = customTest.createCells();
+    // to do
+    private void storeUserCache(ArrayList<Cell> cells) { UserCache.getInstance().setCells(cells); }
 
+    private void setImages() {
         RecyclerView rv = (RecyclerView) findViewById(R.id.gallery);
         rv.setHasFixedSize(true);
         rv.setDrawingCacheEnabled(true);
@@ -88,7 +87,8 @@ public class HomePage extends AppCompatActivity
         RecyclerView.LayoutManager lm = new GridLayoutManager(getApplicationContext(), 3);
         rv.setLayoutManager(lm);
 
-        ImageAdapter ia = new ImageAdapter(getApplicationContext(), this.getClass().getName(), this.images, R.id.recycleview_image, R.layout.recycleview_image);
+        ImageAdapter ia = new ImageAdapter(getApplicationContext(), this.getClass().getName(), UserCache.getInstance().getAllImages(), R.id.recycleview_image, R.layout.recycleview_image);
+        ia.setImageResolution(-1);
         rv.setAdapter(ia);
     }
 }

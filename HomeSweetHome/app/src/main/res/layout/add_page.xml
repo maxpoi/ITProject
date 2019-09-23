@@ -50,10 +50,20 @@
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <include
-            layout="@layout/home_page"
-            android:layout_height="200dp"
-            android:layout_width="match_parent"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            <include
+                layout="@layout/home_page"
+                android:layout_height="200dp"
+                android:layout_width="match_parent"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/input_frame"/>
+
+        </RelativeLayout>
 
         <Button
             android:id="@+id/upload_image_button"

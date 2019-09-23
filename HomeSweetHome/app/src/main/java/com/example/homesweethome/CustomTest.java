@@ -1,57 +1,46 @@
 package com.example.homesweethome;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.util.Base64;
-import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class CustomTest{
 
+    private int[] testData = new int[] {R.drawable.img_1, R.drawable.img_2, R.drawable.img_3, R.drawable.img_4, R.drawable.img_5};
+
     private Context context;
     public CustomTest(Context context) { this.context = context; }
 
-    public String createImg(int res) {
-//        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), res);
-        Bitmap bitmap = ((BitmapDrawable) context.getDrawable(res)).getBitmap();
-        ByteArrayOutputStream arr = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 0, arr);
-        String encodedImg = Base64.encodeToString(arr.toByteArray(),  Base64.DEFAULT);
-        return encodedImg;
+    public Cell createCell() {
+        ImageProcessor imageProcessor = ImageProcessor.getInstance();
+
+        ArrayList<Image> images = new ArrayList<>();
+        for (int i : testData) {
+//            images.add(new Image(imageProcessor.createLowImg(context, i), imageProcessor.encodeMediumImage(context, i), imageProcessor.encodeLargeImage(context, i)));
+            images.add(new Image(null, imageProcessor.encodeMediumImage(context, i), null));
+        }
+
+        return new Cell(null, null, null, images, null, null);
     }
 
-    public ArrayList<String> createCell() {
-        ArrayList<String> imgs = new ArrayList<>();
-
-//        Bitmap bitmap = ((BitmapDrawable) context.getDrawable(R.drawable.img_1)).getBitmap();
-        imgs.add(createImg(R.drawable.img_1));
-        imgs.add(createImg(R.drawable.img_2));
-        imgs.add(createImg(R.drawable.img_3));
-        imgs.add(createImg(R.drawable.img_4));
-        imgs.add(createImg(R.drawable.img_5));
-
-        return imgs;
-    }
-
-    public ArrayList<String> createCells() {
+    public ArrayList<Cell> createCells() {
         int i=0;
-        ArrayList<String> imgs = new ArrayList<>();
+        ArrayList<Cell> cells = new ArrayList<>();
 
         while(i<4) {
-            ArrayList<String> temp = createCell();
-            imgs.addAll(temp);
+            Cell cell = createCell();
+            cell.setPosition(i);
+            cell.setDesc("This is a test description. Let's see how long it can be. " +
+                    "Let's see how long it can be.Let's see how long it can be.Let's see how long it can be." +
+                    "Let's see how long it can be.Let's see how long it can be.Let's see how long it can be." +
+                    "Let's see how long it can be.Let's see how long it can be.Let's see how long it can be." +
+                    "Let's see how long it can be.Let's see how long it can be.Let's see how long it can be." +
+                    "Let's see how long it can be.Let's see how long it can be.");
+            cell.setTitle("Homemade Coffee");
+            cells.add(cell);
             i++;
         }
 
-        return imgs;
+        return cells;
     }
 }
