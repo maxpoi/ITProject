@@ -17,13 +17,13 @@ import java.util.ArrayList;
 
 public class SingleArtifactPage extends AppCompatActivity{
 
-    private String src;
-    private int test_src;
+    private Cell cell;
     private ImageView img;
     private boolean hasAudio = true;
 
     // test varaibles
     private ArrayList<Cell> images;
+    private ArrayList<String> imgs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,21 +35,16 @@ public class SingleArtifactPage extends AppCompatActivity{
         getSupportActionBar().setSubtitle("Change/delete this subtitle if needed");
 
         Intent intent = getIntent();
-        test_src = intent.getIntExtra("id", R.drawable.img_1);
-        String title = intent.getStringExtra("title");
-        String desc = intent.getStringExtra("desc");
+        int position = intent.getIntExtra("position", 0);
 
-//        img = (ImageView) findViewById(R.id.image);
-//        Glide.with(getApplicationContext()).load(test_src).into(img);
-        images = new ArrayList<>();
-        images.add(new Cell(test_src));
-        test();
+        setCell(position);
+        setImages();
 
         TextView title_content = findViewById(R.id.title);
-        title_content.setText(title);
+        title_content.setText(this.cell.getTitle());
 
         TextView desc_content = findViewById(R.id.description);
-        desc_content.setText(desc);
+        desc_content.setText(this.cell.getDesc());
 
 //        img.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -88,13 +83,9 @@ public class SingleArtifactPage extends AppCompatActivity{
         }
     }
 
-    private void test() {
-        images.add(new Cell(R.drawable.img_1));
-        images.add(new Cell(R.drawable.img_2));
-        images.add(new Cell(R.drawable.img_3));
-        images.add(new Cell(R.drawable.img_4));
-        images.add(new Cell(R.drawable.img_5));
+    private void setCell(int position) { this.cell = UserCache.getInstance().getCell(position); }
 
+    private void setImages() {
         RecyclerView rv = (RecyclerView) findViewById(R.id.gallery);
         rv.setHasFixedSize(true);
         rv.setItemViewCacheSize(100);
@@ -104,7 +95,8 @@ public class SingleArtifactPage extends AppCompatActivity{
         LinearLayoutManager lm = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(lm);
 
-        ImageAdapter ia = new ImageAdapter(getApplicationContext(), this.getClass().getName(), this.images, R.id.recycleview_image, R.layout.recycleview_image);
+        ImageAdapter ia = new ImageAdapter(getApplicationContext(), this.getClass().getName(), this.cell.getImages(), R.id.recycleview_image, R.layout.recycleview_image);
+        ia.setImageResolution(0);
         rv.setAdapter(ia);
 
     }

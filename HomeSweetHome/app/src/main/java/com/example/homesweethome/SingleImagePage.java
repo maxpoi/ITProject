@@ -11,8 +11,7 @@ import com.bumptech.glide.Glide;
 
 public class SingleImagePage extends AppCompatActivity {
 
-    private String imageSrc;
-    private int test_src;
+    private String image;
     ImageView img;
 
     @Override
@@ -21,8 +20,10 @@ public class SingleImagePage extends AppCompatActivity {
         setContentView(R.layout.single_image_page);
 
         Intent intent = getIntent();
-        test_src = intent.getIntExtra("id", R.drawable.img_1);
+        int cellPos = intent.getIntExtra("cell", 0);
+        int imagePos = intent.getIntExtra("image", 0);
+        image = UserCache.getInstance().getImagesByCell(cellPos).get(imagePos).getMediumImage();
         img = (ImageView) findViewById(R.id.single_image);
-        Glide.with(getApplicationContext()).load(test_src).into(img);
+        Glide.with(getApplicationContext()).asBitmap().load(ImageProcessor.getInstance().restoreImage(image)).into(img);
     }
 }
