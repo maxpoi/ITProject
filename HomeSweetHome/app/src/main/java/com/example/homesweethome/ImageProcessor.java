@@ -63,7 +63,28 @@ class ImageProcessor {
         return BitmapFactory.decodeResource(res, resId, options);
     }
 
-    public String encodeLowImage(Context context, int res) {
+    public byte[] encodeLowImageByte(Context context, int res) {
+        Bitmap bitmap = CustomDecodeResource(context.getResources(), res, 100, 100);
+        ByteArrayOutputStream arr = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
+        return arr.toByteArray();
+    }
+
+    public byte[] encodeMediumImageByte(Context context, int res) {
+        Bitmap bitmap = CustomDecodeResource(context.getResources(), res, 500, 500);
+        ByteArrayOutputStream arr = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
+        return arr.toByteArray();
+    }
+
+    public byte[] encodeHighImageByte(Context context, int res) {
+        Bitmap bitmap = CustomDecodeResource(context.getResources(), res, 1440, 2560);
+        ByteArrayOutputStream arr = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
+        return arr.toByteArray();
+    }
+
+    public String encodeLowImageString(Context context, int res) {
         Bitmap bitmap = CustomDecodeResource(context.getResources(), res, 100, 100);
         ByteArrayOutputStream arr = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
@@ -71,7 +92,7 @@ class ImageProcessor {
         return encodedImg;
     }
 
-    public String encodeMediumImage(Context context, int res) {
+    public String encodeMediumImageString(Context context, int res) {
         Bitmap bitmap = CustomDecodeResource(context.getResources(), res, 500, 500);
         ByteArrayOutputStream arr = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
@@ -79,7 +100,7 @@ class ImageProcessor {
         return encodedImg;
     }
 
-    public String encodeLargeImage(Context context, int res) {
+    public String encodeLargeImageString(Context context, int res) {
         Bitmap bitmap = CustomDecodeResource(context.getResources(), res, 1440, 2560);
         ByteArrayOutputStream arr = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
@@ -98,6 +119,11 @@ class ImageProcessor {
         //https://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
         byte[] decodedImg = Base64.decode(image, Base64.DEFAULT);
         InputStream inputStream = new ByteArrayInputStream(decodedImg);
+        return BitmapFactory.decodeStream(inputStream);
+    }
+
+    public Bitmap restoreImage(byte[] image) {
+        InputStream inputStream = new ByteArrayInputStream(image);
         return BitmapFactory.decodeStream(inputStream);
     }
 }
