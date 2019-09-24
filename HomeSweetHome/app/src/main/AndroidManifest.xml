@@ -26,10 +26,7 @@
         <activity android:name=".SingleArtifactPage" />
         <activity android:name=".AddPage" />
         <activity android:name=".SingleImagePage" />
-        <activity android:name=".register.EmailValidationActivity" />
-        <activity android:name=".register.RegisterActivity" />
-        <activity android:name=".register.RegisterSuccessActivity" />
-        <activity android:name=".register.RetrievePasswordActivity" />
+        <activity android:name=".CustomTest" />
 
     </application>
 
