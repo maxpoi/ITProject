@@ -17,7 +17,8 @@ public class CustomTest{
         ArrayList<Image> images = new ArrayList<>();
         for (int i : testData) {
 //            images.add(new Image(imageProcessor.createLowImg(context, i), imageProcessor.encodeMediumImage(context, i), imageProcessor.encodeLargeImage(context, i)));
-            images.add(new Image(null, imageProcessor.encodeMediumImage(context, i), null));
+//            images.add(new Image(null, imageProcessor.encodeMediumImage(context, i), null));
+            images.add(new Image(null, imageProcessor.encodeMediumImageByte(context, i), null));
         }
 
         return new Cell(null, null, null, images, null, null);

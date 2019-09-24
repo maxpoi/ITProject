@@ -80,17 +80,21 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
 
     private void setImage(ImageView img, int position) {
-        String image;
+//        String image;
+        byte[] image;
         if (img != null) {
             switch (this.imageResolution) {
                 case -1:
-                    image = this.images.get(position).getMediumImage();
+//                    image = this.images.get(position).getMediumImageString();
+                    image = this.images.get(position).getMediumImageByte();
                     break;
                 case 0:
-                    image = this.images.get(position).getMediumImage();
+//                    image = this.images.get(position).getMediumImageString();
+                    image = this.images.get(position).getMediumImageByte();
                     break;
                 case 1:
-                    image = this.images.get(position).getMediumImage();
+//                    image = this.images.get(position).getMediumImageString();
+                    image = this.images.get(position).getMediumImageByte();
                     break;
                 default:
                     // should never happen
