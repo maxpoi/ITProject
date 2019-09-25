@@ -3,7 +3,7 @@ package com.example.homesweethome;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-class UserCache {
+public class UserCache {
     private static final UserCache ourInstance = new UserCache();
     private ArrayList<Cell> cells;
 
