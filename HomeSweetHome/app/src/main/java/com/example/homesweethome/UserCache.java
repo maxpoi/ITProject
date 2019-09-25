@@ -1,9 +1,14 @@
 package com.example.homesweethome;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
-class UserCache {
+import static java.util.Collections.sort;
+
+public class UserCache{
     private static final UserCache ourInstance = new UserCache();
     private ArrayList<Cell> cells;
 
@@ -29,4 +34,12 @@ class UserCache {
     public Cell getCell(int position) { return cells.get(position); }
 
     public ArrayList<Image> getImagesByCell(int position) { return getCell(position).getImages(); }
+
+    public ArrayList<Cell> sortCellsByTime() {
+        Collections.sort(getCells());
+        return getCells();
+    }
+
+
+
 }

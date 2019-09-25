@@ -10,7 +10,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-class ImageProcessor {
+public class ImageProcessor {
     private static final ImageProcessor ourInstance = new ImageProcessor();
 
     static ImageProcessor getInstance() {
