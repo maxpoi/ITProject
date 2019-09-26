@@ -35,7 +35,7 @@ public class AddPage extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ImageAdapter imageAdapter;
-    private Cell cell = new Cell();
+    private Cell cell;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +46,7 @@ public class AddPage extends AppCompatActivity {
         getSupportActionBar().setTitle("AddPage a new artifact");
         getSupportActionBar().setSubtitle("Change/delete this subtitle if needed");
 
-        Button saveButton = findViewById(R.id.save_button);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveToLocal(cell);
-                finish();
-                openMain();
-            }
-        });
+        this.cell = new Cell();
 
         recyclerView = (RecyclerView) findViewById(R.id.gallery);
         recyclerView.setHasFixedSize(true);
@@ -68,15 +60,6 @@ public class AddPage extends AppCompatActivity {
         imageAdapter = new ImageAdapter(getApplicationContext(), this.getClass().getName(), cell.getImages(), R.id.recycleview_image, R.layout.recycleview_image);
         imageAdapter.setImageResolution(-1);
         recyclerView.setAdapter(imageAdapter);
-
-        // set cell context
-        String title, date, desc;
-        title = ((EditText)findViewById(R.id.edit_title)).getText().toString();
-        date = ((EditText)findViewById(R.id.edit_date)).getText().toString();
-        desc = ((EditText)findViewById(R.id.edit_desc)).getText().toString();
-        this.cell.setTitle(title);
-        this.cell.setTitle(date);
-        this.cell.setTitle(desc);
 
         // perform upload action
         Button uploadImageButton;
@@ -96,6 +79,19 @@ public class AddPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.INTERNAL_CONTENT_URI);
+            }
+        });
+
+
+        Button saveButton = findViewById(R.id.save_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveCell();
+                saveToLocal();
+                UserCache.getInstance().addCell(cell);
+                finish();
+                openMain();
             }
         });
 
@@ -150,7 +146,18 @@ public class AddPage extends AppCompatActivity {
         }
     }
 
-    private void saveToLocal(Cell cell) {
+    private void saveCell() {
+        // set cell context
+        String title, date, desc;
+        title = ((EditText)findViewById(R.id.edit_title)).getText().toString();
+        date = ((EditText)findViewById(R.id.edit_date)).getText().toString();
+        desc = ((EditText)findViewById(R.id.edit_desc)).getText().toString();
+        this.cell.setTitle(title);
+        this.cell.setDate(date);
+        this.cell.setDesc(desc);
+    }
+
+    private void saveToLocal() {
         int number = UserCache.getInstance().getCells().size();
 
         File parent = getFilesDir();
@@ -159,17 +166,17 @@ public class AddPage extends AppCompatActivity {
             return ;
         }
 
-        writeFile(child, "title", cell.getTitle());
-        writeFile(child, "date", cell.getDate());
-        writeFile(child, "desc", cell.getDesc());
+        writeFile(child, "title", this.cell.getTitle());
+        writeFile(child, "date", this.cell.getDate());
+        writeFile(child, "desc", this.cell.getDesc());
 
         // write images
         // now assume only 1 resolution will be used for the entire session
         File lowImageFolder = createFolder(child, "low_image");
         File mediumImageFolder = createFolder(child, "medium_image");
         File highImageFolder = createFolder(child, "high_image");
-        for (int i=0; i<cell.getImages().size(); i++) {
-            Image image = cell.getImages().get(i);
+        for (int i=0; i<this.cell.getImages().size(); i++) {
+            Image image = this.cell.getImages().get(i);
             String id = Integer.toString(i);
 //            writeFile(lowImageFolder, id, image.getLowImageByte());
             writeFile(mediumImageFolder, id, image.getMediumImageByte());
