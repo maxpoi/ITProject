@@ -51,7 +51,6 @@ public class HomePage extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        CustomTest customTest = new CustomTest(getApplicationContext());
         storeUserCache();
         setImages();
     }
