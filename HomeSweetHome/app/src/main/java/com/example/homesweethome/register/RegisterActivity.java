@@ -86,7 +86,6 @@ public class RegisterActivity extends AppCompatActivity {
                     //Intent MessageIntent = new Intent(RegisterActivity.this, RegisterFailActivity.class);
                     //startActivity(MessageIntent);
                 } else{
-                    // TODO: store input register data into database
                     Client.getInstance().createAccount(email,email,password);
 
                     Intent MessageIntent = new Intent(RegisterActivity.this, RegisterSuccessActivity.class);
