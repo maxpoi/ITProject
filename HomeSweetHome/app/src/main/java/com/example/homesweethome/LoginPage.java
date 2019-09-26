@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.homesweethome.register.RegisterActivity;
-import com.example.homesweethome.timeline.TimelineActivity;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -40,7 +39,7 @@ public class LoginPage extends AppCompatActivity {
     }
 
     private void openRegister() {
-        Intent intent = new Intent(this, TimelineActivity.class);
+        Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 }

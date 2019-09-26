@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-import com.example.homesweethome.Client;
 import com.example.homesweethome.LoginPage;
 import com.example.homesweethome.R;
 
@@ -32,15 +30,11 @@ public class RegisterActivity extends AppCompatActivity {
     TextView mTextViewLogin;
     TextView mTextViewForgetPassword;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
+
 /*
         // Find the activity_toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -75,9 +69,9 @@ public class RegisterActivity extends AppCompatActivity {
                 String cnfPassword = mTextCnfPassword.getText().toString();
                 if (!isEmailAddressValid(email)){
                     failedByEmail();
-                } else if (!isEmailAddressExist(email)){
-                    failedByEmailExisting();
-                }else if (!isPasswordValid(password)){
+                    //Intent MessageIntent = new Intent(RegisterActivity.this, RegisterFailActivity.class);
+                    //startActivity(MessageIntent);
+                } else if (!isPasswordValid(password)){
                     failedByPassword();
                     //Intent MessageIntent = new Intent(RegisterActivity.this, RegisterFailActivity.class);
                     //startActivity(MessageIntent);
@@ -86,8 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                     //Intent MessageIntent = new Intent(RegisterActivity.this, RegisterFailActivity.class);
                     //startActivity(MessageIntent);
                 } else{
-                    Client.getInstance().createAccount(email,email,password);
-
+                    // TODO: store input register data into database
                     Intent MessageIntent = new Intent(RegisterActivity.this, RegisterSuccessActivity.class);
                     startActivity(MessageIntent);
                 }
@@ -161,31 +154,22 @@ public class RegisterActivity extends AppCompatActivity {
         }
     };
 
-
-    private boolean isEmailAddressExist(String email) {
+    // A placeholder username validation check
+    private boolean isEmailAddressValid(String email) {
         if (email == null) {
             return false;
         }
-        if (Client.getInstance().checkAccountExist(email).equals("false")) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
 
-    // A placeholder username validation check
-    private boolean isEmailAddressValid(String email) {
-        /*if (email == null) {
-            return false;
-        }
+        //TODO: if the email is registered already
+        //TODO: if email exists
+
         if (email.contains("@")) {
             return true;
         }
         else {
             return false;
-        }*/
-        return true;
+            //return !email.trim().isEmpty();
+        }
     }
 
     // A placeholder password validation check
@@ -243,7 +227,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void failedByEmail(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
         alertDialog.setTitle("Invalid Email");
-        alertDialog.setMessage("???Email is invalid, please enter a valid email.");
+        alertDialog.setMessage("Email is invalid, please enter a valid email.");
 
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
@@ -254,21 +238,6 @@ public class RegisterActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void failedByEmailExisting(){
-        AlertDialog alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
-        alertDialog.setTitle("Email Existed");
-        alertDialog.setMessage("Email is existed, please retrieve password or change to a new email.");
-
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        //Intent registerIntent = new Intent(RegisterActivity.this, RetrievePasswordActivity.class);
-                        //startActivity(registerIntent);
-                    }
-                });
-        alertDialog.show();
-    }
     public void failedByPassword(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
         alertDialog.setTitle("Invalid Password");

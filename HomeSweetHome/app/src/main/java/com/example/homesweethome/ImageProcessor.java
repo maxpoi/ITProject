@@ -84,36 +84,19 @@ public class ImageProcessor {
         return arr.toByteArray();
     }
 
-    public String encodeLowImageString(Context context, int res) {
-        Bitmap bitmap = CustomDecodeResource(context.getResources(), res, 100, 100);
+    public String encodeLowImageString(Context context, int res) { return Base64.encodeToString(encodeLowImageByte(context, res),  Base64.DEFAULT); }
+
+    public String encodeMediumImageString(Context context, int res) { return Base64.encodeToString(encodeMediumImageByte(context, res),  Base64.DEFAULT); }
+
+    public String encodeLargeImageString(Context context, int res) { return Base64.encodeToString(encodeHighImageByte(context, res),  Base64.DEFAULT); }
+
+    public byte[] encodeBitmapByte(Bitmap bitmap) {
         ByteArrayOutputStream arr = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
-        String encodedImg = Base64.encodeToString(arr.toByteArray(),  Base64.DEFAULT);
-        return encodedImg;
+        return arr.toByteArray();
     }
 
-    public String encodeMediumImageString(Context context, int res) {
-        Bitmap bitmap = CustomDecodeResource(context.getResources(), res, 500, 500);
-        ByteArrayOutputStream arr = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
-        String encodedImg = Base64.encodeToString(arr.toByteArray(),  Base64.DEFAULT);
-        return encodedImg;
-    }
-
-    public String encodeLargeImageString(Context context, int res) {
-        Bitmap bitmap = CustomDecodeResource(context.getResources(), res, 1440, 2560);
-        ByteArrayOutputStream arr = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
-        String encodedImg = Base64.encodeToString(arr.toByteArray(),  Base64.DEFAULT);
-        return encodedImg;
-    }
-
-    public String encodeBitmap(Bitmap bitmap) {
-        ByteArrayOutputStream arr = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
-        String encodedImg = Base64.encodeToString(arr.toByteArray(),  Base64.DEFAULT);
-        return encodedImg;
-    }
+    public String encodeBitmapString(Bitmap bitmap) { return Base64.encodeToString(encodeBitmapByte(bitmap), Base64.DEFAULT); }
 
     public Bitmap restoreImage(String image) {
         //https://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview

@@ -2,7 +2,7 @@ package com.example.homesweethome;
 
 import java.util.ArrayList;
 
-public class Cell implements Comparable<Cell>{
+public class Cell {
 
     private ArrayList<Image> images;
     private String video;
@@ -77,10 +77,5 @@ public class Cell implements Comparable<Cell>{
     }
     public int getTest_src() {
         return this.test_src;
-    }
-
-    @Override
-    public int compareTo(Cell cell) {
-        return this.date.compareTo(cell.date);
     }
 }
