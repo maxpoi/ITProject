@@ -83,7 +83,6 @@ public class HomePage extends AppCompatActivity
 
     // to do
     private void storeUserCache() {
-//        UserCache.getInstance().setCells(cells);
         String[] folders = getFilesDir().list();
         if (folders == null) {
             Toast toast = Toast.makeText(getApplicationContext(), "Don't have read permission", Toast.LENGTH_SHORT);
@@ -91,27 +90,17 @@ public class HomePage extends AppCompatActivity
             return ;
         }
 
-        int numFolders = folders.length;
-        UserCache userCache = UserCache.getInstance();
         // if never add an artifact before
-        if (numFolders == 0) {
-            userCache.initialize();
-            return ;
-        }
+        int numFolders = folders.length;
+        if (numFolders == 0) { return ; }
 
-//        int numCells;
-//        // if just open the app, which means there is no cache
-//       if (userCache.getCells() == null) {
-//           numCells = 0;
-//       } else {
-//           numCells = userCache.getCells().size();
-//       }
-        // if cache is exactly the same, just return
-        // todo
-//        if (numFolders == numCells) { return ; }
+        // if has cache already, read from cache.
+        UserCache userCache = UserCache.getInstance();
+        ArrayList<Cell> cells = userCache.getCells();
+        if (cells.size() != 0) { return ; }
 
-        // otherwise
-        ArrayList<Cell> cells = new ArrayList<>();
+        // otherwise, initialize the cache for this session.
+        cells = new ArrayList<>();
         for (int i = 0; i<numFolders; i++) {
             File cellFolder = new File(getFilesDir(), Integer.toString(i));
 
@@ -133,6 +122,7 @@ public class HomePage extends AppCompatActivity
 //              byte[] lowImage = readFileByte(lowImageFolder, "low_image");
 //              byte[] highImage = readFileByte(highImageFolder, "low_image");
                 image.setMediumImageByte(mediumImage);
+                image.setPosition(i);
                 cell.addImage(image);
             }
             cells.add(cell);

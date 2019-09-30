@@ -19,15 +19,21 @@ public class UserCache {
     private static ArrayList<Cell> cells;
 
     static UserCache getInstance() { return ourInstance; }
+    private UserCache() { this.cells = new ArrayList<>(); }
 
-    private UserCache() {}
-
+    public ArrayList<Cell> getCells() { return this.cells; }
     public void setCells(ArrayList<Cell> cells) { this.cells = cells; }
+
 
     public void initialize() { this.cells = new ArrayList<>(); }
 
     public static ArrayList<Cell> getCells() { return cells; }
 
+    public Cell getCell(int position) { return cells.get(position); }
+    public void addCell(Cell cell) { this.cells.add(cell); }
+
+
+    public ArrayList<Image> getImagesByCell(int position) { return getCell(position).getImages(); }
     public ArrayList<Image> getAllImages() {
         ArrayList<Image> images = new ArrayList<>();
 
@@ -36,6 +42,7 @@ public class UserCache {
         }
         return images;
     }
+
 
     public static Cell getCell(int position) { return cells.get(position); }
 
@@ -62,6 +69,4 @@ public class UserCache {
         }
         return years;
     }
-
-
 }

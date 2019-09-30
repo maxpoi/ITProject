@@ -21,10 +21,6 @@ public class SingleArtifactPage extends AppCompatActivity{
     private ImageView img;
     private boolean hasAudio = true;
 
-    // test varaibles
-    private ArrayList<Cell> images;
-    private ArrayList<String> imgs;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,24 +32,17 @@ public class SingleArtifactPage extends AppCompatActivity{
 
         Intent intent = getIntent();
         int position = intent.getIntExtra("position", 0);
-
-        setCell(position);
+        this.cell = UserCache.getInstance().getCell(position);
         setImages();
 
         TextView title_content = findViewById(R.id.title);
         title_content.setText(this.cell.getTitle());
 
+        TextView date_content = findViewById(R.id.date);
+        date_content.setText(this.cell.getDate());
+
         TextView desc_content = findViewById(R.id.description);
         desc_content.setText(this.cell.getDesc());
-
-//        img.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(getApplicationContext(), com.example.homesweethome.SingleImagePage.class);
-//                i.putExtra("id", test_src);
-//                startActivity(i);
-//            }
-//        });
 
         final FloatingActionButton edit_button = (FloatingActionButton) findViewById(R.id.edit_button);
         edit_button.setOnClickListener(new View.OnClickListener() {
@@ -82,8 +71,6 @@ public class SingleArtifactPage extends AppCompatActivity{
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    private void setCell(int position) { this.cell = UserCache.getInstance().getCell(position); }
 
     private void setImages() {
         RecyclerView rv = (RecyclerView) findViewById(R.id.gallery);
