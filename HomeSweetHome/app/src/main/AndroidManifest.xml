@@ -32,6 +32,7 @@
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".register.RegisterSuccessActivity" />
         <activity android:name=".register.RetrievePasswordActivity" />
+        <activity android:name=".timeline.TimelineActivity" />
     </application>
 
 </manifest>

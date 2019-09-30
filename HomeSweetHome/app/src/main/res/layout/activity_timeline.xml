@@ -41,31 +41,32 @@
             android:textSize="40dp"
             />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
 
 
             <com.example.homesweethome.timeline.PointView
                 android:layout_width="match_parent"
                 android:layout_height="700dp"
                 android:orientation="vertical"
+
                 tools:ignore="MissingConstraints" />
 
-                <View
-                    android:layout_width="10dp"
-                    android:layout_height="700dp"
-                    android:layout_gravity="center"
-                    android:background="@color/colorPrimary"
-                    tools:layout_editor_absoluteX="200dp"
-                    tools:layout_editor_absoluteY="0dp"
-                    tools:ignore="MissingConstraints" />
-
+            <View
+                android:layout_width="10dp"
+                android:layout_height="700dp"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimary"
+                tools:layout_editor_absoluteX="200dp"
+                tools:layout_editor_absoluteY="0dp"
+                tools:ignore="MissingConstraints" />
 
 
 
             />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
 
 
 
