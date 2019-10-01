@@ -13,6 +13,14 @@ import java.io.InputStream;
 public class ImageProcessor {
     private static final ImageProcessor ourInstance = new ImageProcessor();
 
+    public static final int lowImageWidth = 100;
+    public static final int lowImageHeight = 100;
+    public static final int mediumImageWidth = 500;
+    public static final int mediumImageHeight = 500;
+    public static final int highImageWidth = 1024;
+    public static final int highImageHeight = 768;
+
+
     static ImageProcessor getInstance() {
         return ourInstance;
     }
@@ -64,21 +72,21 @@ public class ImageProcessor {
     }
 
     public byte[] encodeLowImageByte(Context context, int res) {
-        Bitmap bitmap = CustomDecodeResource(context.getResources(), res, 100, 100);
+        Bitmap bitmap = CustomDecodeResource(context.getResources(), res, lowImageWidth, lowImageHeight);
         ByteArrayOutputStream arr = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
         return arr.toByteArray();
     }
 
     public byte[] encodeMediumImageByte(Context context, int res) {
-        Bitmap bitmap = CustomDecodeResource(context.getResources(), res, 500, 500);
+        Bitmap bitmap = CustomDecodeResource(context.getResources(), res, mediumImageWidth, mediumImageHeight);
         ByteArrayOutputStream arr = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
         return arr.toByteArray();
     }
 
     public byte[] encodeHighImageByte(Context context, int res) {
-        Bitmap bitmap = CustomDecodeResource(context.getResources(), res, 1440, 2560);
+        Bitmap bitmap = CustomDecodeResource(context.getResources(), res, highImageWidth, highImageHeight);
         ByteArrayOutputStream arr = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
         return arr.toByteArray();
