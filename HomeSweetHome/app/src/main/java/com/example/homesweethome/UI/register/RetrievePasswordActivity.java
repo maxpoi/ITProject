@@ -1,4 +1,4 @@
-package com.example.homesweethome.register;
+package com.example.homesweethome.UI.register;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.homesweethome.LoginPage;
+import com.example.homesweethome.UI.LoginPage;
 import com.example.homesweethome.R;
 public class RetrievePasswordActivity extends AppCompatActivity implements View.OnClickListener{
 

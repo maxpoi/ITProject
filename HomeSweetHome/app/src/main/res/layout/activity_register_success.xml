@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".register.RegisterSuccessActivity">
+    tools:context=".UI.register.RegisterSuccessActivity">
 
     <Button
         android:id="@+id/button_return"

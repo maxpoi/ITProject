@@ -1,4 +1,4 @@
-package com.example.homesweethome.register;
+package com.example.homesweethome.UI.register;
 import androidx.annotation.Nullable;
 
 public class RegisterFormState {

@@ -1,4 +1,4 @@
-package com.example.homesweethome.register;
+package com.example.homesweethome.UI.register;
 
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +17,7 @@ import android.widget.Toast;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-import com.example.homesweethome.LoginPage;
+import com.example.homesweethome.UI.LoginPage;
 import com.example.homesweethome.R;
 
 public class RegisterActivity extends AppCompatActivity {

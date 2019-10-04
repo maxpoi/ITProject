@@ -1,4 +1,4 @@
-package com.example.homesweethome;
+package com.example.homesweethome.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.homesweethome.register.RegisterActivity;
+import com.example.homesweethome.R;
+import com.example.homesweethome.UI.register.*;
 
 public class LoginPage extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.homesweethome.register;
+package com.example.homesweethome.UI.register;
 
 import android.app.Dialog;
 import android.content.Context;
