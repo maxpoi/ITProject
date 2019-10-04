@@ -1,9 +1,9 @@
-package com.example.homesweethome;// A Java program for a Client
+// A Java program for a Client 
 import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
 
-public class Client 
+public class Client
 { 
     // initialize socket and input output streams
 	// The IP address will be hard coded for client
@@ -42,61 +42,100 @@ public class Client
     }
 
     // 01 - The function called when the user want to create the account
-    public String createAccount(String accountName, String email, String password) {
-    	return this.sendAndReceive (String.format("01\n%s\n%s\n%s", 
-				accountName, email, password));
+    public String createAccount (String accountName, String email, String password, 
+    		String question, String answer) {
+    	return this.sendAndReceive (String.format("01\n%s\n%s\n%s\n%s\n%s", 
+				accountName, email, password, question, answer));
     }
     
     // 02 - The function called when the user forgets his/her password
-    public String forgetPassword(String email) {
-        return this.sendAndReceive (String.format("02\n%s", email));
+    // ask the database what is the question decided by user
+    public String askQuestion(String email) {
+    	return this.sendAndReceive (String.format("02\n%s", email));
+    }
+    
+    // 021 - User typed in the answer and send the answer to database for verifying
+    public String answerQuestion(String email, String answer) {
+    	return this.sendAndReceive (String.format("021\n%s\n%s", email, answer));
+    }
+    
+    // 022 - User can change the passwords now by giving their email and answer
+    public String resetPassword(String email, String password) {
+    	return this.sendAndReceive (String.format("022\n%s\n%s", email, password));
     }
     
     // 03 - The function called when the user logins in
     public String login(String email, String password) {
     	return this.sendAndReceive (String.format("03\n%s\n%s", email, password));
     }
-    /*
+    
     // 04 - upload artifact to the server
     // name, description, video, audio, picture number, picture(s)
     public String uploadArtifact (Cell artifact) {
     	StringBuilder message = new StringBuilder();
+    	
+    	// transfer String information
     	message.append(artifact.getTitle() + "\n");
     	message.append(artifact.getDesc() + "\n");
     	message.append("null" + "\n");
     	message.append("null" + "\n");
     	message.append(artifact.getDate() + "\n");
-    	message.append("1" + "\n");
-    	//message.append(artifact.getImgs() + "\n");
-    	String artifactInfo = message.toString();
+    	String artifactInfo = null;
+    	
+    	// transfer images
+    	ArrayList<Image> images = artifact.getImages();
+    	if (images == null) {
+    		message.append("0");
+    		artifactInfo = message.toString();
+    	}
+    	else {
+	    	int numberOfPictures = images.size();
+	    	message.append(String.format("%s", numberOfPictures) + "\n");
+	    	for (int i = 0; i < numberOfPictures; i++) {
+	    		Image image = images.get(i);
+	    		for (int j = 0; j < 3; j++) {
+	    			image.getLowImageString();
+	    			image.getMediumImageString();
+	    			image.getHighImageString();
+	    		}
+	    	}	
+	    	artifactInfo = message.toString();
+    	}
     	return this.sendAndReceive (String.format("04\n%s", artifactInfo));
     }
     
-    // 05 - upload artifact
+    // 05 - delete artifact
     // number of features, feature name 1, feature 1 new content ...
-    public String updateArtifact (Cell artifact) {
-    	return this.sendAndReceive (String.format("05\n%s", artifact));
+    public String deleteArtifact (Cell artifact) {
+    	if (artifact.getImages() == null) {
+    		return "false";
+    	}
+    	return this.sendAndReceive (String.format("05\n%s", artifact.getTitle()));
     }
     
+    /*
     // 06 - achieve all artifacts
-    // id, name, date, desc, video, audio, email, num of pic, pics
+    // name, description, video, audio, picture number, picture(s)
     public ArrayList<Cell> achieveAllArtifact () {
         ArrayList<Cell> artifacts = new ArrayList<Cell>();
-        String[] str = this.sendAndReceive ("06").split("\n");
-    	for (int i = 0; i < str.length; i ++) {
-    		ArrayList<String> imgs = new ArrayList<String>();
-    		Cell artifact = new Cell (str[i+1], str[i+2], str[i+3], imgs, str[i+4], str[i+5]);
-    		int numPics = Integer.parseInt(str[i+7]);
+        String[] received = this.sendAndReceive ("06").split("\n");
+        
+    	for (int i = 0; i < received.length; i ++) {
+    		ArrayList<Image> imgs = new ArrayList<Image>();
+    		int numPics = Integer.parseInt(received[i+7]);
     		int j;
     		for (j = 0; j < i + 8 + numPics; j++) {
-    			artifact.addImg(str[j]);
+    			artifact.addImg(received[j]);
     		}
     		i = j;
+    		Cell artifact = new Cell (received[i+1], received[i+2], received[i+3], 
+    				imgs, received[i+4], received[i+5]);
     		artifacts.add(artifact);
     	}
     	return artifacts;
     }
-    */
+	*/
+    
     // Send message to Server
     private String sendAndReceive (String message) {
     	try {
@@ -124,7 +163,6 @@ public class Client
     public void search(String...str) {
     	
     }
-    
     
 } 
 
