@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="35476771-1af4-421e-8265-70f236bb93bf" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/AddPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/UI/AddPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/AddPage_cp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/Cell.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/CustomTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/HomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/UI/HomePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/ITPServer/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/Image.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/ImageAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/HelperClasses/ImageAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/ImageProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/HelperClasses/ImageProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/LoginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/UI/LoginPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/SingleArtifactPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/UI/SingleArtifactPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/SingleImagePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/UI/SingleImagePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/UserCache.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/register/EmailValidationActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/UI/register/EmailValidationActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/register/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/UI/register/RegisterActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/register/RegisterFailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/UI/register/RegisterFailActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/register/RegisterFormState.java" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/UI/register/RegisterFormState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/register/RegisterSuccessActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/UI/register/RegisterSuccessActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/register/RegisterSuccessDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/UI/register/RegisterSuccessDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/register/RetrievePasswordActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/UI/register/RetrievePasswordActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/register/RetrieveQuestionActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/UI/register/RetrieveQuestionActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/timeline/TimelineActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/java/com/example/homesweethome/timeline/TimelineActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/res/layout/activity_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/res/layout/activity_register.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/res/layout/activity_register_fail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/res/layout/activity_register_fail.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/res/layout/activity_register_success.xml" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/res/layout/activity_register_success.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/res/layout/activity_reset_password.xml" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/res/layout/activity_reset_password.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/res/layout/activity_retrieve_password.xml" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/res/layout/activity_retrieve_password.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/res/layout/home_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/res/layout/home_page.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/app/src/main/res/layout/login_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/app/src/main/res/layout/login_page.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HomeSweetHome/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/HomeSweetHome/build.gradle" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
+    <option name="width" value="1680" />
+    <option name="height" value="1027" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Project" type="1abcf292:AndroidViewProjectNode" />
+              <item name="Project" type="e9137016:NonAndroidModuleNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="35476771-1af4-421e-8265-70f236bb93bf" name="Default Changelist" comment="" />
+      <created>1569915394866</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1569915394866</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="23" width="1680" height="1027" extended-state="0" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.33394384" />
+      <window_info id="Structure" side_tool="true" />
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="Build Variants" side_tool="true" />
+      <window_info id="Resources Explorer" />
+      <window_info id="Capture Tool" />
+      <window_info id="simpleUML" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="TODO" />
+      <window_info anchor="bottom" id="Android Profiler" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Logcat" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="right" id="Device File Explorer" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Palette&#9;" />
+    </layout>
+  </component>
+  <component name="simpleUML.UMLToolWindowPlugin">
+    <General>
+      <option name="birdViewUpdateDelay" value="2000" />
+      <option name="defaultFileLocation" value="file://$PROJECT_DIR$/.." />
+    </General>
+    <Classdiagram>
+      <option name="diagramTitleFont" value="SansSerif,1,12" />
+      <option name="diagramFont" value="SansSerif,0,10" />
+      <option name="defaultFieldsExpanded" value="false" />
+      <option name="defaultContructorsExpanded" value="false" />
+      <option name="defaultMethodsExpanded" value="false" />
+      <option name="showParameters" value="true" />
+      <option name="showTooltip" value="true" />
+      <option name="showReturnValues" value="true" />
+      <option name="longModifier" value="true" />
+      <option name="implementsBehaviour" value="1" />
+      <option name="extendsBehaviour" value="1" />
+      <option name="compartmentBehaviour" value="1" />
+      <option name="interfaceBackgroundColor" value="-6494306" />
+      <option name="abstractClassBackgroundColor" value="-1580132" />
+      <option name="classBackgroundColor" value="-6508057" />
+      <option name="diagramBackgroundColor" value="-1" />
+      <option name="useAntialiasedConnectors" value="true" />
+      <option name="quickSourceLinkColor" value="-16776961" />
+      <option name="quickDiagramLinkColor" value="-8454144" />
+      <option name="drawDecorations" value="false" />
+      <option name="hideFieldList" value="" />
+      <option name="showFieldList" value="" />
+      <option name="hideConstructorList" value="" />
+      <option name="showConstructorList" value="" />
+      <option name="hideMethodList" value="" />
+      <option name="showMethodList" value="" />
+      <option name="minimumFigureSize" value="0,0" />
+    </Classdiagram>
+    <Dependencydiagram>
+      <option name="diagramTitleFont" value="SansSerif,1,12" />
+      <option name="diagramFont" value="SansSerif,0,10" />
+      <option name="diagramBackgroundColor" value="-1" />
+      <option name="useAntialiasedConnectors" value="true" />
+      <option name="packageNameCompressionLevel" value="0" />
+    </Dependencydiagram>
+    <Packagediagram>
+      <option name="diagramTitleFont" value="SansSerif,0,12" />
+      <option name="diagramFont" value="SansSerif,0,10" />
+      <option name="packageBackgroundColor" value="-4144960" />
+      <option name="diagramBackgroundColor" value="-1" />
+      <option name="useAntialiasedConnectors" value="true" />
+      <option name="packageNameCompressionLevel" value="2" />
+    </Packagediagram>
+  </component>
+</project>
