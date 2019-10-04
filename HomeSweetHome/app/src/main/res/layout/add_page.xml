@@ -40,7 +40,9 @@
             android:id="@+id/edit_date"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/input_frame" />
+            android:background="@drawable/input_frame"
+            android:singleLine="true"
+            android:inputType="date" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -5,10 +5,10 @@ import android.graphics.Bitmap;
 import androidx.annotation.NonNull;
 import androidx.room.*;
 
-@Entity(tableName = "Images")
+@Entity(tableName = "Images",
+        primaryKeys = {"id", "artifactId"})
 public class Image {
-    @PrimaryKey
-    @NonNull
+
     private int id;
     private int artifactId;
 

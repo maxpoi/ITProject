@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,8 @@ import com.example.homesweethome.R;
 import com.example.homesweethome.UI.SingleArtifactPage;
 import com.example.homesweethome.UI.SingleImagePage;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +29,16 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView img;
+        private TextView title;
+        private TextView date;
+        private TextView desc;
 
         public ViewHolder(View view) {
             super (view);
-            img = (ImageView) view.findViewById(R.id.recycleview_image);
+            img = (ImageView) view.findViewById(R.id.recycleview_artifact_image);
+            title = view.findViewById(R.id.recycleview_artifact_title);
+            date = view.findViewById(R.id.recycleview_artifact_date);
+            desc = view.findViewById(R.id.recycleview_artifact_desc);
         }
     }
 
@@ -41,7 +50,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
     @NonNull
     @Override
     public ArtifactAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.recycleview_image, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.recycleview_artifact, parent, false);
         return new ArtifactAdapter.ViewHolder(view);
     }
 
@@ -59,6 +68,10 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
                 context.startActivity(intent);
             }
         });
+
+        holder.title.setText(artifacts.get(position).getTitle());
+        holder.date.setText(artifacts.get(position).getDate());
+        holder.desc.setText(artifacts.get(position).getDesc());
     }
 
     @Override

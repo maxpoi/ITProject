@@ -11,13 +11,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
@@ -54,8 +57,14 @@ public class HomePage extends AppCompatActivity
         RecyclerView rv = (RecyclerView) findViewById(R.id.gallery);
         rv.setHasFixedSize(true);
         rv.setDrawingCacheEnabled(true);
-        RecyclerView.LayoutManager lm = new GridLayoutManager(getApplicationContext(), 3);
+//        RecyclerView.LayoutManager lm = new GridLayoutManager(getApplicationContext(), 3);
+        RecyclerView.LayoutManager lm = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         rv.setLayoutManager(lm);
+
+        DividerItemDecoration divider = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+//        divider.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.decoder_gap));
+//        divider.
+        rv.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
         final ArtifactAdapter artifactAdapter = new ArtifactAdapter(getApplicationContext());
         rv.setAdapter(artifactAdapter);
 
