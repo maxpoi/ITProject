@@ -65,7 +65,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         Bitmap imageBitmap = images.get(position).getMediumImageBitmap();
         if (imageBitmap == null) {
             String imagePath = images.get(position).getMediumResImagePath();
-            imageBitmap = ((HomeSweetHome)context).getImageProcessor().decodeFileToMedium(imagePath);
+            imageBitmap = ((HomeSweetHome)context).getImageProcessor().decodeFileToMediumBitmap(imagePath);
         }
 
         Glide.with(this.context).asBitmap().load(imageBitmap).into(img);

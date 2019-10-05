@@ -76,7 +76,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
         String imagePath = artifacts.get(position).getCoverImagePath();
         if(!(new File(imagePath)).exists()) { return ;}
 
-        Bitmap bitmap = ((HomeSweetHome)context).getImageProcessor().decodeFileToLow(imagePath);
+        Bitmap bitmap = ((HomeSweetHome)context).getImageProcessor().decodeFileToLowBitmap(imagePath);
         Glide.with(this.context).asBitmap().load(bitmap).into(img);
     }
 

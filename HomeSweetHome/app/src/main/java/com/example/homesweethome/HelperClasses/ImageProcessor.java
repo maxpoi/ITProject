@@ -44,67 +44,25 @@ public class ImageProcessor {
 
     private ImageProcessor() {}
 
-    public Bitmap decodeFileToLow(String file) { return CustomDecodeFile(file, lowImageWidth, lowImageHeight); }
-    public Bitmap decodeFileToMedium(String file) { return CustomDecodeFile(file, mediumImageWidth, mediumImageHeight); }
-    public Bitmap decodeFileToHigh(String file) { return CustomDecodeFile(file, highImageWidth, highImageHeight); }
+    public Bitmap decodeFileToLowBitmap(String file) { return CustomDecodeFile(file, lowImageWidth, lowImageHeight); }
+    public Bitmap decodeFileToMediumBitmap(String file) { return CustomDecodeFile(file, mediumImageWidth, mediumImageHeight); }
+    public Bitmap decodeFileToHighBitmap(String file) { return CustomDecodeFile(file, highImageWidth, highImageHeight); }
 
-    public String encodeBitmapString(Bitmap bitmap) { return Base64.encodeToString(encodeBitmapByte(bitmap), Base64.DEFAULT); }
+    public String encodeBitmapToString(Bitmap bitmap) { return Base64.encodeToString(encodeBitmapByte(bitmap), Base64.DEFAULT); }
 
-    public Bitmap restoreImage(String image) {
+    public Bitmap restoreImageFromString(String image) {
         //https://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
         byte[] decodedImg = Base64.decode(image, Base64.DEFAULT);
         InputStream inputStream = new ByteArrayInputStream(decodedImg);
         return BitmapFactory.decodeStream(inputStream);
     }
 
-    public Bitmap restoreImage(byte[] image) {
+    public Bitmap restoreImageFromByte(byte[] image) {
         InputStream inputStream = new ByteArrayInputStream(image);
         return BitmapFactory.decodeStream(inputStream);
     }
 
-    public String readFileString(File folder, String filename) {
-        File file = new File(folder, filename);
-
-        try {
-            byte[] output = new byte[(int)file.length()];
-            FileInputStream inputStream = new FileInputStream(file);
-            inputStream.read(output);
-            inputStream.close();
-            return new String(output);
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    public byte[] readFileByte(File folder, String filename) {
-        File file = new File(folder, filename);
-
-        try {
-            byte[] output = new byte[(int)file.length()];
-            FileInputStream inputStream = new FileInputStream(file);
-            inputStream.read(output);
-            inputStream.close();
-            return output;
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    public byte[] readFileByte(String filePath) {
-        File file = new File(filePath);
-
-        try {
-            byte[] output = new byte[(int)file.length()];
-            FileInputStream inputStream = new FileInputStream(file);
-            inputStream.read(output);
-            inputStream.close();
-            return output;
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    public void saveToLocal(List<Image> images) { new saveToLocalAsyncTask(images).execute(); }
+    public void saveImageListToLocal(List<Image> images) { new saveToLocalAsyncTask(images).execute(); }
 
     private static class saveToLocalAsyncTask extends AsyncTask<Void, Void, Void> {
         private List<Image> images;

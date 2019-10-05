@@ -203,7 +203,7 @@ public class AddPage extends AppCompatActivity {
         artifact.setDesc(desc);
         artifactViewModel.addArtifact(artifact);
         for (Image image : imageList) artifactViewModel.addImage(image);
-        ((HomeSweetHome)getApplication()).getImageProcessor().saveToLocal(imageList);
+        ((HomeSweetHome)getApplication()).getImageProcessor().saveImageListToLocal(imageList);
     }
 
     private void createImage() {
@@ -230,9 +230,9 @@ public class AddPage extends AppCompatActivity {
         image.setMediumResImagePath(folderPath + ImageProcessor.MEDIUM_RES_IMAGE_FOLDER_NAME + imageId + ImageProcessor.IMAGE_TYPE);
         image.setHighResImagePath(folderPath + ImageProcessor.HIGH_RES_IMAGE_FOLDER_NAME + imageId + ImageProcessor.IMAGE_TYPE);
 
-        image.setLowImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLow(filePath));
-        image.setMediumImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToMedium(filePath));
-        image.setHighImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToHigh(filePath));
+        image.setLowImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
+        image.setMediumImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToMediumBitmap(filePath));
+        image.setHighImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToHighBitmap(filePath));
 
         imageList.add(image);
         imageAdapter.setImages(imageList);

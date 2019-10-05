@@ -1,6 +1,7 @@
 package com.example.homesweethome.UI;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -38,8 +39,8 @@ public class SingleImagePage extends AppCompatActivity {
                 Image image = images.get(imageId);
                 if (image.getHighImageBitmap() == null) {
                     String imagePath = image.getHighResImagePath();
-                    byte[] imageByte = ((HomeSweetHome)getApplication()).getImageProcessor().readFileByte(imagePath);
-                    Glide.with(getApplicationContext()).asBitmap().load(((HomeSweetHome) getApplication()).getImageProcessor().restoreImage(imageByte)).into(img);
+                    Bitmap imageBitmap = ((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToHighBitmap(imagePath);
+                    Glide.with(getApplicationContext()).asBitmap().load(imageBitmap).into(img);
                 } else {
                     Glide.with(getApplicationContext()).asBitmap().load(image.getHighImageBitmap()).into(img);
                 }
