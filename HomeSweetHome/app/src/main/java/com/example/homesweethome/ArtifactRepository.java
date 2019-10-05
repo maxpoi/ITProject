@@ -46,6 +46,8 @@ public class ArtifactRepository {
     public void deleteImage(Image image) { artifactDatabase.imageDAO().delete(image); }
     public void deleteArtifact(Artifact artifact) { artifactDatabase.artifactDAO().delete(artifact); }
 
+
+
     private static class insertArtifactAsyncTask extends AsyncTask<Artifact, Void, Void> {
         private ArtifactDatabase artifactDatabase;
 

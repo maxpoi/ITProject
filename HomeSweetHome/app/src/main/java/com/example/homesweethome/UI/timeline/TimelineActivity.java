@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 //import com.example.homesweethome.Cell;
 //import com.example.homesweethome.ImageProcessor;
+import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
 import com.example.homesweethome.UI.LoginPage;
 import com.example.homesweethome.R;
 //import com.example.homesweethome.UserCache;
@@ -30,6 +31,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class TimelineActivity extends AppCompatActivity {
@@ -40,6 +42,7 @@ public class TimelineActivity extends AppCompatActivity {
     //private LinearLayout linearLayout;
     private FrameLayout linearLayout;
     //private LinkedList<ImageButton> imageButtons;
+    private List<Artifact> artifactList;
 
 
     @Override
@@ -88,8 +91,6 @@ public class TimelineActivity extends AppCompatActivity {
         years.add("1983");
         years.add("1987");
         years.add("1987");
-
-
 
         map = mappingYearInterval(years);
         float margin = 10;

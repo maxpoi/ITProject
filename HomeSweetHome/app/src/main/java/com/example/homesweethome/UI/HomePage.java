@@ -72,8 +72,6 @@ public class HomePage extends AppCompatActivity
         artifactListViewModel.getArtifacts().observe(this, new Observer<List<Artifact>>() {
             @Override
             public void onChanged(List<Artifact> artifacts) {
-                // TODO
-                // should I do a background thread?
                 artifactAdapter.setArtifacts(artifacts);
             }
         });
