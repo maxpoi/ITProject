@@ -1,4 +1,4 @@
-package com.example.homesweethome.timeline;
+package com.example.homesweethome.UI.timeline;
 
 import android.view.ViewGroup;
 import android.widget.SectionIndexer;

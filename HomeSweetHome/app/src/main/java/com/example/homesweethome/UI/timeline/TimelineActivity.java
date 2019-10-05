@@ -1,4 +1,4 @@
-package com.example.homesweethome.timeline;
+package com.example.homesweethome.UI.timeline;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,14 +17,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.homesweethome.Cell;
-import com.example.homesweethome.ImageProcessor;
-import com.example.homesweethome.LoginPage;
+//import com.example.homesweethome.Cell;
+//import com.example.homesweethome.ImageProcessor;
+import com.example.homesweethome.UI.LoginPage;
 import com.example.homesweethome.R;
-import com.example.homesweethome.UserCache;
-import com.example.homesweethome.register.RegisterActivity;
-import com.example.homesweethome.register.RegisterFailActivity;
-import com.example.homesweethome.register.RetrievePasswordActivity;
+//import com.example.homesweethome.UserCache;
+import com.example.homesweethome.UI.register.RegisterActivity;
+import com.example.homesweethome.UI.register.RegisterFailActivity;
+import com.example.homesweethome.UI.register.RetrievePasswordActivity;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import java.util.LinkedList;
 import java.util.Map;
 
 public class TimelineActivity extends AppCompatActivity {
-    UserCache userCache = UserCache.getInstance();
+    //UserCache userCache = UserCache.getInstance();
     float axis = 7;
     float pointSize = 50;
 

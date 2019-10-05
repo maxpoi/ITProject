@@ -1,4 +1,4 @@
-package com.example.homesweethome.timeline;
+package com.example.homesweethome.UI.timeline;
 
 public class TimelineText {
     private String year;

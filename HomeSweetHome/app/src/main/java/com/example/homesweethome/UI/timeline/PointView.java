@@ -1,4 +1,4 @@
-package com.example.homesweethome.timeline;
+package com.example.homesweethome.UI.timeline;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,8 +13,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.example.homesweethome.UserCache;
-import com.example.homesweethome.register.RegisterFailActivity;
+import com.example.homesweethome.UI.register.RegisterFailActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +23,7 @@ import java.util.Map;
 import static com.bumptech.glide.Glide.init;
 
 public class PointView extends View implements View.OnClickListener {
-    ArrayList<String> years = UserCache.getSortedYear();
+    //ArrayList<String> years = UserCache.getSortedYear();
 
 
     public PointView(Context context) {

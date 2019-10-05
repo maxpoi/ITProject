@@ -1,4 +1,4 @@
-package com.example.homesweethome.timeline;
+package com.example.homesweethome.UI.timeline;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,7 +9,9 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import java.lang.reflect.Array;
+import com.example.homesweethome.UI.timeline.PointView;
+import com.example.homesweethome.UI.timeline.TimelineText;
+
 import java.util.ArrayList;
 
 public class TextView extends View implements View.OnClickListener {
