@@ -49,7 +49,7 @@
 
 
 
-            <com.example.homesweethome.timeline.PointView
+            <com.example.homesweethome.UI.timeline.PointView
                 android:layout_width="match_parent"
                 android:layout_height="700dp"
                 android:orientation="vertical"
@@ -73,7 +73,7 @@
                 android:orientation="vertical"
                 android:id="@+id/timeline_layout"
                 tools:ignore="MissingConstraints" />
-            <com.example.homesweethome.timeline.TextView
+            <com.example.homesweethome.UI.timeline.TextView
                 android:layout_width="match_parent"
                 android:layout_height="700dp"
                 android:orientation="vertical"
