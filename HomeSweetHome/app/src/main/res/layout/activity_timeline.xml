@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".UI.timeline.TimelineActivity">
+    tools:context=".timeline.TimelineActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,35 +41,46 @@
             android:textSize="40dp"
             />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/timeline_f_layout"
+            >
 
 
-            <com.example.homesweethome.UI.timeline.PointView
+
+            <com.example.homesweethome.timeline.PointView
                 android:layout_width="match_parent"
                 android:layout_height="700dp"
                 android:orientation="vertical"
+
                 tools:ignore="MissingConstraints" />
 
-                <View
-                    android:layout_width="10dp"
-                    android:layout_height="700dp"
-                    android:layout_gravity="center"
-                    android:background="@color/colorPrimary"
-                    tools:layout_editor_absoluteX="200dp"
-                    tools:layout_editor_absoluteY="0dp"
-                    tools:ignore="MissingConstraints" />
 
 
+            <View
+                android:layout_width="7dp"
+                android:layout_height="700dp"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimary"
+                tools:layout_editor_absoluteX="200dp"
+                tools:layout_editor_absoluteY="0dp"
+                tools:ignore="MissingConstraints" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="700dp"
+                android:orientation="vertical"
+                android:id="@+id/timeline_layout"
+                tools:ignore="MissingConstraints" />
+            <com.example.homesweethome.timeline.TextView
+                android:layout_width="match_parent"
+                android:layout_height="700dp"
+                android:orientation="vertical"
 
+                tools:ignore="MissingConstraints" />
             />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
+        </FrameLayout>
 
 
     </LinearLayout>
