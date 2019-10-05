@@ -53,18 +53,15 @@ public class SearchPage extends AppCompatActivity {
         rv.setAdapter(artifactAdapter);
 
         final ArtifactListViewModel artifactListViewModel = new ViewModelProvider(this).get(ArtifactListViewModel.class);
+        setAdapter(artifactListViewModel.getArtifacts());
 
         final EditText searchBox = findViewById(R.id.search_box);
         searchBox.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
 
             @Override
             public void afterTextChanged(Editable s) {

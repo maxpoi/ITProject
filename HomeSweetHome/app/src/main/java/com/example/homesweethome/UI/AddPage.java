@@ -198,6 +198,7 @@ public class AddPage extends AppCompatActivity {
         title = ((EditText)findViewById(R.id.edit_title)).getText().toString();
         date = ((EditText)findViewById(R.id.edit_date)).getText().toString();
         desc = ((EditText)findViewById(R.id.edit_desc)).getText().toString();
+
         artifact.setTitle(title);
         artifact.setDate(date);
         artifact.setDesc(desc);
