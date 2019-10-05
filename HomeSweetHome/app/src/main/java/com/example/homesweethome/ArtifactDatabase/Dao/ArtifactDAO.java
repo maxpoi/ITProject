@@ -25,4 +25,9 @@ public interface ArtifactDAO {
 
     @Query("SELECT coverImagePath FROM artifacts")
     LiveData<List<String>> getCoverImagesPath();
+
+    @Query("SELECT Artifacts.* " +
+            "FROM Artifacts JOIN ArtifactFts ON (Artifacts.id = ArtifactFts.rowid) " +
+            "WHERE ArtifactFts MATCH :query")
+    LiveData<List<Artifact>> searchAllArtifacts(String query);
 }

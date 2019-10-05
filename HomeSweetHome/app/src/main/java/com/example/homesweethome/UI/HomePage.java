@@ -61,9 +61,6 @@ public class HomePage extends AppCompatActivity
         RecyclerView.LayoutManager lm = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         rv.setLayoutManager(lm);
 
-        DividerItemDecoration divider = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
-//        divider.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.decoder_gap));
-//        divider.
         rv.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
         final ArtifactAdapter artifactAdapter = new ArtifactAdapter(getApplicationContext());
         rv.setAdapter(artifactAdapter);
@@ -98,10 +95,16 @@ public class HomePage extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         int id = menuItem.getItemId();
 
-        if (id == R.id.nav_home) {
-            openHomePage();
-            // destroy current home activity to reduce memory usage
-            // or maybe can just close the navigationView?
+        switch (id) {
+            case R.id.nav_home:
+                openHomePage();
+                break;
+            case R.id.nav_search:
+                openSeachPage();
+                break;
+            default:
+                // do nothing;
+                break;
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -117,6 +120,11 @@ public class HomePage extends AppCompatActivity
     private void openAddPage() {
         Intent intent = new Intent(getApplicationContext(), AddPage.class);
         intent.putExtra("artifactId", artifactListViewModel.getArtifacts().getValue() == null ? 0 : artifactListViewModel.getArtifacts().getValue().size());
+        startActivity(intent);
+    }
+
+    private void openSeachPage() {
+        Intent intent = new Intent(getApplicationContext(), SearchPage.class);
         startActivity(intent);
     }
 }

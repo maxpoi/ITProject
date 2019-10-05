@@ -19,15 +19,18 @@ public class ArtifactListViewModel extends AndroidViewModel {
 
     private LiveData<List<Artifact>> artifacts;
     private LiveData<List<String>> images;
+    private ArtifactRepository artifactRepository;
 
     public ArtifactListViewModel(@NonNull Application application) {
         super(application);
-        ArtifactRepository artifactRepository = ((AccessSingleton)application).getRepository();
+        this.artifactRepository = ((AccessSingleton)application).getRepository();
         artifacts = artifactRepository.getAllArtifacts();
         images = artifactRepository.getHomeImages();
     }
 
     public LiveData<List<Artifact>> getArtifacts() { return artifacts; }
     public LiveData<List<String>> getHomeImages() { return images; }
+
+    public LiveData<List<Artifact>> searchAllArtifacts(String query) { return artifactRepository.searchAllArtifacts(query); }
 
 }

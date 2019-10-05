@@ -7,9 +7,10 @@ import androidx.room.*;
 import com.example.homesweethome.ArtifactDatabase.Dao.ArtifactDAO;
 import com.example.homesweethome.ArtifactDatabase.Dao.ImageDAO;
 import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
+import com.example.homesweethome.ArtifactDatabase.Entities.ArtifactFts;
 import com.example.homesweethome.ArtifactDatabase.Entities.Image;
 
-@Database(entities = {Artifact.class, Image.class}, version = 1)
+@Database(entities = {Artifact.class, ArtifactFts.class, Image.class}, version = 1)
 public abstract class ArtifactDatabase extends RoomDatabase {
     public abstract ArtifactDAO artifactDAO();
     public abstract ImageDAO imageDAO();

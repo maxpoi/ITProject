@@ -53,6 +53,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                 Intent intent;
                 intent = new Intent(context, SingleImagePage.class);
                 intent.putExtra("imagePath", images.get(position).getHighResImagePath());
+                intent.putExtra("artifactId", images.get(position).getArtifactId());
+                intent.putExtra("imageId", images.get(position).getId());
                 context.startActivity(intent);
             }
         });

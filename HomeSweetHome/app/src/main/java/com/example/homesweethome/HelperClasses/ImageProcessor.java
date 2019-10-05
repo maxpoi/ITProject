@@ -4,14 +4,19 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.util.Base64;
+
+import com.example.homesweethome.ArtifactDatabase.Entities.Image;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class ImageProcessor {
     private static final ImageProcessor ourInstance = new ImageProcessor();
@@ -82,7 +87,7 @@ public class ImageProcessor {
     public Bitmap decodeFileToMedium(String file) { return CustomDecodeFile(file, mediumImageWidth, mediumImageHeight); }
     public Bitmap decodeFileToHigh(String file) { return CustomDecodeFile(file, highImageWidth, highImageHeight); }
 
-    public byte[] encodeBitmapByte(Bitmap bitmap) {
+    private static byte[] encodeBitmapByte(Bitmap bitmap) {
         ByteArrayOutputStream arr = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
         return arr.toByteArray();
@@ -141,6 +146,63 @@ public class ImageProcessor {
             return output;
         } catch (IOException e) {
             return null;
+        }
+    }
+
+    public void saveToLocal(List<Image> images) { new saveToLocalAsyncTask(images); }
+
+    private static class saveToLocalAsyncTask extends AsyncTask<Void, Void, Void> {
+        private List<Image> images;
+
+        saveToLocalAsyncTask(List<Image> images) { this.images = images; }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            for (Image image : images) {
+                File low = new File(image.getLowResImagePath());
+                File medium = new File(image.getMediumResImagePath());
+                File high = new File(image.getHighResImagePath());
+
+                writeFile(low, image.getLowImageBitmap());
+                writeFile(medium, image.getMediumImageBitmap());
+                writeFile(high, image.getHighImageBitmap());
+            }
+
+            return null;
+        }
+
+        private void writeFile(File file, Bitmap context) {
+            if (context == null) {
+                return ;
+            }
+
+            checkFileExistence(file);
+            if (!file.isFile()) {
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            FileOutputStream outputStream;
+            byte[] contextByte = encodeBitmapByte(context);
+            try {
+                outputStream = new FileOutputStream(file);
+                outputStream.write(contextByte);
+                outputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        private void checkFileExistence(File file) {
+            int lastFolderIndex = file.getAbsolutePath().lastIndexOf('/');
+            String parentFolder = file.getAbsolutePath().substring(0, lastFolderIndex);
+            File parent = new File(parentFolder);
+            if (!parent.exists()) {
+                parent.mkdirs();
+            }
         }
     }
 

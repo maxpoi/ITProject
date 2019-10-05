@@ -212,7 +212,7 @@ public class AddPage extends AppCompatActivity {
         artifact.setDesc(desc);
         artifactViewModel.addArtifact(artifact);
         for (Image image : imageList) artifactViewModel.addImage(image);
-        new saveToLocalAsyncTask(((AccessSingleton)getApplication()).getImageProcessor(), imageList).execute();
+        ((AccessSingleton)getApplication()).getImageProcessor().saveToLocal(imageList);
     }
 
     private void createImage() {
@@ -260,64 +260,4 @@ public class AddPage extends AppCompatActivity {
 
         return true;
     }
-
-    private static class saveToLocalAsyncTask extends AsyncTask<Void, Void, Void> {
-        private ImageProcessor imageProcessor;
-        private List<Image> images;
-
-        saveToLocalAsyncTask(ImageProcessor imageProcessor, List<Image> images) {
-            this.imageProcessor = imageProcessor;
-            this.images = images;
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            for (Image image : images) {
-                File low = new File(image.getLowResImagePath());
-                File medium = new File(image.getMediumResImagePath());
-                File high = new File(image.getHighResImagePath());
-
-                writeFile(low, image.getLowImageBitmap());
-                writeFile(medium, image.getMediumImageBitmap());
-                writeFile(high, image.getHighImageBitmap());
-            }
-
-            return null;
-        }
-
-        private void writeFile(File file, Bitmap context) {
-            if (context == null) {
-                return ;
-            }
-
-            checkFileExistence(file);
-            if (!file.isFile()) {
-                try {
-                    file.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            FileOutputStream outputStream;
-            byte[] contextByte = imageProcessor.encodeBitmapByte(context);
-            try {
-                outputStream = new FileOutputStream(file);
-                outputStream.write(contextByte);
-                outputStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        private void checkFileExistence(File file) {
-            int lastFolderIndex = file.getAbsolutePath().lastIndexOf('/');
-            String parentFolder = file.getAbsolutePath().substring(0, lastFolderIndex);
-            File parent = new File(parentFolder);
-            if (!parent.exists()) {
-                parent.mkdirs();
-            }
-        }
-    }
-
 }
