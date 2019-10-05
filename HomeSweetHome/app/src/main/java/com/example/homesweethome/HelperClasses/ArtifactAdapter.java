@@ -14,15 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
-import com.example.homesweethome.ArtifactDatabase.Entities.Image;
 import com.example.homesweethome.R;
 import com.example.homesweethome.UI.SingleArtifactPage;
-import com.example.homesweethome.UI.SingleImagePage;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHolder> {
@@ -81,8 +76,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
         String imagePath = artifacts.get(position).getCoverImagePath();
         if(!(new File(imagePath)).exists()) { return ;}
 
-        byte[] image = ImageProcessor.getInstance().readFileByte(imagePath);
-        Bitmap bitmap = ImageProcessor.getInstance().restoreImage(image);
+        Bitmap bitmap = ((HomeSweetHome)context).getImageProcessor().decodeFileToLow(imagePath);
         Glide.with(this.context).asBitmap().load(bitmap).into(img);
     }
 

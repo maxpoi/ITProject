@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.homesweethome.ArtifactDatabase.Entities.Image;
-import com.example.homesweethome.HelperClasses.ImageProcessor;
+import com.example.homesweethome.HelperClasses.HomeSweetHome;
 import com.example.homesweethome.R;
 import com.example.homesweethome.ViewModels.ArtifactViewModel;
 
@@ -38,8 +38,8 @@ public class SingleImagePage extends AppCompatActivity {
                 Image image = images.get(imageId);
                 if (image.getHighImageBitmap() == null) {
                     String imagePath = image.getHighResImagePath();
-                    byte[] imageByte = ImageProcessor.getInstance().readFileByte(imagePath);
-                    Glide.with(getApplicationContext()).asBitmap().load(ImageProcessor.getInstance().restoreImage(imageByte)).into(img);
+                    byte[] imageByte = ((HomeSweetHome)getApplication()).getImageProcessor().readFileByte(imagePath);
+                    Glide.with(getApplicationContext()).asBitmap().load(((HomeSweetHome) getApplication()).getImageProcessor().restoreImage(imageByte)).into(img);
                 } else {
                     Glide.with(getApplicationContext()).asBitmap().load(image.getHighImageBitmap()).into(img);
                 }

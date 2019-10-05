@@ -19,79 +19,34 @@ import java.io.InputStream;
 import java.util.List;
 
 public class ImageProcessor {
-    private static final ImageProcessor ourInstance = new ImageProcessor();
+    private static ImageProcessor ourInstance;
 
-    public static final int lowImageWidth = 100;
-    public static final int lowImageHeight = 100;
-    public static final int mediumImageWidth = 500;
-    public static final int mediumImageHeight = 500;
-    public static final int highImageWidth = 2560;
-    public static final int highImageHeight = 1440;
+    private static final int lowImageWidth = 100;
+    private static final int lowImageHeight = 100;
+    private static final int mediumImageWidth = 500;
+    private static final int mediumImageHeight = 500;
+    private static final int highImageWidth = 2560;
+    private static final int highImageHeight = 1440;
 
+    public static String PARENT_FOLDER_PATH;
+    public static String LOW_RES_IMAGE_FOLDER_NAME = "/low_image/";
+    public static String MEDIUM_RES_IMAGE_FOLDER_NAME = "/medium_image/";
+    public static String HIGH_RES_IMAGE_FOLDER_NAME = "/high_image/";
+    public static String IMAGE_TYPE = ".jpeg";
 
-    public static ImageProcessor getInstance() {
+    public static ImageProcessor getInstance(String path) {
+        if (ourInstance == null) {
+            PARENT_FOLDER_PATH = path;
+            ourInstance = new ImageProcessor();
+        }
         return ourInstance;
     }
 
     private ImageProcessor() {}
 
-    // https://developer.android.com/topic/performance/graphics/load-bitmap
-    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) >= reqHeight
-                    && (halfWidth / inSampleSize) >= reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize;
-    }
-
-    // https://developer.android.com/topic/performance/graphics/load-bitmap
-    private static Bitmap CustomDecodeFile(String file, int reqWidth, int reqHeight) {
-
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(file, options);
-
-        // need to somehow keep track of this information.
-        int imageHeight = options.outHeight;
-        int imageWidth = options.outWidth;
-        String imageType = options.outMimeType;
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        Bitmap bitmap = null;
-        while(bitmap == null)
-            bitmap = BitmapFactory.decodeFile(file, options);
-
-        return bitmap;
-    }
-
     public Bitmap decodeFileToLow(String file) { return CustomDecodeFile(file, lowImageWidth, lowImageHeight); }
     public Bitmap decodeFileToMedium(String file) { return CustomDecodeFile(file, mediumImageWidth, mediumImageHeight); }
     public Bitmap decodeFileToHigh(String file) { return CustomDecodeFile(file, highImageWidth, highImageHeight); }
-
-    private static byte[] encodeBitmapByte(Bitmap bitmap) {
-        ByteArrayOutputStream arr = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
-        return arr.toByteArray();
-    }
 
     public String encodeBitmapString(Bitmap bitmap) { return Base64.encodeToString(encodeBitmapByte(bitmap), Base64.DEFAULT); }
 
@@ -149,7 +104,7 @@ public class ImageProcessor {
         }
     }
 
-    public void saveToLocal(List<Image> images) { new saveToLocalAsyncTask(images); }
+    public void saveToLocal(List<Image> images) { new saveToLocalAsyncTask(images).execute(); }
 
     private static class saveToLocalAsyncTask extends AsyncTask<Void, Void, Void> {
         private List<Image> images;
@@ -204,6 +159,60 @@ public class ImageProcessor {
                 parent.mkdirs();
             }
         }
+    }
+
+    // https://developer.android.com/topic/performance/graphics/load-bitmap
+    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+    // https://developer.android.com/topic/performance/graphics/load-bitmap
+    private static Bitmap CustomDecodeFile(String file, int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(file, options);
+
+        // need to somehow keep track of this information.
+        int imageHeight = options.outHeight;
+        int imageWidth = options.outWidth;
+        String imageType = options.outMimeType;
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        Bitmap bitmap = null;
+        while(bitmap == null)
+            bitmap = BitmapFactory.decodeFile(file, options);
+
+        return bitmap;
+    }
+
+    private static byte[] encodeBitmapByte(Bitmap bitmap) {
+        ByteArrayOutputStream arr = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, arr);
+        return arr.toByteArray();
     }
 
 //    // test functions only

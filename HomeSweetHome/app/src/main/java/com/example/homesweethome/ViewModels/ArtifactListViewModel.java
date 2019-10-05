@@ -5,14 +5,11 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 
 import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
-import com.example.homesweethome.ArtifactDatabase.Entities.Image;
 import com.example.homesweethome.ArtifactRepository;
-import com.example.homesweethome.HelperClasses.AccessSingleton;
+import com.example.homesweethome.HelperClasses.HomeSweetHome;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ArtifactListViewModel extends AndroidViewModel {
@@ -23,7 +20,7 @@ public class ArtifactListViewModel extends AndroidViewModel {
 
     public ArtifactListViewModel(@NonNull Application application) {
         super(application);
-        this.artifactRepository = ((AccessSingleton)application).getRepository();
+        this.artifactRepository = ((HomeSweetHome)application).getRepository();
         artifacts = artifactRepository.getAllArtifacts();
         images = artifactRepository.getHomeImages();
     }

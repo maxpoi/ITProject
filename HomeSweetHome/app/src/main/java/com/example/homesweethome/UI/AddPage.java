@@ -1,15 +1,10 @@
 package com.example.homesweethome.UI;
 
 import android.Manifest;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.MenuItem;
@@ -31,22 +26,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
 import com.example.homesweethome.ArtifactDatabase.Entities.Image;
-import com.example.homesweethome.HelperClasses.AccessSingleton;
+import com.example.homesweethome.HelperClasses.HomeSweetHome;
 import com.example.homesweethome.HelperClasses.ImageAdapter;
 import com.example.homesweethome.HelperClasses.ImageProcessor;
 import com.example.homesweethome.R;
 import com.example.homesweethome.ViewModels.ArtifactViewModel;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddPage extends AppCompatActivity {
 
     private int REQUEST_LOAD_CODE = 1;
-    private int REQUEST_PERMISSIONS = 2;
     String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     private Artifact artifact;
@@ -135,7 +126,7 @@ public class AddPage extends AppCompatActivity {
             if (checkPermissions()) {
                 createImage();
             } else {
-                ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS);
+                ActivityCompat.requestPermissions(this, permissions, 0);
             }
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Fail to upload, try again", Toast.LENGTH_SHORT);
@@ -212,11 +203,11 @@ public class AddPage extends AppCompatActivity {
         artifact.setDesc(desc);
         artifactViewModel.addArtifact(artifact);
         for (Image image : imageList) artifactViewModel.addImage(image);
-        ((AccessSingleton)getApplication()).getImageProcessor().saveToLocal(imageList);
+        ((HomeSweetHome)getApplication()).getImageProcessor().saveToLocal(imageList);
     }
 
     private void createImage() {
-        String folderPath = getFilesDir().getAbsolutePath() + "/" + artifact.getId();
+        String folderPath = ImageProcessor.PARENT_FOLDER_PATH + artifact.getId();
 
         int imageId =  imageList.size();
         Image image = new Image(imageId);
@@ -235,13 +226,13 @@ public class AddPage extends AppCompatActivity {
         cursor.close();
         // Set the Image in ImageView after decoding the String
 
-        image.setLowResImagePath(folderPath + "/low_image/" + imageId + ".jpeg");
-        image.setMediumResImagePath(folderPath + "/medium_image/" + imageId + ".jpeg");
-        image.setHighResImagePath(folderPath + "/high_image/" + imageId + ".jpeg");
+        image.setLowResImagePath(folderPath + ImageProcessor.LOW_RES_IMAGE_FOLDER_NAME + imageId + ImageProcessor.IMAGE_TYPE);
+        image.setMediumResImagePath(folderPath + ImageProcessor.MEDIUM_RES_IMAGE_FOLDER_NAME + imageId + ImageProcessor.IMAGE_TYPE);
+        image.setHighResImagePath(folderPath + ImageProcessor.HIGH_RES_IMAGE_FOLDER_NAME + imageId + ImageProcessor.IMAGE_TYPE);
 
-        image.setLowImageBitmap(((AccessSingleton)getApplication()).getImageProcessor().decodeFileToLow(filePath));
-        image.setMediumImageBitmap(((AccessSingleton)getApplication()).getImageProcessor().decodeFileToMedium(filePath));
-        image.setHighImageBitmap(((AccessSingleton)getApplication()).getImageProcessor().decodeFileToHigh(filePath));
+        image.setLowImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLow(filePath));
+        image.setMediumImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToMedium(filePath));
+        image.setHighImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToHigh(filePath));
 
         imageList.add(image);
         imageAdapter.setImages(imageList);
