@@ -1,43 +1,29 @@
 package com.example.homesweethome.UI;
 
-import android.app.Application;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
-import com.example.homesweethome.ArtifactDatabase.Entities.Image;
-import com.example.homesweethome.ArtifactRepository;
 import com.example.homesweethome.HelperClasses.ArtifactAdapter;
-import com.example.homesweethome.HelperClasses.ImageAdapter;
+import com.example.homesweethome.HelperClasses.DataTag;
 import com.example.homesweethome.R;
 import com.example.homesweethome.ViewModels.ArtifactListViewModel;
-import com.example.homesweethome.ViewModels.ArtifactViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomePage extends AppCompatActivity
@@ -100,7 +86,7 @@ public class HomePage extends AppCompatActivity
                 openHomePage();
                 break;
             case R.id.nav_search:
-                openSeachPage();
+                openSearchPage();
                 break;
             default:
                 // do nothing;
@@ -119,11 +105,12 @@ public class HomePage extends AppCompatActivity
 
     private void openAddPage() {
         Intent intent = new Intent(getApplicationContext(), AddPage.class);
-        intent.putExtra("artifactId", artifactListViewModel.getArtifacts().getValue() == null ? 0 : artifactListViewModel.getArtifacts().getValue().size());
+        intent.putExtra(DataTag.TAG.toString(), DataTag.ADD.toString());
+        intent.putExtra(DataTag.ARTIFACT_ID.toString(), artifactListViewModel.getArtifacts().getValue() == null ? 0 : artifactListViewModel.getArtifacts().getValue().size());
         startActivity(intent);
     }
 
-    private void openSeachPage() {
+    private void openSearchPage() {
         Intent intent = new Intent(getApplicationContext(), SearchPage.class);
         startActivity(intent);
     }

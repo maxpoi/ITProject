@@ -36,9 +36,9 @@ public class ArtifactRepository {
 
     public LiveData<List<Artifact>> getAllArtifacts() { return artifacts; }
     public LiveData<Artifact> getArtifact(final int artifactId) { return artifactDatabase.artifactDAO().getArtifact(artifactId); }
+    public LiveData<List<String>> getHomeImages() { return  artifactDatabase.artifactDAO().getCoverImagesPath(); }
 
     public LiveData<List<Image>> getArtifactImages(final int artifactId) { return artifactDatabase.imageDAO().getImages(artifactId); }
-    public LiveData<List<String>> getHomeImages() { return  artifactDatabase.artifactDAO().getCoverImagesPath(); }
 
     public void addArtifact (Artifact artifact) { new insertArtifactAsyncTask(artifactDatabase).execute(artifact); }
     public void addImage(Image image) { new insertImageAsyncTask(artifactDatabase).execute(image); }

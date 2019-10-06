@@ -39,12 +39,14 @@ public class Artifact {
     }
 
     @Ignore
-    public Artifact(String title, String date, String desc, String video, String audio) {
-        this.title = title;
-        this.date = date;
-        this.desc = desc;
-        this.video = video;
-        this.audio = audio;
+    public Artifact(Artifact artifact) {
+        this.id = artifact.getId();
+        this.video = artifact.getVideo();
+        this.audio = artifact.getAudio();
+        this.title = artifact.getTitle();
+        this.date = artifact.getTitle();
+        this.desc = artifact.getDesc();
+        this.coverImagePath = artifact.getCoverImagePath();
     }
 
     @Ignore

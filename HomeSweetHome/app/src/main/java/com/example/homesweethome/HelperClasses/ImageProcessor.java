@@ -1,12 +1,11 @@
 package com.example.homesweethome.HelperClasses;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Base64;
 
+import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
 import com.example.homesweethome.ArtifactDatabase.Entities.Image;
 
 import java.io.ByteArrayInputStream;
@@ -16,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.channels.FileChannel;
 import java.util.List;
 
 public class ImageProcessor {
@@ -33,6 +33,9 @@ public class ImageProcessor {
     public static String MEDIUM_RES_IMAGE_FOLDER_NAME = "/medium_image/";
     public static String HIGH_RES_IMAGE_FOLDER_NAME = "/high_image/";
     public static String IMAGE_TYPE = ".jpeg";
+
+    public static String VIDEO_FOLDER_NAME = "/video/";
+    public static String VIDEO_NAME = "video.mp4";
 
     public static ImageProcessor getInstance(String path) {
         if (ourInstance == null) {
@@ -62,12 +65,13 @@ public class ImageProcessor {
         return BitmapFactory.decodeStream(inputStream);
     }
 
-    public void saveImageListToLocal(List<Image> images) { new saveToLocalAsyncTask(images).execute(); }
+    public void saveImageListToLocal(List<Image> images) { new saveImageListToLocalAsyncTask(images).execute(); }
+    public void saveVideoToLocal(int artifactId, String videoPath) { new saveVideoToLocalAsyncTask(artifactId, videoPath).execute(); }
 
-    private static class saveToLocalAsyncTask extends AsyncTask<Void, Void, Void> {
+    private static class saveImageListToLocalAsyncTask extends AsyncTask<Void, Void, Void> {
         private List<Image> images;
 
-        saveToLocalAsyncTask(List<Image> images) { this.images = images; }
+        saveImageListToLocalAsyncTask(List<Image> images) { this.images = images; }
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -89,7 +93,7 @@ public class ImageProcessor {
                 return ;
             }
 
-            checkFileExistence(file);
+            checkFolderExistence(file);
             if (!file.isFile()) {
                 try {
                     file.createNewFile();
@@ -101,7 +105,7 @@ public class ImageProcessor {
             FileOutputStream outputStream;
             byte[] contextByte = encodeBitmapByte(context);
             try {
-                outputStream = new FileOutputStream(file);
+                outputStream = new FileOutputStream(file, false); // set append to false thus it will overwrite the file!!!!
                 outputStream.write(contextByte);
                 outputStream.close();
             } catch (Exception e) {
@@ -109,13 +113,63 @@ public class ImageProcessor {
             }
         }
 
-        private void checkFileExistence(File file) {
+        private void checkFolderExistence(File file) {
             int lastFolderIndex = file.getAbsolutePath().lastIndexOf('/');
             String parentFolder = file.getAbsolutePath().substring(0, lastFolderIndex);
             File parent = new File(parentFolder);
             if (!parent.exists()) {
                 parent.mkdirs();
             }
+        }
+    }
+
+    private static class saveVideoToLocalAsyncTask extends AsyncTask<Void, Void, Void> {
+        private int artifactId;
+        private String videoPath;
+
+        saveVideoToLocalAsyncTask(int artifactId, String videoPath) {
+            this.artifactId = artifactId;
+            this.videoPath = videoPath;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            if (videoPath == null) {
+                return null;
+            }
+
+            File sourceVideo = new File(videoPath);
+
+            File destinationFolder = new File(PARENT_FOLDER_PATH + artifactId + VIDEO_FOLDER_NAME);
+            destinationFolder.mkdirs();
+
+            File destinationVideo = new File(PARENT_FOLDER_PATH + artifactId + VIDEO_FOLDER_NAME + VIDEO_NAME);
+            try {
+                if (destinationVideo.createNewFile()) {
+                    // do nothing
+                } else {
+                    // delete the old file
+                    destinationVideo.delete();
+                    destinationVideo.createNewFile();
+                }
+                copyFile(sourceVideo, destinationVideo);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        private void copyFile(File sourceFile, File destFile) throws IOException {
+            if (!destFile.exists()) { return ; }
+
+            FileChannel source = new FileInputStream(sourceFile).getChannel();
+            FileChannel destination = new FileOutputStream(destFile).getChannel();
+            if (source != null) {
+                destination.transferFrom(source, 0, source.size());
+                source.close();
+            }
+
+            destination.close();
         }
     }
 

@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/upload_page_image"
+            android:text="@string/edit_page_image"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -106,13 +106,13 @@
             android:layout_height="wrap_content" >
 
             <VideoView
-                android:id="@+id/add_page_video"
+                android:id="@+id/edit_page_video"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:visibility="invisible"/>
 
             <TextView
-                android:id="@+id/add_page_video_background"
+                android:id="@+id/edit_video_background"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:background="@drawable/input_frame"/>

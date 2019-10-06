@@ -8,12 +8,15 @@
 <!--    <include layout="@layout/addPage"/>-->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp">
 
             <TextView
                 android:id="@+id/title"
@@ -33,13 +36,13 @@
             <include
                 layout="@layout/home_page"
                 android:layout_height="300dp"
-                android:layout_width="match_parent"/>
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"/>
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
                 android:scrollbars="vertical">
 
                 <TextView
@@ -49,6 +52,12 @@
                     android:text="@string/upload_page_text_description"
                     android:textSize="20sp" />
             </androidx.core.widget.NestedScrollView>
+            
+            <VideoView
+                android:id="@+id/single_artifact_video"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:visibility="invisible" />
 
         </LinearLayout>
     </ScrollView>

@@ -59,7 +59,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
             public void onClick(View view) {
                 Intent intent;
                 intent = new Intent(context, SingleArtifactPage.class);
-                intent.putExtra("artifactId", artifacts.get(position).getId());
+                intent.putExtra(DataTag.ARTIFACT_ID.toString(), artifacts.get(position).getId());
                 context.startActivity(intent);
             }
         });

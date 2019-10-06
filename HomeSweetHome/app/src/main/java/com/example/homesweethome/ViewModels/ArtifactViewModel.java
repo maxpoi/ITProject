@@ -20,7 +20,6 @@ public class ArtifactViewModel extends AndroidViewModel {
     private LiveData<Artifact> artifact;
     private LiveData<List<Image>> images;
     private ArtifactRepository artifactRepository;
-//    private List<Image> tempImages;
 
     // use factory to create this view model as Room only call the no parameter constructor.
     public static class ArtifactViewModelFactory extends ViewModelProvider.NewInstanceFactory {

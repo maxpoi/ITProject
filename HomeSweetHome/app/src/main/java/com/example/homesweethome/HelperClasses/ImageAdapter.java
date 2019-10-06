@@ -50,9 +50,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             public void onClick(View view) {
                 Intent intent;
                 intent = new Intent(context, SingleImagePage.class);
-                intent.putExtra("imagePath", images.get(position).getHighResImagePath());
-                intent.putExtra("artifactId", images.get(position).getArtifactId());
-                intent.putExtra("imageId", images.get(position).getId());
+                intent.putExtra(DataTag.IMAGE_PATH.toString(), images.get(position).getOriginalPath());
+                intent.putExtra(DataTag.ARTIFACT_ID.toString(), images.get(position).getArtifactId());
+                intent.putExtra(DataTag.IMAGE_ID.toString(), images.get(position).getId());
                 context.startActivity(intent);
             }
         });
@@ -75,4 +75,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         this.images = images;
         notifyDataSetChanged();
     }
+
+    public List<Image> getImages() { return images; }
 }

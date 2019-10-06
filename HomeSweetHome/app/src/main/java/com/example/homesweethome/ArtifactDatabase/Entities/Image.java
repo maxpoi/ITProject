@@ -34,6 +34,9 @@ public class Image {
     private Bitmap highImageBitmap;
 
     @Ignore
+    private String originalPath;
+
+    @Ignore
     public Image(String lowResImagePath, String mediumResImagePath, String highResImagePath) {
         this.lowResImagePath = lowResImagePath;
         this.mediumResImagePath = mediumResImagePath;
@@ -80,4 +83,7 @@ public class Image {
     public void setLowImageBitmap(Bitmap lowImageBitmap) { this.lowImageBitmap = lowImageBitmap; }
     public void setMediumImageBitmap(Bitmap mediumImageBitmap) { this.mediumImageBitmap = mediumImageBitmap; }
     public void setHighImageBitmap(Bitmap highImageBitmap) { this.highImageBitmap = highImageBitmap; }
+
+    public void setOriginalPath(String path) { originalPath = path; }
+    public String getOriginalPath() { return  originalPath; }
 }

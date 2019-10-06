@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
 import com.example.homesweethome.ArtifactDatabase.Entities.Image;
+import com.example.homesweethome.HelperClasses.DataTag;
 import com.example.homesweethome.HelperClasses.ImageAdapter;
 import com.example.homesweethome.R;
 import com.example.homesweethome.ViewModels.ArtifactViewModel;
@@ -28,16 +32,19 @@ public class SingleArtifactPage extends AppCompatActivity{
     private boolean hasAudio = true;
 
     private ArtifactViewModel artifactViewModel;
-    private Artifact artifact;
+    private int artifactId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_artifact_page);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("AddPage a new artifact");
-        getSupportActionBar().setSubtitle("Change/delete this subtitle if needed");
+        final ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.setDisplayHomeAsUpEnabled(true);
+            bar.setTitle("Single artifact");
+            bar.setSubtitle("Have a good day");
+        }
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.gallery);
         rv.setHasFixedSize(true);
@@ -52,7 +59,7 @@ public class SingleArtifactPage extends AppCompatActivity{
         rv.setAdapter(ia);
 
         Intent intent = getIntent();
-        final int artifactId = intent.getIntExtra("artifactId", 0);
+        artifactId = intent.getIntExtra(DataTag.ARTIFACT_ID.toString(), 0);
 
         ArtifactViewModel.ArtifactViewModelFactory artifactViewModelFactory = new ArtifactViewModel.ArtifactViewModelFactory(getApplication(), artifactId);
         artifactViewModel = new ViewModelProvider(this, artifactViewModelFactory).get(ArtifactViewModel.class);
@@ -66,6 +73,8 @@ public class SingleArtifactPage extends AppCompatActivity{
         final TextView title_content = findViewById(R.id.title);
         final TextView date_content = findViewById(R.id.date);
         final TextView desc_content = findViewById(R.id.description);
+        final VideoView videoView = findViewById(R.id.single_artifact_video);
+        videoView.setMediaController(new MediaController(this));
 
         artifactViewModel.getArtifact().observe(this, new Observer<Artifact>() {
             @Override
@@ -73,6 +82,15 @@ public class SingleArtifactPage extends AppCompatActivity{
                 title_content.setText(artifact.getTitle());
                 date_content.setText(artifact.getDate());
                 desc_content.setText(artifact.getDesc());
+                if (bar != null) {
+                    bar.setTitle(artifact.getTitle());
+                    bar.setSubtitle(artifact.getDate());
+                }
+
+                if (artifact.getVideo() != null) {
+                    videoView.setVideoPath(artifact.getVideo());
+                    videoView.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -81,7 +99,6 @@ public class SingleArtifactPage extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 openEditPage();
-                finish();
             }
         });
 
@@ -106,6 +123,8 @@ public class SingleArtifactPage extends AppCompatActivity{
 
     public void openEditPage() {
         Intent i = new Intent(getApplicationContext(), AddPage.class);
+        i.putExtra(DataTag.TAG.toString(), DataTag.EDIT.toString());
+        i.putExtra(DataTag.ARTIFACT_ID.toString(), artifactId);
         startActivity(i);
     }
 }
