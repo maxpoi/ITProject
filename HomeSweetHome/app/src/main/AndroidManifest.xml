@@ -34,7 +34,8 @@
         <activity android:name=".UI.register.RetrievePasswordActivity" />
         <activity android:name=".UI.timeline.TimelineActivity" />
         <activity android:name=".UI.SearchPage" />
-        <activity android:name=".UI.EditPage" />
+        <activity android:name=".UI.PopUpText"
+            android:theme="@style/Theme_Dialog" />
     </application>
 
 </manifest>

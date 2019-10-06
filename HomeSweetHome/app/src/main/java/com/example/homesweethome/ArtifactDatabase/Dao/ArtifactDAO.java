@@ -20,6 +20,9 @@ public interface ArtifactDAO {
     @Query("SELECT * FROM Artifacts WHERE id = :id")
     LiveData<Artifact> getArtifact(int id);
 
+    @Query("SELECT * FROM Artifacts WHERE id = :id")
+    Artifact getStaticArtifact(int id);
+
     @Query("SELECT * FROM artifacts")
     LiveData<List<Artifact>> getAllArtifacts();
 

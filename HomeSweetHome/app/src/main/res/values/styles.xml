@@ -47,6 +47,16 @@
         <item name="android:textStyle">italic</item>
     </style>
 
+    <style name="Theme_Dialog" parent="@style/Theme.AppCompat.Dialog">
+        ...
+        <item name="android:windowBackground">@android:drawable/dialog_holo_light_frame</item>
+        <item name="android:windowMinWidthMajor">97%</item>
+        <item name="android:windowMinWidthMinor">97%</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">#f5f0e6</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
 
 </resources>

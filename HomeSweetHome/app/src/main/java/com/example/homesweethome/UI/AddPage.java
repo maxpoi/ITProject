@@ -79,27 +79,16 @@ public class AddPage extends AppCompatActivity {
         Intent intent = getIntent();
         tag = intent.getStringExtra(DataTag.TAG.toString());
         artifact = new Artifact(intent.getIntExtra(DataTag.ARTIFACT_ID.toString(), 0));
+        newImages = new ArrayList<>();
 
         ArtifactViewModel.ArtifactViewModelFactory artifactViewModelFactory = new ArtifactViewModel.ArtifactViewModelFactory(getApplication(), artifact.getId());
         artifactViewModel = new ViewModelProvider(this, artifactViewModelFactory).get(ArtifactViewModel.class);
-
-        if (tag.equals(DataTag.ADD.toString())) {
-            artifactViewModel.getArtifactImages().observe(this, new Observer<List<Image>>() {
-                @Override
-                public void onChanged(List<Image> images) {
-                    imageAdapter.setImages(images);
-                }
-            });
-        }
-
-        if (tag.equals(DataTag.EDIT.toString())) {
-            artifactViewModel.getArtifactImages().observe(this, new Observer<List<Image>>() {
-                @Override
-                public void onChanged(List<Image> images) {
-                    imageAdapter.setImages(images);
-                }
-            });
-        }
+        artifactViewModel.getArtifactImages().observe(this, new Observer<List<Image>>() {
+            @Override
+            public void onChanged(List<Image> images) {
+                imageAdapter.setImages(images);
+            }
+        });
 
         // perform upload action
         Button uploadImageButton, uploadVideoButton;
@@ -126,8 +115,28 @@ public class AddPage extends AppCompatActivity {
             }
         });
 
+        final EditText title = findViewById(R.id.edit_title);
+        final EditText date = findViewById(R.id.edit_date);
+        final EditText desc = findViewById(R.id.edit_desc);
         videoView = findViewById(R.id.add_page_video);
         videoView.setMediaController(new MediaController(this));
+
+        artifactViewModel.getArtifact().observe(this, new Observer<Artifact>() {
+            @Override
+            public void onChanged(Artifact artifact) {
+                if (artifact != null) {
+                    title.setText(artifact.getTitle());
+                    date.setText(artifact.getDate());
+                    desc.setText(artifact.getDesc());
+
+                    if (artifact.getVideo() != null) {
+                        videoView.setVisibility(View.VISIBLE);
+                        videoView.setVideoPath(artifact.getVideo());
+                        findViewById(R.id.add_page_video_background).setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+        });
 
         Button saveButton = findViewById(R.id.save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -158,7 +167,7 @@ public class AddPage extends AppCompatActivity {
                 if (checkPermissions()) {
                     uploadVideo();
                 } else {
-                    ActivityCompat.requestPermissions(this, permissions, 0);
+                    ActivityCompat.requestPermissions(this, permissions, REQUEST_LOAD_VIDEO_CODE);
                 }
             } else{
                 Toast toast = Toast.makeText(getApplicationContext(), "Fail to upload, try again", Toast.LENGTH_SHORT);
@@ -210,7 +219,7 @@ public class AddPage extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                openMain();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -247,6 +256,7 @@ public class AddPage extends AppCompatActivity {
         artifact.setDate(date);
         artifact.setDesc(desc);
         artifactViewModel.addArtifact(artifact);
+
         for (Image image : newImages) artifactViewModel.addImage(image);
         ((HomeSweetHome)getApplication()).getImageProcessor().saveImageListToLocal(newImages);
         ((HomeSweetHome)getApplication()).getImageProcessor().saveVideoToLocal(artifact.getId(), artifact.getVideo());
@@ -255,7 +265,7 @@ public class AddPage extends AppCompatActivity {
     private void createImage() {
         final String folderPath = ImageProcessor.PARENT_FOLDER_PATH + artifact.getId();
 
-        int imageId =  newImages.size();
+        int imageId=  artifactViewModel.getImagesLen() + newImages.size();
         final Image image = new Image(imageId);
         image.setArtifactId(artifact.getId());
 
@@ -287,36 +297,7 @@ public class AddPage extends AppCompatActivity {
         }
 
         newImages.add(image);
-
-        if (tag.equals(DataTag.EDIT.toString())) {
-            System.out.println(newImages.get(newImages.size() - 1).getId());
-            artifactViewModel.getArtifactImages().observe(this, new Observer<List<Image>>() {
-                @Override
-                public void onChanged(List<Image> images) {
-                    // update image with correct data
-                    // update id
-                    int imageId = newImages.size() + images.size() - 1;
-                    Image image = newImages.get(newImages.size() - 1);
-                    image.setId(imageId);
-                    System.out.println(newImages.get(newImages.size() - 1).getId());
-                    // update path
-                    image.setLowResImagePath(folderPath + ImageProcessor.LOW_RES_IMAGE_FOLDER_NAME + imageId + ImageProcessor.IMAGE_TYPE);
-                    image.setMediumResImagePath(folderPath + ImageProcessor.MEDIUM_RES_IMAGE_FOLDER_NAME + imageId + ImageProcessor.IMAGE_TYPE);
-                    image.setHighResImagePath(folderPath + ImageProcessor.HIGH_RES_IMAGE_FOLDER_NAME + imageId + ImageProcessor.IMAGE_TYPE);
-
-
-
-                    List<Image> allImages = new ArrayList<>();
-                    allImages.addAll(newImages);
-                    allImages.addAll(images);
-                    imageAdapter.setImages(allImages);
-                }
-            });
-            System.out.println(newImages.get(newImages.size() - 1).getId());
-        } else {
-            imageAdapter.setImages(newImages);
-        }
-
+        imageAdapter.addImage(image);
     }
 
     private void uploadVideo() {
@@ -344,7 +325,7 @@ public class AddPage extends AppCompatActivity {
     }
 
     private boolean checkField() {
-        if (newImages.isEmpty()) {
+        if (newImages.size() + artifactViewModel.getImagesLen() == 0) {
             Toast toast = Toast.makeText(getApplicationContext(), "Must upload at least 1 photo!", Toast.LENGTH_SHORT);
             toast.show();
             return false;

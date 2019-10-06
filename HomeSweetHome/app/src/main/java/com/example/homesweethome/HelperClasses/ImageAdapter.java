@@ -76,5 +76,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
+    public void addImage(Image image) {
+        this.images.add(image);
+        notifyItemInserted(images.size()-1);
+    }
+
     public List<Image> getImages() { return images; }
 }

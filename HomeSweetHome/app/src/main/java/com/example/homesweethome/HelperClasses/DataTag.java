@@ -31,6 +31,20 @@ public enum DataTag {
             return "artifact id";
         }
     },
+    ARTIFACT_TITLE {
+        @NonNull
+        @Override
+        public String toString() {
+            return "title";
+        }
+    },
+    ARTIFACT_DATE {
+        @NonNull
+        @Override
+        public String toString() {
+            return "date";
+        }
+    },
     IMAGE_ID {
         @NonNull
         @Override

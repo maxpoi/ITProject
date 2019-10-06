@@ -1,5 +1,6 @@
 package com.example.homesweethome.UI;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -52,7 +53,6 @@ public class SingleImagePage extends AppCompatActivity {
                 }
             });
         }
-
-
     }
+
 }

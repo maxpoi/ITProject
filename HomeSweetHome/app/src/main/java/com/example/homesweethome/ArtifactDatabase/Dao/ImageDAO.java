@@ -21,4 +21,7 @@ public interface ImageDAO {
 
     @Query("SELECT * FROM Images WHERE artifactId = :artifactId")
     LiveData<List<Image>> getImages(int artifactId);
+
+    @Query("SELECT * FROM Images WHERE artifactID = :artifactId")
+    List<Image> getStaticImages(int artifactId);
 }

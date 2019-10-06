@@ -11,6 +11,7 @@ import android.widget.VideoView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -70,6 +71,7 @@ public class SingleArtifactPage extends AppCompatActivity{
             }
         });
 
+        final CardView text_card = findViewById(R.id.text_card);
         final TextView title_content = findViewById(R.id.title);
         final TextView date_content = findViewById(R.id.date);
         final TextView desc_content = findViewById(R.id.description);
@@ -79,18 +81,29 @@ public class SingleArtifactPage extends AppCompatActivity{
         artifactViewModel.getArtifact().observe(this, new Observer<Artifact>() {
             @Override
             public void onChanged(Artifact artifact) {
-                title_content.setText(artifact.getTitle());
-                date_content.setText(artifact.getDate());
-                desc_content.setText(artifact.getDesc());
                 if (bar != null) {
                     bar.setTitle(artifact.getTitle());
                     bar.setSubtitle(artifact.getDate());
                 }
 
+                title_content.setText(artifact.getTitle());
+                date_content.setText(artifact.getDate());
+                desc_content.setText(artifact.getDesc());
+
                 if (artifact.getVideo() != null) {
                     videoView.setVideoPath(artifact.getVideo());
                     videoView.setVisibility(View.VISIBLE);
                 }
+
+                if(artifact.getDesc() != null)
+                    text_card.setVisibility(View.VISIBLE);
+            }
+        });
+
+        text_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPopUpText();
             }
         });
 
@@ -126,5 +139,11 @@ public class SingleArtifactPage extends AppCompatActivity{
         i.putExtra(DataTag.TAG.toString(), DataTag.EDIT.toString());
         i.putExtra(DataTag.ARTIFACT_ID.toString(), artifactId);
         startActivity(i);
+    }
+
+    private void openPopUpText() {
+        Intent intent = new Intent(getApplicationContext(), PopUpText.class);
+        intent.putExtra(DataTag.ARTIFACT_ID.toString(), artifactId);
+        startActivity(intent);
     }
 }
