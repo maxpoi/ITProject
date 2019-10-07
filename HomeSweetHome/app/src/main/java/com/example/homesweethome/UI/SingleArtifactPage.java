@@ -1,11 +1,13 @@
 package com.example.homesweethome.UI;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -29,7 +31,6 @@ import java.util.List;
 
 public class SingleArtifactPage extends AppCompatActivity{
 
-    private ImageView img;
     private boolean hasAudio = true;
 
     private ArtifactViewModel artifactViewModel;
@@ -58,6 +59,7 @@ public class SingleArtifactPage extends AppCompatActivity{
 
         final ImageAdapter ia = new ImageAdapter(getApplicationContext());
         rv.setAdapter(ia);
+        rv.setBackgroundColor(Color.BLACK);
 
         Intent intent = getIntent();
         artifactId = intent.getIntExtra(DataTag.ARTIFACT_ID.toString(), 0);
@@ -76,7 +78,7 @@ public class SingleArtifactPage extends AppCompatActivity{
         final TextView date_content = findViewById(R.id.date);
         final TextView desc_content = findViewById(R.id.description);
         final VideoView videoView = findViewById(R.id.single_artifact_video);
-        videoView.setMediaController(new MediaController(this));
+        final RelativeLayout videoFrame = findViewById(R.id.video);
 
         artifactViewModel.getArtifact().observe(this, new Observer<Artifact>() {
             @Override
@@ -92,11 +94,25 @@ public class SingleArtifactPage extends AppCompatActivity{
 
                 if (artifact.getVideo() != null) {
                     videoView.setVideoPath(artifact.getVideo());
+                    videoView.seekTo(1);
                     videoView.setVisibility(View.VISIBLE);
+                    videoFrame.setVisibility(View.VISIBLE);
+                } else {
+                    videoView.setVisibility(View.GONE);
+                    videoFrame.setVisibility(View.GONE);
                 }
 
                 if(artifact.getDesc() != null)
                     text_card.setVisibility(View.VISIBLE);
+            }
+        });
+
+        videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), VideoPlayPage.class);
+                intent.putExtra(DataTag.ARTIFACT_VIDEO.toString(), artifactViewModel.getStaticArtifact().getVideo());
+                startActivity(intent);
             }
         });
 

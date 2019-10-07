@@ -52,6 +52,13 @@ public enum DataTag {
             return "date";
         }
     },
+    ARTIFACT_VIDEO {
+        @NonNull
+        @Override
+        public String toString() {
+            return "video";
+        }
+    },
     IMAGE_ID {
         @NonNull
         @Override

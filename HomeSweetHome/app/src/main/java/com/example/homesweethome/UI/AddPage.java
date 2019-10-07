@@ -78,6 +78,7 @@ public class AddPage extends AppCompatActivity {
         recyclerView.setAdapter(imageAdapter);
 
         Intent intent = getIntent();
+        final String tag = intent.getStringExtra(DataTag.TAG.toString());
         artifact = new Artifact(intent.getIntExtra(DataTag.ARTIFACT_ID.toString(), 0));
         newImages = new ArrayList<>();
 
@@ -123,7 +124,6 @@ public class AddPage extends AppCompatActivity {
         final EditText date = findViewById(R.id.edit_date);
         desc = findViewById(R.id.edit_desc);
         videoView = findViewById(R.id.add_page_video);
-        videoView.setMediaController(new MediaController(this));
 
         artifactViewModel.getArtifact().observe(this, new Observer<Artifact>() {
             @Override
@@ -136,6 +136,7 @@ public class AddPage extends AppCompatActivity {
                     if (artifact.getVideo() != null) {
                         videoView.setVisibility(View.VISIBLE);
                         videoView.setVideoPath(artifact.getVideo());
+                        videoView.seekTo(1);
                         findViewById(R.id.add_page_video_background).setVisibility(View.INVISIBLE);
                     }
                 }
@@ -151,6 +152,15 @@ public class AddPage extends AppCompatActivity {
             }
         });
 
+        videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), VideoPlayPage.class);
+                intent.putExtra(DataTag.ARTIFACT_VIDEO.toString(), artifact.getVideo());
+                startActivity(intent);
+            }
+        });
+
         Button saveButton = findViewById(R.id.save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,7 +168,12 @@ public class AddPage extends AppCompatActivity {
                 if (!checkField()) { return; }
                 saveButtonPressed = true;
                 saveArtifact();
-                openMain();
+
+                if (tag.equals(DataTag.ADD.toString())) {
+                    openMain();
+                } else {
+                    openSingleArtifactPage();
+                }
             }
         });
 
@@ -265,6 +280,13 @@ public class AddPage extends AppCompatActivity {
 
     private void openMain() {
         Intent intent = new Intent(this, HomePage.class);
+        startActivity(intent);
+    }
+
+    private void openSingleArtifactPage() {
+        Intent intent;
+        intent = new Intent(this, SingleArtifactPage.class);
+        intent.putExtra(DataTag.ARTIFACT_ID.toString(), artifact.getId());
         startActivity(intent);
     }
 

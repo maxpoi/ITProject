@@ -39,6 +39,8 @@
             android:theme="@style/Theme_Dialog" />
         <activity android:name=".UI.PopUpEditText"
             android:theme="@style/Theme_Dialog"/>
+        <activity android:name=".UI.VideoPlayPage"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

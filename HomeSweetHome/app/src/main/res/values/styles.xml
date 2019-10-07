@@ -57,6 +57,4 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="windowNoTitle">true</item>
     </style>
-
-
 </resources>

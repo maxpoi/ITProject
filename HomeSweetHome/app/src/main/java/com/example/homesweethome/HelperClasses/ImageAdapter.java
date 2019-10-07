@@ -3,6 +3,7 @@ package com.example.homesweethome.HelperClasses;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
         setImage(holder.img, position);
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
