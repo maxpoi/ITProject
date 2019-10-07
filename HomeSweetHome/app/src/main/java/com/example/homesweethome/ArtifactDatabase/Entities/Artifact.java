@@ -1,6 +1,7 @@
 package com.example.homesweethome.ArtifactDatabase.Entities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.*;
 
 import java.util.ArrayList;
@@ -89,4 +90,15 @@ public class Artifact {
     public String getCoverImagePath() { return coverImagePath; }
     public void setCoverImagePath(String coverImagePath) { this.coverImagePath = coverImagePath; }
 
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == this)
+            return true;
+
+        if (! (obj instanceof Artifact))
+            return false;
+
+        Artifact artifact = (Artifact) obj;
+        return artifact.id == this.id;
+    }
 }

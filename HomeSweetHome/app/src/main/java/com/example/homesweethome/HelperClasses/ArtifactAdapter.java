@@ -18,6 +18,7 @@ import com.example.homesweethome.R;
 import com.example.homesweethome.UI.SingleArtifactPage;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHolder> {
@@ -84,5 +85,17 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
     public void setArtifacts(List<Artifact> artifacts) {
         this.artifacts = artifacts;
         notifyDataSetChanged();
+    }
+
+    public void addArtifacts(List<Artifact> artifacts) {
+        if (this.artifacts == null)
+            this.artifacts = new ArrayList<>();
+        int oldSize = this.artifacts.size();
+
+        for (Artifact artifact : artifacts) {
+            if (!this.artifacts.contains(artifact))
+                this.artifacts.add(artifact);
+        }
+        notifyItemRangeInserted(oldSize, artifacts.size());
     }
 }

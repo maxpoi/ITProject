@@ -24,6 +24,13 @@ public enum DataTag {
             return "edit";
         }
     },
+    INPUT_TEXT {
+        @NonNull
+        @Override
+        public String toString() {
+            return "input";
+        }
+    },
     ARTIFACT_ID {
         @NonNull
         @Override

@@ -249,9 +249,4 @@ public class ImageProcessor {
 //        return arr.toByteArray();
 //    }
 //
-//    public String encodeLowImageString(Context context, int res) { return Base64.encodeToString(encodeLowImageByte(context, res),  Base64.DEFAULT); }
-//
-//    public String encodeMediumImageString(Context context, int res) { return Base64.encodeToString(encodeMediumImageByte(context, res),  Base64.DEFAULT); }
-//
-//    public String encodeLargeImageString(Context context, int res) { return Base64.encodeToString(encodeHighImageByte(context, res),  Base64.DEFAULT); }
 }

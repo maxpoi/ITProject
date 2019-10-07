@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ import java.util.List;
 public class SearchPage extends AppCompatActivity {
 
     private ArtifactAdapter artifactAdapter;
+    private TextView backgroundText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,9 +58,14 @@ public class SearchPage extends AppCompatActivity {
         setAdapter(artifactListViewModel.getArtifacts());
 
         final EditText searchBox = findViewById(R.id.search_box);
+        backgroundText = findViewById(R.id.search_background);
+
         searchBox.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                artifactAdapter.setArtifacts(null);
+                backgroundText.setVisibility(View.INVISIBLE);
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
@@ -66,22 +73,13 @@ public class SearchPage extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s == null || s.toString().isEmpty()) {
-                    setAdapter(artifactListViewModel.getArtifacts());
+                    // do nothing
+                    backgroundText.setVisibility(View.VISIBLE);
                 } else {
-                    setAdapter(artifactListViewModel.searchAllArtifacts("*" + s + "*"));
-                }
-            }
-        });
-
-        ImageButton searchButton = findViewById(R.id.search_button);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Editable query =  searchBox.getText();
-                if (query == null || query.toString().isEmpty()) {
-                    setAdapter(artifactListViewModel.getArtifacts());
-                } else {
-                    setAdapter(artifactListViewModel.searchAllArtifacts("*" + query + "*"));
+                    String[] queries = s.toString().split(" ");
+                    for (String query : queries)
+                        setAdapterExtra(artifactListViewModel.searchAllArtifacts("*" + query + "*"));
+                    backgroundText.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -103,6 +101,17 @@ public class SearchPage extends AppCompatActivity {
             @Override
             public void onChanged(List<Artifact> artifacts) {
                 artifactAdapter.setArtifacts(artifacts);
+            }
+        });
+    }
+
+    private void setAdapterExtra(LiveData<List<Artifact>> artifacts) {
+        artifacts.observe(this, new Observer<List<Artifact>>() {
+            @Override
+            public void onChanged(List<Artifact> artifacts) {
+                artifactAdapter.addArtifacts(artifacts);
+                if (artifactAdapter.getItemCount() == 0)
+                    backgroundText.setVisibility(View.VISIBLE);
             }
         });
     }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -41,6 +42,7 @@ public class AddPage extends AppCompatActivity {
 
     private final int REQUEST_LOAD_IMAGE_CODE = 1;
     private final int REQUEST_LOAD_VIDEO_CODE = 2;
+    private final int REQUEST_INPUT_CODE = 3;
     String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     private Artifact artifact;
@@ -52,8 +54,7 @@ public class AddPage extends AppCompatActivity {
     private Uri uriImage, uriVideo;
 
     private VideoView videoView;
-
-    private String tag;
+    private TextView desc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +78,6 @@ public class AddPage extends AppCompatActivity {
         recyclerView.setAdapter(imageAdapter);
 
         Intent intent = getIntent();
-        tag = intent.getStringExtra(DataTag.TAG.toString());
         artifact = new Artifact(intent.getIntExtra(DataTag.ARTIFACT_ID.toString(), 0));
         newImages = new ArrayList<>();
 
@@ -89,6 +89,10 @@ public class AddPage extends AppCompatActivity {
                 imageAdapter.setImages(images);
             }
         });
+
+        if (artifactViewModel.getStaticArtifact() != null) {
+            artifact = new Artifact(artifactViewModel.getStaticArtifact());
+        }
 
         // perform upload action
         Button uploadImageButton, uploadVideoButton;
@@ -117,7 +121,7 @@ public class AddPage extends AppCompatActivity {
 
         final EditText title = findViewById(R.id.edit_title);
         final EditText date = findViewById(R.id.edit_date);
-        final EditText desc = findViewById(R.id.edit_desc);
+        desc = findViewById(R.id.edit_desc);
         videoView = findViewById(R.id.add_page_video);
         videoView.setMediaController(new MediaController(this));
 
@@ -138,6 +142,15 @@ public class AddPage extends AppCompatActivity {
             }
         });
 
+        desc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PopUpEditText.class);
+                intent.putExtra(DataTag.INPUT_TEXT.toString(), desc.getText().toString());
+                startActivityForResult(intent, REQUEST_INPUT_CODE);
+            }
+        });
+
         Button saveButton = findViewById(R.id.save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,23 +168,33 @@ public class AddPage extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
-            if (requestCode == REQUEST_LOAD_IMAGE_CODE) {
-                uriImage = data.getData();
-                if (checkPermissions()) {
-                    createImage();
-                } else {
-                    ActivityCompat.requestPermissions(this, permissions, REQUEST_LOAD_IMAGE_CODE);
-                }
-            } else if (requestCode == REQUEST_LOAD_VIDEO_CODE) {
-                uriVideo = data.getData();
-                if (checkPermissions()) {
-                    uploadVideo();
-                } else {
-                    ActivityCompat.requestPermissions(this, permissions, REQUEST_LOAD_VIDEO_CODE);
-                }
-            } else{
-                Toast toast = Toast.makeText(getApplicationContext(), "Fail to upload, try again", Toast.LENGTH_SHORT);
-                toast.show();
+            switch (requestCode) {
+                case REQUEST_LOAD_IMAGE_CODE:
+                    uriImage = data.getData();
+                    if (checkPermissions()) {
+                        createImage();
+                    } else {
+                        ActivityCompat.requestPermissions(this, permissions, REQUEST_LOAD_IMAGE_CODE);
+                    }
+                    break;
+
+                case REQUEST_LOAD_VIDEO_CODE:
+                    uriVideo = data.getData();
+                    if (checkPermissions()) {
+                        uploadVideo();
+                    } else {
+                        ActivityCompat.requestPermissions(this, permissions, REQUEST_LOAD_VIDEO_CODE);
+                    }
+                    break;
+
+                case REQUEST_INPUT_CODE:
+                    String input = data.getStringExtra(DataTag.INPUT_TEXT.toString());
+                    desc.setText(input);
+                    break;
+                default:
+                    Toast toast = Toast.makeText(getApplicationContext(), "Fail to upload, try again", Toast.LENGTH_SHORT);
+                    toast.show();
+                    break;
             }
         }
     }
@@ -250,7 +273,7 @@ public class AddPage extends AppCompatActivity {
         String title, date, desc;
         title = ((EditText)findViewById(R.id.edit_title)).getText().toString();
         date = ((EditText)findViewById(R.id.edit_date)).getText().toString();
-        desc = ((EditText)findViewById(R.id.edit_desc)).getText().toString();
+        desc = ((TextView)findViewById(R.id.edit_desc)).getText().toString();
 
         artifact.setTitle(title);
         artifact.setDate(date);

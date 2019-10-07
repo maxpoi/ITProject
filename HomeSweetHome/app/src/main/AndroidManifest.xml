@@ -27,7 +27,8 @@
             />
         <activity android:name=".UI.SingleArtifactPage" />
         <activity android:name=".UI.AddPage" />
-        <activity android:name=".UI.SingleImagePage" />
+        <activity android:name=".UI.SingleImagePage"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".UI.register.EmailValidationActivity" />
         <activity android:name=".UI.register.RegisterActivity" />
         <activity android:name=".UI.register.RegisterSuccessActivity" />
@@ -36,6 +37,8 @@
         <activity android:name=".UI.SearchPage" />
         <activity android:name=".UI.PopUpText"
             android:theme="@style/Theme_Dialog" />
+        <activity android:name=".UI.PopUpEditText"
+            android:theme="@style/Theme_Dialog"/>
     </application>
 
 </manifest>

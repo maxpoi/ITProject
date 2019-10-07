@@ -6,33 +6,32 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <EditText
+        android:id="@+id/search_box"
         android:layout_width="match_parent"
-        android:layout_height="80dp" >
+        android:minHeight="60dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/input_frame"/>
 
-        <EditText
-            android:id="@+id/search_box"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/search_background"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_margin="20dp"
-            android:background="@drawable/input_frame"
-            android:singleLine="true"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:text="@string/search_background"
+            android:textAlignment="center"
+            android:visibility="invisible"/>
 
-        <ImageButton
-            android:id="@+id/search_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="5dp"
-            android:background="@android:drawable/ic_menu_search"
-            android:rotation="0"/>
+        <include layout="@layout/home_page"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <include layout="@layout/home_page"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp" />
+    </RelativeLayout>
 
 </LinearLayout>
