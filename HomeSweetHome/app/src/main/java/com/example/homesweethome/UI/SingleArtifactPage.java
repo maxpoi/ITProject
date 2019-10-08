@@ -143,11 +143,16 @@ public class SingleArtifactPage extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                openHomePage();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void openHomePage() {
+        Intent intent = new Intent(getApplicationContext(), HomePage.class);
+        startActivity(intent);
     }
 
     public void openEditPage() {

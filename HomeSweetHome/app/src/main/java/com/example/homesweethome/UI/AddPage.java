@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -365,6 +366,7 @@ public class AddPage extends AppCompatActivity {
         }
         artifact.setVideo(sourcePath);
         videoView.setVideoURI(uriVideo);
+        videoView.seekTo(1);
         videoView.setVisibility(View.VISIBLE);
         findViewById(R.id.add_page_video_background).setVisibility(View.INVISIBLE);
     }

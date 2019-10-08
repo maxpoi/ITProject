@@ -70,12 +70,12 @@
 
                     <VideoView
                         android:id="@+id/single_artifact_video"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="200dp"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginTop="5dp"/>
+                        android:layout_marginTop="5dp" />
             </RelativeLayout>
 
         </LinearLayout>

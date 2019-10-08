@@ -1,8 +1,10 @@
 package com.example.homesweethome.UI;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -27,6 +29,9 @@ public class VideoPlayPage extends AppCompatActivity implements
     private static final String DEBUG_TAG = "Gestures";
     private GestureDetectorCompat detector;
 
+    int videoWidth;
+    int videoHeight;
+
     VideoView video;
     MediaController mc;
 
@@ -36,7 +41,12 @@ public class VideoPlayPage extends AppCompatActivity implements
         setContentView(R.layout.video_play_page);
 
         String videoPath = getIntent().getStringExtra(DataTag.ARTIFACT_VIDEO.toString());
+        getVideoAspectRatio(videoPath);
+
         video = findViewById(R.id.video_play_page);
+        if (!isVideoLandscaped())
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         video.setVideoPath(videoPath);
         video.start();
 
@@ -47,6 +57,18 @@ public class VideoPlayPage extends AppCompatActivity implements
         detector.setOnDoubleTapListener(this);
     }
 
+    private void getVideoAspectRatio(String path) {
+        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+        mediaMetadataRetriever.setDataSource(this, Uri.parse(path));
+        String height = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);
+        String width = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);
+        videoWidth = Integer.parseInt(width);
+        videoHeight = Integer.parseInt(height);
+    }
+
+    private boolean isVideoLandscaped() {
+        return videoWidth > videoHeight;
+    }
     @Override
     public boolean onTouchEvent(MotionEvent event){
         if (this.detector.onTouchEvent(event)) {
