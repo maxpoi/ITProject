@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
 import com.example.homesweethome.ArtifactDatabase.Entities.Image;
 import com.example.homesweethome.HelperClasses.DataTag;
@@ -59,7 +60,6 @@ public class SingleArtifactPage extends AppCompatActivity{
 
         final ImageAdapter ia = new ImageAdapter(getApplicationContext());
         rv.setAdapter(ia);
-        rv.setBackgroundColor(Color.BLACK);
 
         Intent intent = getIntent();
         artifactId = intent.getIntExtra(DataTag.ARTIFACT_ID.toString(), 0);
@@ -77,8 +77,7 @@ public class SingleArtifactPage extends AppCompatActivity{
         final TextView title_content = findViewById(R.id.title);
         final TextView date_content = findViewById(R.id.date);
         final TextView desc_content = findViewById(R.id.description);
-        final VideoView videoView = findViewById(R.id.single_artifact_video);
-        final RelativeLayout videoFrame = findViewById(R.id.video);
+        final ImageView videoCover = findViewById(R.id.single_artifact_video);
 
         artifactViewModel.getArtifact().observe(this, new Observer<Artifact>() {
             @Override
@@ -93,13 +92,10 @@ public class SingleArtifactPage extends AppCompatActivity{
                 desc_content.setText(artifact.getDesc());
 
                 if (artifact.getVideo() != null) {
-                    videoView.setVideoPath(artifact.getVideo());
-                    videoView.seekTo(1);
-                    videoView.setVisibility(View.VISIBLE);
-                    videoFrame.setVisibility(View.VISIBLE);
+                    Glide.with(getApplicationContext()).load(artifact.getVideo()).into(videoCover);
+                    videoCover.setVisibility(View.VISIBLE);
                 } else {
-                    videoView.setVisibility(View.GONE);
-                    videoFrame.setVisibility(View.GONE);
+                    videoCover.setVisibility(View.GONE);
                 }
 
                 if(artifact.getDesc() != null)
@@ -107,7 +103,7 @@ public class SingleArtifactPage extends AppCompatActivity{
             }
         });
 
-        videoView.setOnClickListener(new View.OnClickListener() {
+        videoCover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), VideoPlayPage.class);

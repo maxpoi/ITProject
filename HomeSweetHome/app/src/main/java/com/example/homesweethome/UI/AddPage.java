@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
 import com.example.homesweethome.ArtifactDatabase.Entities.Image;
 import com.example.homesweethome.HelperClasses.DataTag;
@@ -54,7 +56,7 @@ public class AddPage extends AppCompatActivity {
     private boolean saveButtonPressed = false;
     private Uri uriImage, uriVideo;
 
-    private VideoView videoView;
+    private ImageView videoCover;
     private TextView desc;
 
     @Override
@@ -124,7 +126,7 @@ public class AddPage extends AppCompatActivity {
         final EditText title = findViewById(R.id.edit_title);
         final EditText date = findViewById(R.id.edit_date);
         desc = findViewById(R.id.edit_desc);
-        videoView = findViewById(R.id.add_page_video);
+        videoCover = findViewById(R.id.add_page_video);
 
         artifactViewModel.getArtifact().observe(this, new Observer<Artifact>() {
             @Override
@@ -135,9 +137,8 @@ public class AddPage extends AppCompatActivity {
                     desc.setText(artifact.getDesc());
 
                     if (artifact.getVideo() != null) {
-                        videoView.setVisibility(View.VISIBLE);
-                        videoView.setVideoPath(artifact.getVideo());
-                        videoView.seekTo(1);
+                        videoCover.setVisibility(View.VISIBLE);
+                        Glide.with(getApplicationContext()).load(artifact.getVideo()).into(videoCover);
                         findViewById(R.id.add_page_video_background).setVisibility(View.INVISIBLE);
                     }
                 }
@@ -153,7 +154,7 @@ public class AddPage extends AppCompatActivity {
             }
         });
 
-        videoView.setOnClickListener(new View.OnClickListener() {
+        videoCover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), VideoPlayPage.class);
@@ -365,9 +366,9 @@ public class AddPage extends AppCompatActivity {
             return ;
         }
         artifact.setVideo(sourcePath);
-        videoView.setVideoURI(uriVideo);
-        videoView.seekTo(1);
-        videoView.setVisibility(View.VISIBLE);
+
+        Glide.with(this).load(uriVideo).into(videoCover);
+        videoCover.setVisibility(View.VISIBLE);
         findViewById(R.id.add_page_video_background).setVisibility(View.INVISIBLE);
     }
 
