@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".timeline.TimelineActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:src="@drawable/img_1"
+
+            />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Timeline"
+            android:textSize="60dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Your story starts at"
+            android:textSize="40dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="1897"
+            android:textSize="40dp"
+            />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/timeline_f_layout"
+            >
+
+
+
+            <com.example.homesweethome.timeline.PointView
+                android:layout_width="match_parent"
+                android:layout_height="700dp"
+                android:orientation="vertical"
+
+                tools:ignore="MissingConstraints" />
+
+
+
+            <View
+                android:layout_width="7dp"
+                android:layout_height="700dp"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimary"
+                tools:layout_editor_absoluteX="200dp"
+                tools:layout_editor_absoluteY="0dp"
+                tools:ignore="MissingConstraints" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="700dp"
+                android:orientation="vertical"
+                android:id="@+id/timeline_layout"
+                tools:ignore="MissingConstraints" />
+            <com.example.homesweethome.timeline.TextView
+                android:layout_width="match_parent"
+                android:layout_height="700dp"
+                android:orientation="vertical"
+
+                tools:ignore="MissingConstraints" />
+            />
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>
