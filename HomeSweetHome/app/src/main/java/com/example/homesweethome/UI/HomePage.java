@@ -20,6 +20,7 @@ import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
 import com.example.homesweethome.HelperClasses.ArtifactAdapter;
 import com.example.homesweethome.HelperClasses.DataTag;
 import com.example.homesweethome.R;
+import com.example.homesweethome.UI.timeline.TimelineActivity;
 import com.example.homesweethome.ViewModels.ArtifactListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -87,6 +88,8 @@ public class HomePage extends AppCompatActivity
             case R.id.nav_search:
                 openSearchPage();
                 break;
+            case R.id.nav_timeline:
+                openTimelinePage();
             default:
                 // do nothing;
                 break;
@@ -111,6 +114,11 @@ public class HomePage extends AppCompatActivity
 
     private void openSearchPage() {
         Intent intent = new Intent(getApplicationContext(), SearchPage.class);
+        startActivity(intent);
+    }
+
+    private void openTimelinePage() {
+        Intent intent = new Intent(getApplicationContext(), TimelineActivity.class);
         startActivity(intent);
     }
 }
