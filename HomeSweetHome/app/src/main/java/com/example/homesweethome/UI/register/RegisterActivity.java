@@ -81,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
                     //startActivity(MessageIntent);
                 } else{
                     // TODO: store input register data into database
-                    Intent MessageIntent = new Intent(RegisterActivity.this, RegisterSuccessActivity.class);
+                    Intent MessageIntent = new Intent(RegisterActivity.this, RegisterSuccessDialog.class);
                     startActivity(MessageIntent);
                 }
             }

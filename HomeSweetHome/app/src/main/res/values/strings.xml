@@ -48,8 +48,11 @@
     <string name="reset_password">Reset Password</string>
     <string name="nav_search">Search</string>
     <string name="search_background">Type a word to search!\nSplit word with space to search on multiple key words!</string>
+    <string name="nav_timeline">Timeline</string>
     <string name="date_year_hint"><i> YYYY</i></string>
     <string name="date_month_hint"><i> MM</i></string>
     <string name="date_day_hint"><i> DD</i></string>
     <string name="date_seperator"><i>/</i></string>
+
+
 </resources>
