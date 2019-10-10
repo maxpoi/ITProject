@@ -2,6 +2,7 @@ package com.example.homesweethome.UI.register;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.homesweethome.R;
+import com.example.homesweethome.UI.LoginPage;
+
 public class RegisterSuccessDialog  extends AppCompatActivity {
 
     final Context context = this;
@@ -23,26 +26,29 @@ public class RegisterSuccessDialog  extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_success);
+        setContentView(R.layout.activity_background_dialog);
 
         //TODO
-        button = (Button) findViewById(R.id.button_register);
+        button = (Button) findViewById(R.id.button_ok);
 
         // add button listener
         button.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-
+                /*
                 // custom dialog
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.activity_register_success);
-                dialog.setTitle("Title...");
 
-                // set the custom dialog components - text, image and button
+                // set title
+                TextView title = (TextView) dialog.findViewById(R.id.title);
+                title.setText("Success!");
+
+                // set text, image and button
                 TextView text = (TextView) dialog.findViewById(R.id.text);
-                text.setText("Android custom dialog example!");
-                ImageView image = (ImageView) dialog.findViewById(R.id.image);
+                text.setText("Your password is reset successfully!");
+                ImageView image = (ImageView) dialog.findViewById(R.id.image_title);
                 image.setImageResource(R.drawable.ic_launcher_background);
 
                 Button dialogButton = (Button) dialog.findViewById(R.id.button_return);
@@ -54,7 +60,10 @@ public class RegisterSuccessDialog  extends AppCompatActivity {
                     }
                 });
 
-                dialog.show();
+                dialog.show();*/
+
+                Intent MessageIntent = new Intent(RegisterSuccessDialog.this, LoginPage.class);
+                startActivity(MessageIntent);
             }
         });
     }
