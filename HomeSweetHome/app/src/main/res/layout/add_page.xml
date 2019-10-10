@@ -15,6 +15,7 @@
         android:layout_marginLeft="30dp">
 
         <TextView
+            android:id="@+id/add_page_title_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/upload_page_title"
@@ -29,6 +30,7 @@
             android:singleLine="true" />
 
         <TextView
+            android:id="@+id/add_page_date_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -36,15 +38,65 @@
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/edit_date"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/input_frame"
-            android:singleLine="true"
-            android:inputType="date" />
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_date_year"
+                android:layout_width="106dp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_frame"
+                android:inputType="date"
+                android:singleLine="true"
+                android:hint="@string/date_year_hint"
+                android:textAlignment="viewStart" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/date_seperator"
+                android:textSize="30sp"
+                android:textStyle="italic" />
+
+            <EditText
+                android:id="@+id/edit_date_month"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_frame"
+                android:inputType="date"
+                android:singleLine="true"
+                android:hint="@string/date_month_hint"
+                android:textAlignment="viewStart"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/date_seperator"
+                android:textSize="30sp"
+                android:textStyle="italic" />
+
+            <EditText
+                android:id="@+id/edit_date_day"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_frame"
+                android:inputType="date"
+                android:singleLine="true"
+                android:hint="@string/date_day_hint"
+                android:textAlignment="viewStart"/>
+
+        </LinearLayout>
 
         <TextView
+            android:id="@+id/add_page_photo_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -61,6 +113,7 @@
                 android:layout_width="match_parent"/>
 
             <TextView
+                android:id="@+id/recyclerview_frame"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:background="@drawable/input_frame"/>
@@ -76,6 +129,7 @@
             android:background="@drawable/upload_button_pressed"/>
 
         <TextView
+            android:id="@+id/add_page_desc_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -92,6 +146,7 @@
             android:textSize="20sp"/>
 
         <TextView
+            android:id="@+id/add_page_video_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

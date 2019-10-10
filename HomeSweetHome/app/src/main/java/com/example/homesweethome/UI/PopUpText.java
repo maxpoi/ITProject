@@ -23,12 +23,17 @@ public class PopUpText extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_text);
 
+        final TextView desc = findViewById(R.id.description);
+
         final int artifactId = getIntent().getIntExtra(DataTag.ARTIFACT_ID.toString(), 0);
         ArtifactViewModel.ArtifactViewModelFactory artifactViewModelFactory = new ArtifactViewModel.ArtifactViewModelFactory(getApplication(), artifactId);
         ArtifactViewModel artifactViewModel = new ViewModelProvider(this, artifactViewModelFactory).get(ArtifactViewModel.class);
-        Artifact artifact = artifactViewModel.getStaticArtifact();
+        artifactViewModel.getArtifact().observe(this, new Observer<Artifact>() {
+            @Override
+            public void onChanged(Artifact artifact) {
+                desc.setText(artifact.getDesc());
+            }
+        });
 
-        final TextView desc = findViewById(R.id.description);
-        desc.setText(artifact.getDesc());
     }
 }

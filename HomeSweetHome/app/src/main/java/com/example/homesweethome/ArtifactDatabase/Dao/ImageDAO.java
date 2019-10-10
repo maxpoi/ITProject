@@ -19,6 +19,9 @@ public interface ImageDAO {
     @Delete
     void delete(Image image);
 
+    @Query("DELETE FROM Images WHERE artifactId = :artifactId")
+    void deleteAllArtifactImages(int artifactId);
+
     @Query("SELECT * FROM Images WHERE artifactId = :artifactId")
     LiveData<List<Image>> getImages(int artifactId);
 
