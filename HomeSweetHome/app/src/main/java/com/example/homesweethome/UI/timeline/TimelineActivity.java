@@ -45,7 +45,6 @@ public class TimelineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline_old);
-        PointView pointView = new PointView(this);
         artifactListViewModel = new ViewModelProvider(this).get(ArtifactListViewModel.class);
         artifactListViewModel.getArtifacts().observe(this, new Observer<List<Artifact>>() {
             @Override

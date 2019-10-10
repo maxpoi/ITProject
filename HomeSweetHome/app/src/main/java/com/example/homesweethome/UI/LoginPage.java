@@ -44,8 +44,8 @@ public class LoginPage extends AppCompatActivity {
         });
 
 
-        mTextEmail = (EditText) findViewById(R.id.email);
-        mTextPassword = (EditText) findViewById(R.id.register_password);
+        mTextEmail = (EditText) findViewById(R.id.login_email);
+        mTextPassword = (EditText) findViewById(R.id.login_password);
 
         mTextEmail.addTextChangedListener(afterTextChangedListener);
         mTextPassword.addTextChangedListener(afterTextChangedListener);
