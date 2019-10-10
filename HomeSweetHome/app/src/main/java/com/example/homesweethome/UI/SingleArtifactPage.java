@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
 import com.example.homesweethome.ArtifactDatabase.Entities.Image;
 import com.example.homesweethome.HelperClasses.DataTag;
+import com.example.homesweethome.HelperClasses.HomeSweetHome;
 import com.example.homesweethome.HelperClasses.ImageAdapter;
 import com.example.homesweethome.R;
 import com.example.homesweethome.ViewModels.ArtifactViewModel;
@@ -130,6 +131,7 @@ public class SingleArtifactPage extends AppCompatActivity{
             public void onClick(View v) {
                 artifactViewModel.deleteArtifact(artifactViewModel.getStaticArtifact(artifactId));
                 artifactViewModel.deleteArtifactImages(artifactId);
+                ((HomeSweetHome)getApplication()).getImageProcessor().deleteImageListFromLocal(artifactId);
                 openHomePage();
             }
         });

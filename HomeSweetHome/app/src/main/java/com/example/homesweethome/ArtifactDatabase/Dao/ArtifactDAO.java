@@ -12,7 +12,7 @@ import java.util.List;
 public interface ArtifactDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Artifact artifact);
+    Long insert(Artifact artifact);
 
     @Delete
     void delete(Artifact artifact);

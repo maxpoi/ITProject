@@ -68,6 +68,31 @@ public class ImageProcessor {
     public void saveImageListToLocal(List<Image> images) { new saveImageListToLocalAsyncTask(images).execute(); }
     public void saveVideoToLocal(int artifactId, String videoPath) { new saveVideoToLocalAsyncTask(artifactId, videoPath).execute(); }
 
+    public void deleteImageListFromLocal(int artifactId) { new deleteImageListFromLocalAsyncTask().execute(artifactId); }
+
+
+    /***
+     * Result of the codes are private functions & classes
+     */
+
+    private static class deleteImageListFromLocalAsyncTask extends AsyncTask<Integer, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Integer... params) {
+            String parent = PARENT_FOLDER_PATH + params[0];
+            File parentFolder = new File(parent);
+            deleteRecursive(parentFolder);
+            return null;
+        }
+
+        void deleteRecursive(File fileOrDirectory) {
+            if (fileOrDirectory.isDirectory())
+                for (File child : fileOrDirectory.listFiles())
+                    deleteRecursive(child);
+            fileOrDirectory.delete();
+        }
+    }
+
     private static class saveImageListToLocalAsyncTask extends AsyncTask<Void, Void, Void> {
         private List<Image> images;
 

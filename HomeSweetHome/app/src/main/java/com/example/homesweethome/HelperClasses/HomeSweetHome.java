@@ -5,6 +5,8 @@ import android.app.Application;
 import com.example.homesweethome.ArtifactDatabase.ArtifactDatabase;
 import com.example.homesweethome.ArtifactRepository;
 
+import java.util.Random;
+
 public class HomeSweetHome extends Application {
 
     @Override

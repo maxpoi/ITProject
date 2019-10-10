@@ -329,7 +329,7 @@ public class AddPage extends AppCompatActivity {
     private void createImage() {
         final String folderPath = ImageProcessor.PARENT_FOLDER_PATH + artifact.getId();
 
-        int imageId=  artifactViewModel.getArtifactStaticImages(artifact.getId()).size() + newImages.size();
+        int imageId =  artifactViewModel.getArtifactStaticImages(artifact.getId()).size() + newImages.size();
         final Image image = new Image(imageId);
         image.setArtifactId(artifact.getId());
 

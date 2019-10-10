@@ -25,6 +25,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
+import java.util.Random;
 
 public class HomePage extends AppCompatActivity
                   implements NavigationView.OnNavigationItemSelectedListener{
@@ -105,7 +106,7 @@ public class HomePage extends AppCompatActivity
     private void openAddPage() {
         Intent intent = new Intent(getApplicationContext(), AddPage.class);
         intent.putExtra(DataTag.TAG.toString(), DataTag.ADD.toString());
-        intent.putExtra(DataTag.ARTIFACT_ID.toString(), artifactListViewModel.getArtifacts().getValue() == null ? 0 : artifactListViewModel.getArtifacts().getValue().size());
+        intent.putExtra(DataTag.ARTIFACT_ID.toString(), new Random().nextInt());
         startActivity(intent);
     }
 

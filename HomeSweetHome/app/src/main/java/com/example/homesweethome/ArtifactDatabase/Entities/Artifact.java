@@ -9,8 +9,7 @@ import java.util.ArrayList;
 @Entity(tableName = "Artifacts")
 public class Artifact {
 
-    @PrimaryKey
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
     private String video;

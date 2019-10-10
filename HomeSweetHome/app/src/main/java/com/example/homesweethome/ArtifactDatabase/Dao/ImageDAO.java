@@ -11,7 +11,7 @@ import java.util.List;
 public interface ImageDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Image image);
+    Long insert(Image image);
 
     @Insert
     void  insertAll(List<Image> images);

@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import com.example.homesweethome.R;
 import com.example.homesweethome.UI.register.*;
-import com.example.homesweethome.UI.timeline.TimelineActivity;
+//import com.example.homesweethome.UI.timeline.TimelineActivity;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -41,7 +41,7 @@ public class LoginPage extends AppCompatActivity {
     }
 
     private void openRegister() {
-        Intent intent = new Intent(this, TimelineActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, TimelineActivity.class);
+//        startActivity(intent);
     }
 }
