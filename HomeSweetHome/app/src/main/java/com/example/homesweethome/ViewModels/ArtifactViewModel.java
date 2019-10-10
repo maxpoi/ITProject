@@ -20,8 +20,6 @@ public class ArtifactViewModel extends AndroidViewModel {
     private LiveData<Artifact> artifact;
     private LiveData<List<Image>> images;
     private ArtifactRepository artifactRepository;
-    private int imagesLen;
-    private Artifact staticArtifact;
 
     // use factory to create this view model as Room only call the no parameter constructor.
     public static class ArtifactViewModelFactory extends ViewModelProvider.NewInstanceFactory {
@@ -47,8 +45,6 @@ public class ArtifactViewModel extends AndroidViewModel {
         this.artifactRepository = artifactRepository;
         artifact = artifactRepository.getArtifact(artifactId);
         images = artifactRepository.getArtifactImages(artifactId);
-        imagesLen = artifactRepository.getArtifactImagesLen(artifactId);
-        staticArtifact = artifactRepository.getStaticArtifact(artifactId);
     }
 
     public LiveData<Artifact> getArtifact() { return artifact; }
@@ -58,8 +54,9 @@ public class ArtifactViewModel extends AndroidViewModel {
     public void addArtifact(Artifact artifact) { artifactRepository.addArtifact(artifact); }
 
     public void deleteImage(Image image) { artifactRepository.deleteImage(image); }
+    public void deleteArtifactImages(int artifactId) { artifactRepository.deleteArtifactImages(artifactId); }
     public void deleteArtifact(Artifact artifact) { artifactRepository.deleteArtifact(artifact); }
 
-    public int getImagesLen() { return imagesLen; }
-    public Artifact getStaticArtifact() { return staticArtifact; }
+    public List<Image> getArtifactStaticImages(int artifactId) { return artifactRepository.getArtifactStaticImages(artifactId); }
+    public Artifact getStaticArtifact(int artifactId) { return artifactRepository.getStaticArtifact(artifactId); }
 }

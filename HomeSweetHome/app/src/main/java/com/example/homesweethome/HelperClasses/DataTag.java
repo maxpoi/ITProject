@@ -72,5 +72,19 @@ public enum DataTag {
         public String toString() {
             return "image path";
         }
+    },
+    DATE_SEPERATOR {
+        @NonNull
+        @Override
+        public String toString() {
+            return "/";
+        }
+    },
+    DATE_PATTERN {
+        @NonNull
+        @Override
+        public String toString() {
+            return "\\d+";
+        }
     }
 }

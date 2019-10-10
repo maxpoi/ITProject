@@ -29,6 +29,4 @@ public class ArtifactListViewModel extends AndroidViewModel {
     public LiveData<List<String>> getHomeImages() { return images; }
 
     public LiveData<List<Artifact>> searchAllArtifacts(String query) { return artifactRepository.searchAllArtifacts(query); }
-
-    public void deleteArtifact(Artifact artifact) { artifactRepository.deleteArtifact(artifact); }
 }

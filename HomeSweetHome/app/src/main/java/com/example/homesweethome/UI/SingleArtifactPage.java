@@ -31,9 +31,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 public class SingleArtifactPage extends AppCompatActivity{
-
-    private boolean hasAudio = true;
-
     private ArtifactViewModel artifactViewModel;
     private int artifactId;
 
@@ -107,7 +104,7 @@ public class SingleArtifactPage extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), VideoPlayPage.class);
-                intent.putExtra(DataTag.ARTIFACT_VIDEO.toString(), artifactViewModel.getStaticArtifact().getVideo());
+                intent.putExtra(DataTag.ARTIFACT_VIDEO.toString(), artifactViewModel.getStaticArtifact(artifactId).getVideo());
                 startActivity(intent);
             }
         });
@@ -127,12 +124,15 @@ public class SingleArtifactPage extends AppCompatActivity{
             }
         });
 
-        final FloatingActionButton audio_play = (FloatingActionButton) findViewById(R.id.audio_play);
-
-        if (this.hasAudio)
-            audio_play.show();
-        else
-            audio_play.hide();
+        final FloatingActionButton delete_button = (FloatingActionButton) findViewById(R.id.delete_button);
+        delete_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                artifactViewModel.deleteArtifact(artifactViewModel.getStaticArtifact(artifactId));
+                artifactViewModel.deleteArtifactImages(artifactId);
+                openHomePage();
+            }
+        });
     }
 
     @Override

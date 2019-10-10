@@ -50,41 +50,60 @@ public class ArtifactRepository {
     public LiveData<List<String>> getHomeImages() { return  artifactDatabase.artifactDAO().getCoverImagesPath(); }
 
     public LiveData<List<Image>> getArtifactImages(final int artifactId) { return artifactDatabase.imageDAO().getImages(artifactId); }
-    public int getArtifactImagesLen(final int artifactId) {
+    public List<Image> getArtifactStaticImages(final int artifactId) {
         try {
             return new getStaticImagesAsyncTask(artifactDatabase.imageDAO()).execute(artifactId).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return -1;
+        return null;
     }
 
     public void addArtifact (Artifact artifact) { new insertArtifactAsyncTask(artifactDatabase).execute(artifact); }
     public void addImage(Image image) { new insertImageAsyncTask(artifactDatabase).execute(image); }
 
     public void deleteImage(Image image) { artifactDatabase.imageDAO().delete(image); }
-    public void deleteArtifact(Artifact artifact) { artifactDatabase.artifactDAO().delete(artifact); }
+    public void deleteArtifactImages(int artifactId) { new deleteArtifactImagesAsyncTask(artifactDatabase.imageDAO()).execute(artifactId); }
+    public void deleteArtifact(Artifact artifact) { new deleteArtifactAsyncTask(artifactDatabase.artifactDAO()).execute(artifact); }
 
     public LiveData<List<Artifact>> searchAllArtifacts(String query) { return artifactDatabase.artifactDAO().searchAllArtifacts(query); }
 
 
     // private classes & functions
-    private static class getStaticImagesAsyncTask extends AsyncTask<Integer, Void, Integer> {
-
+    private static class deleteArtifactImagesAsyncTask extends  AsyncTask<Integer, Void, Void> {
         private ImageDAO imageDAO;
+        deleteArtifactImagesAsyncTask(ImageDAO imageDAO) { this.imageDAO = imageDAO; }
 
+        @Override
+        protected Void doInBackground(Integer... artifactIds) {
+            imageDAO.deleteAllArtifactImages(artifactIds[0]);
+            return null;
+        }
+    }
+
+    private static class deleteArtifactAsyncTask extends  AsyncTask<Artifact, Void, Void> {
+        private ArtifactDAO artifactDAO;
+        deleteArtifactAsyncTask(ArtifactDAO artifactDAO) { this.artifactDAO = artifactDAO; }
+
+        @Override
+        protected Void doInBackground(Artifact... artifacts) {
+            artifactDAO.delete(artifacts[0]);
+            return null;
+        }
+    }
+
+    private static class getStaticImagesAsyncTask extends AsyncTask<Integer, Void, List<Image>> {
+        private ImageDAO imageDAO;
         getStaticImagesAsyncTask(ImageDAO imageDAO) { this.imageDAO = imageDAO; }
 
         @Override
-        protected Integer doInBackground(Integer... artifactIds) {
-            return imageDAO.getStaticImages(artifactIds[0]).size();
+        protected List<Image> doInBackground(Integer... artifactIds) {
+            return imageDAO.getStaticImages(artifactIds[0]);
         }
     }
 
     private static class getStaticArtifact extends AsyncTask<Integer, Void, Artifact> {
-
         private ArtifactDAO artifactDAO;
-
         getStaticArtifact(ArtifactDAO artifactDAO) { this.artifactDAO = artifactDAO; }
 
         @Override
@@ -95,7 +114,6 @@ public class ArtifactRepository {
 
     private static class insertArtifactAsyncTask extends AsyncTask<Artifact, Void, Void> {
         private ArtifactDatabase artifactDatabase;
-
         insertArtifactAsyncTask(ArtifactDatabase artifactDatabase) { this.artifactDatabase = artifactDatabase; }
 
         @Override
@@ -107,7 +125,6 @@ public class ArtifactRepository {
 
     private static class insertImageAsyncTask extends AsyncTask<Image, Void, Void> {
         private ArtifactDatabase artifactDatabase;
-
         insertImageAsyncTask(ArtifactDatabase artifactDatabase) { this.artifactDatabase = artifactDatabase; }
 
         @Override

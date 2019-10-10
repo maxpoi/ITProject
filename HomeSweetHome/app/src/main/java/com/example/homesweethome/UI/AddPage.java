@@ -4,10 +4,13 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -38,7 +41,10 @@ import com.example.homesweethome.HelperClasses.ImageProcessor;
 import com.example.homesweethome.R;
 import com.example.homesweethome.ViewModels.ArtifactViewModel;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AddPage extends AppCompatActivity {
@@ -58,6 +64,10 @@ public class AddPage extends AppCompatActivity {
 
     private ImageView videoCover;
     private TextView desc;
+    private EditText title;
+    private EditText dateYear;
+    private EditText dateMonth;
+    private EditText dateDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +104,9 @@ public class AddPage extends AppCompatActivity {
             }
         });
 
-        if (artifactViewModel.getStaticArtifact() != null) {
-            artifact = new Artifact(artifactViewModel.getStaticArtifact());
-        }
+        Artifact staticArtifact = artifactViewModel.getStaticArtifact(artifact.getId());
+        if (staticArtifact != null)
+            artifact = new Artifact(staticArtifact);
 
         // perform upload action
         Button uploadImageButton, uploadVideoButton;
@@ -123,9 +133,11 @@ public class AddPage extends AppCompatActivity {
             }
         });
 
-        final EditText title = findViewById(R.id.edit_title);
-        final EditText date = findViewById(R.id.edit_date);
+        title = findViewById(R.id.edit_title);
         desc = findViewById(R.id.edit_desc);
+        dateYear = findViewById(R.id.edit_date_year);
+        dateMonth = findViewById(R.id.edit_date_month);
+        dateDay = findViewById(R.id.edit_date_day);
         videoCover = findViewById(R.id.add_page_video);
 
         artifactViewModel.getArtifact().observe(this, new Observer<Artifact>() {
@@ -133,8 +145,15 @@ public class AddPage extends AppCompatActivity {
             public void onChanged(Artifact artifact) {
                 if (artifact != null) {
                     title.setText(artifact.getTitle());
-                    date.setText(artifact.getDate());
                     desc.setText(artifact.getDesc());
+
+                    String date = artifact.getDate();
+                    if (date != null) {
+                        String[] dates = date.split("/");
+                        dateYear.setText(dates[0]);
+                        dateMonth.setText(dates[1]);
+                        dateDay.setText(dates[2]);
+                    }
 
                     if (artifact.getVideo() != null) {
                         videoCover.setVisibility(View.VISIBLE);
@@ -294,17 +313,15 @@ public class AddPage extends AppCompatActivity {
 
     private void saveArtifact() {
         // set cell context
-        String title, date, desc;
-        title = ((EditText)findViewById(R.id.edit_title)).getText().toString();
-        date = ((EditText)findViewById(R.id.edit_date)).getText().toString();
-        desc = ((TextView)findViewById(R.id.edit_desc)).getText().toString();
+        artifact.setTitle(title.getText().toString());
+        artifact.setDesc(desc.getText().toString());
 
-        artifact.setTitle(title);
+        String date = dateYear.getText().toString() + "/" + dateMonth.getText().toString() + "/" + dateDay.getText().toString();
         artifact.setDate(date);
-        artifact.setDesc(desc);
-        artifactViewModel.addArtifact(artifact);
 
+        artifactViewModel.addArtifact(artifact);
         for (Image image : newImages) artifactViewModel.addImage(image);
+
         ((HomeSweetHome)getApplication()).getImageProcessor().saveImageListToLocal(newImages);
         ((HomeSweetHome)getApplication()).getImageProcessor().saveVideoToLocal(artifact.getId(), artifact.getVideo());
     }
@@ -312,7 +329,7 @@ public class AddPage extends AppCompatActivity {
     private void createImage() {
         final String folderPath = ImageProcessor.PARENT_FOLDER_PATH + artifact.getId();
 
-        int imageId=  artifactViewModel.getImagesLen() + newImages.size();
+        int imageId=  artifactViewModel.getArtifactStaticImages(artifact.getId()).size() + newImages.size();
         final Image image = new Image(imageId);
         image.setArtifactId(artifact.getId());
 
@@ -345,6 +362,7 @@ public class AddPage extends AppCompatActivity {
 
         newImages.add(image);
         imageAdapter.addImage(image);
+        findViewById(R.id.recyclerview_frame).setActivated(false);
     }
 
     private void uploadVideo() {
@@ -373,12 +391,105 @@ public class AddPage extends AppCompatActivity {
     }
 
     private boolean checkField() {
-        if (newImages.size() + artifactViewModel.getImagesLen() == 0) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Must upload at least 1 photo!", Toast.LENGTH_SHORT);
+        boolean allSatisfied;
+        boolean requestedFocus = false;
+
+        allSatisfied = checkTitle() && checkDate() && checkDescription() && checkPhotos()  && checkVideo();
+
+        return allSatisfied;
+    }
+
+    private boolean checkTitle() {
+        if (title.getText() == null || title.getText().toString().trim().isEmpty()) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Must enter a Title!", Toast.LENGTH_SHORT);
             toast.show();
+
+            final EditText editTitleFrame = findViewById(R.id.edit_title);
+            editTitleFrame.setActivated(true);
+
+            final TextView titleTitle = findViewById(R.id.add_page_title_title);
+            titleTitle.setFocusableInTouchMode(true);
+            titleTitle.requestFocus();
+            titleTitle.setFocusableInTouchMode(false);
             return false;
         }
-
         return true;
     }
+
+    private boolean checkDate() {
+        boolean validDate = true;
+
+        if (!isValidDate()) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Date is wrong!", Toast.LENGTH_SHORT);
+            toast.show();
+
+            TextView dateTitle = findViewById(R.id.add_page_date_title);
+            dateTitle.setFocusableInTouchMode(true);
+            dateTitle.requestFocus();
+            dateTitle.setFocusableInTouchMode(false);
+
+            validDate = false;
+        }
+
+        findViewById(R.id.edit_date_year).setActivated(!isValidYear());
+        findViewById(R.id.edit_date_month).setActivated(!isValidMonth());
+        findViewById(R.id.edit_date_day).setActivated(!isValidDay());
+        return validDate;
+    }
+
+    private boolean isValidYear() {
+        return dateYear.getText() != null
+                && dateYear.getText().toString().matches(DataTag.DATE_PATTERN.toString())
+                && Integer.parseInt(dateYear.getText().toString()) <= Calendar.getInstance().get(Calendar.YEAR);
+    }
+
+    private boolean isValidMonth() {
+        return dateMonth.getText() != null
+                && dateMonth.getText().toString().matches(DataTag.DATE_PATTERN.toString())
+                && Integer.parseInt(dateMonth.getText().toString()) <= (Calendar.getInstance().get(Calendar.MONTH) + 1);
+    }
+
+    private boolean isValidDay() {
+        return dateDay.getText() != null
+                && dateDay.getText().toString().matches(DataTag.DATE_PATTERN.toString())
+                && Integer.parseInt(dateDay.getText().toString()) <= Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+    }
+
+    private boolean isValidDate() {
+        return isValidYear() && isValidMonth() && isValidDay();
+    }
+
+    private boolean checkPhotos() {
+        if (newImages.size() + artifactViewModel.getArtifactStaticImages(artifact.getId()).size() == 0) {
+            final TextView recyclerViewFrame = findViewById(R.id.recyclerview_frame);
+            recyclerViewFrame.setActivated(true);
+
+            TextView photoTitle = findViewById(R.id.add_page_photo_title);
+            photoTitle.setFocusableInTouchMode(true);
+            photoTitle.requestFocus();
+            photoTitle.setFocusableInTouchMode(false);
+
+            Toast toast = Toast.makeText(getApplicationContext(), "Must upload at least 1 photo!", Toast.LENGTH_SHORT);
+            toast.show();
+//
+//            final Handler handler = new Handler();
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    recyclerViewFrame.setActivated(false);
+//                }
+//            }, 500);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkDescription() {
+        return true;
+    }
+
+    private boolean checkVideo() {
+        return true;
+    }
+
 }
