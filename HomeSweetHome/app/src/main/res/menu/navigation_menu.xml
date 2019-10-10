@@ -11,4 +11,9 @@
         android:id="@+id/nav_search"
         android:icon="@android:drawable/ic_dialog_dialer"
         android:title="@string/nav_search" />
+
+    <item
+        android:id="@+id/nav_timeline"
+        android:icon="@android:drawable/ic_dialog_dialer"
+        android:title="@string/nav_timeline" />
 </menu>
