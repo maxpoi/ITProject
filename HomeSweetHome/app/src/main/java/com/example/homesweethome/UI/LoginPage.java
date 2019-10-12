@@ -58,6 +58,7 @@ public class LoginPage extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                openMain();
                 String email = mTextEmail.getText().toString();
                 String password = mTextPassword.getText().toString();
                 if (!isEmailAddressValid(email)){

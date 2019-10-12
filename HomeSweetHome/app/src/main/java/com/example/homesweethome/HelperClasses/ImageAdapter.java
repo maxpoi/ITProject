@@ -86,8 +86,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(context, "try again", Toast.LENGTH_SHORT);
-                toast.show();
                 images.remove(position);
                 notifyItemRemoved(position);
             }
