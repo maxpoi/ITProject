@@ -4,6 +4,8 @@ import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
 import com.example.homesweethome.ArtifactDatabase.Entities.Image;
 import com.example.homesweethome.ViewModels.ArtifactListViewModel;
 import com.example.homesweethome.ViewModels.ArtifactViewModel;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +17,7 @@ public class SynchronizeHandler {
     //private StorageReference mStorageRef;
     private ArtifactListViewModel artifactListViewModel;
     private ArtifactViewModel artifactViewModel;
+    private StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
 
     SynchronizeHandler(ArtifactListViewModel artifactListViewModel,
                        ArtifactViewModel artifactViewModel){
@@ -25,6 +28,7 @@ public class SynchronizeHandler {
     public void uploadAll() throws JSONException {
         JSONObject jsonObject = new JSONObject();
         JSONArray artifactjsonArray = new JSONArray();
+        // Change all the artifact and their pictures to JSON one by one
         for(Artifact artifact : artifactListViewModel.getAllStaticArtifacts()) {
             JSONObject artifactJson = new JSONObject();
             artifactJson.put("artifact_id", artifact.getId());
@@ -36,8 +40,14 @@ public class SynchronizeHandler {
             artifactJson.put("artifact_cover", artifact.getCoverImagePath());
             artifactjsonArray.put(artifactJson);
 
+            // Change the pictures attached to this artifacts into JSON
             List<Image> images = artifactViewModel.getArtifactStaticImages(artifact.getId());
-
+            for (int i = 0; i < images.size(); i++) {
+                JSONObject imageJson = new JSONObject();
+                imageJson.put("image_id", images.get(i).getId());
+                imageJson.put("image_video", images.get(i).getArtifactId());
+                artifactjsonArray.put(imageJson);
+            }
         }
         jsonObject.put("forms", artifactjsonArray);
     }
