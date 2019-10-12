@@ -1,5 +1,6 @@
 package com.example.homesweethome.UI.register;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
@@ -19,6 +20,10 @@ import android.content.DialogInterface;
 
 import com.example.homesweethome.UI.LoginPage;
 import com.example.homesweethome.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterActivity extends AppCompatActivity {
     private MutableLiveData<RegisterFormState> mRegisterFormState = new MutableLiveData<>();
@@ -80,9 +85,31 @@ public class RegisterActivity extends AppCompatActivity {
                     //Intent MessageIntent = new Intent(RegisterActivity.this, RegisterFailActivity.class);
                     //startActivity(MessageIntent);
                 } else{
-                    // TODO: store input register data into database
-                    Intent MessageIntent = new Intent(RegisterActivity.this, RegisterSuccessDialog.class);
-                    startActivity(MessageIntent);
+//                    // TODO: store input register data into database
+                    Task<AuthResult> authResultTask = FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>(){
+
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        // there was an error
+                                        if (mTextPassword.length() < 6) {
+                                            mTextPassword.setError(getString(R.string.app_name));
+                                        }
+                                        else {
+//                                          Toast.makeText(getApplicationContext(), "afsedasdfsadfafsza", Toast.LENGTH_SHORT).show();
+                                            Intent MessageIntent = new Intent(RegisterActivity.this, RegisterSuccessActivity.class);
+                                            startActivity(MessageIntent);
+                                        }
+                                    }
+
+                                    else {
+                                        Intent intent = new Intent(RegisterActivity.this, RegisterFailActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }
+                            });
                 }
             }
         });
@@ -97,7 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(registerIntent);
             }
         });
-        // Jump to forget-password page
+        // Jump to login page
         mTextViewLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
