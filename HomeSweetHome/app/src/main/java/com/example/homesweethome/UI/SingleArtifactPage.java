@@ -35,6 +35,8 @@ public class SingleArtifactPage extends AppCompatActivity{
     private ArtifactViewModel artifactViewModel;
     private int artifactId;
 
+    private boolean enableDeletion = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +58,7 @@ public class SingleArtifactPage extends AppCompatActivity{
         LinearLayoutManager lm = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(lm);
 
-        final ImageAdapter ia = new ImageAdapter(getApplicationContext());
+        final ImageAdapter ia = new ImageAdapter(getApplicationContext(), enableDeletion);
         rv.setAdapter(ia);
 
         Intent intent = getIntent();

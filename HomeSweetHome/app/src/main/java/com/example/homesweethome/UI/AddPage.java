@@ -7,10 +7,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,8 +48,9 @@ public class AddPage extends AppCompatActivity {
     private final int REQUEST_INPUT_CODE = 3;
     private final int FIRST_ARTIFACT_ID = 0;
 
-    String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    String tag;
+    private String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private boolean enableDeletion = true;
+    private String tag;
 
     private Artifact artifact;
     private int artifactId;
@@ -84,7 +87,7 @@ public class AddPage extends AppCompatActivity {
         LinearLayoutManager lm = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(lm);
 
-        imageAdapter = new ImageAdapter(getApplicationContext());
+        imageAdapter = new ImageAdapter(getApplicationContext(), enableDeletion);
         recyclerView.setAdapter(imageAdapter);
 
         Intent intent = getIntent();
@@ -109,6 +112,16 @@ public class AddPage extends AppCompatActivity {
                 }
             });
         }
+
+//        ImageButton deleteImageButton = findViewById(R.id.delete_image_button);
+//        deleteImageButton.setVisibility(View.VISIBLE);
+//        deleteImageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast toast = Toast.makeText(getApplicationContext(), "Please give permissions to access.", Toast.LENGTH_SHORT);
+//                toast.show();
+//            }
+//        });
 
         // perform upload action
         Button uploadImageButton, uploadVideoButton;
@@ -318,19 +331,19 @@ public class AddPage extends AppCompatActivity {
     private void saveArtifact() {
         // set cell context
         String date = dateYear.getText().toString() + "/" + dateMonth.getText().toString() + "/" + dateDay.getText().toString();
+        newImages = imageAdapter.getImages();
 
         artifact.setTitle(title.getText().toString());
         artifact.setDesc(desc.getText().toString());
         artifact.setDate(date);
-
-        if (artifact.getCoverImagePath() == null) {
-            List<Image> artifactImages = artifactViewModel.getArtifactStaticImages(artifactId);
-            String coverImagePath = artifactImages.size() == 0 ? newImages.get(0).getLowResImagePath() : artifactImages.get(0).getLowResImagePath();
-            artifact.setCoverImagePath(coverImagePath);
-        }
+        artifact.setCoverImagePath(newImages.get(0).getLowResImagePath());
 
         artifactViewModel.addArtifact(artifact);
-        for (Image image : newImages) artifactViewModel.addImage(image);
+
+        artifactViewModel.deleteArtifactImages(artifactId);
+        ((HomeSweetHome)getApplication()).getImageProcessor().deleteImageListFromLocal(artifactId);
+        for(Image image : newImages) artifactViewModel.addImage(image);
+//        for (Image image : newImages) artifactViewModel.addImage(image);
 
         ((HomeSweetHome)getApplication()).getImageProcessor().saveImageListToLocal(newImages);
         ((HomeSweetHome)getApplication()).getImageProcessor().saveVideoToLocal(artifact.getId(), artifact.getVideo());
@@ -520,6 +533,21 @@ public class AddPage extends AppCompatActivity {
 
     private boolean checkVideo() {
         return true;
+    }
+
+    public void deleteImage(Image image, boolean fromArtifact) {
+        boolean deleted = false;
+
+        for(Image img : newImages) {
+            if (img.equals(image)) {
+                newImages.remove(img);
+                deleted = true;
+                break;
+            }
+        }
+
+        if (!deleted)
+            artifactViewModel.deleteImage(image);
     }
 
 }

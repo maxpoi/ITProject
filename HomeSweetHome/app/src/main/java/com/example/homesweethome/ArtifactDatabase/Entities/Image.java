@@ -3,6 +3,7 @@ package com.example.homesweethome.ArtifactDatabase.Entities;
 import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.*;
 
 @Entity(tableName = "Images", primaryKeys = {"id", "artifactId"})  // indices = {@Index(value = {"id", "artifactId"}, unique = true)}
@@ -85,4 +86,16 @@ public class Image {
 
     public void setOriginalPath(String path) { originalPath = path; }
     public String getOriginalPath() { return  originalPath; }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == this)
+            return true;
+
+        if (! (obj instanceof Image))
+            return false;
+
+        Image image = (Image) obj;
+        return image.id == this.id && image.artifactId == this.artifactId;
+    }
 }
