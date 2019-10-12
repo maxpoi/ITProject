@@ -1,5 +1,6 @@
 package com.example.homesweethome.UI;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -14,6 +15,11 @@ import android.widget.EditText;
 
 import com.example.homesweethome.R;
 import com.example.homesweethome.UI.register.*;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -60,9 +66,24 @@ public class LoginPage extends AppCompatActivity {
                 } else if (!isPasswordValid(password)){
                     failedByPassword();
                 } else{
+                    FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginPage.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Intent MessageIntent = new Intent(LoginPage.this, HomePage.class);
+                                startActivity(MessageIntent);
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                failedByDismatch();
+                            }
+
+                            // ...
+                        }
+                    });
                     // TODO: login data into database
-                    Intent MessageIntent = new Intent(LoginPage.this, HomePage.class);
-                    startActivity(MessageIntent);
+
                 }
             }
         });
@@ -154,6 +175,20 @@ public class LoginPage extends AppCompatActivity {
         AlertDialog alertDialog = new AlertDialog.Builder(LoginPage.this).create();
         alertDialog.setTitle("Invalid Password");
         alertDialog.setMessage("Password is invalid, please enter a password with length 6-20 contains only digits and letters.");
+
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    public void failedByDismatch(){
+        AlertDialog alertDialog = new AlertDialog.Builder(LoginPage.this).create();
+        alertDialog.setTitle("Dismatch Email and Password");
+        alertDialog.setMessage("Email and Password are not matched, please enter again");
 
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
