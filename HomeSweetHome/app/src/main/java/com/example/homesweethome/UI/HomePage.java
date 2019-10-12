@@ -109,7 +109,7 @@ public class HomePage extends AppCompatActivity
     private void openAddPage() {
         Intent intent = new Intent(getApplicationContext(), AddPage.class);
         intent.putExtra(DataTag.TAG.toString(), DataTag.ADD.toString());
-        intent.putExtra(DataTag.ARTIFACT_ID.toString(), new Random().nextInt());
+        intent.putExtra(DataTag.ARTIFACT_ID.toString(), artifactListViewModel.getLastArtifactId()+1);
         startActivity(intent);
     }
 

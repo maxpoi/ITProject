@@ -15,18 +15,20 @@ import java.util.List;
 public class ArtifactListViewModel extends AndroidViewModel {
 
     private LiveData<List<Artifact>> artifacts;
-    private LiveData<List<String>> images;
+    private LiveData<List<String>> coverImagesPathList;
     private ArtifactRepository artifactRepository;
 
     public ArtifactListViewModel(@NonNull Application application) {
         super(application);
         this.artifactRepository = ((HomeSweetHome)application).getRepository();
         artifacts = artifactRepository.getAllArtifacts();
-        images = artifactRepository.getHomeImages();
+        coverImagesPathList = artifactRepository.getCoverImagesPath();
     }
 
     public LiveData<List<Artifact>> getArtifacts() { return artifacts; }
-    public LiveData<List<String>> getHomeImages() { return images; }
+    public List<Artifact> getAllStaticArtifacts() { return artifactRepository.getAllStaticArtifacts(); }
+    public LiveData<List<String>> getCoverImagesPath() { return coverImagesPathList; }
+    public int getLastArtifactId() { return artifactRepository.getLastArtifactId(); }
 
     public LiveData<List<Artifact>> searchAllArtifacts(String query) { return artifactRepository.searchAllArtifacts(query); }
 }

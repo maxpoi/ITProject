@@ -9,7 +9,7 @@ import java.util.ArrayList;
 @Entity(tableName = "Artifacts")
 public class Artifact {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     private int id;
 
     private String video;
@@ -28,7 +28,7 @@ public class Artifact {
         initialize();
     }
 
-    public Artifact(int id, String video, String audio, String title, String date, String desc, String coverImagePath) {
+    public Artifact(int id, String video, String audio, String title, String date, String desc) {
         this.id = id;
         this.video = video;
         this.audio = audio;

@@ -11,7 +11,7 @@ import java.util.List;
 public interface ImageDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Long insert(Image image);
+    void insert(Image image);
 
     @Insert
     void  insertAll(List<Image> images);
@@ -25,6 +25,11 @@ public interface ImageDAO {
     @Query("SELECT * FROM Images WHERE artifactId = :artifactId")
     LiveData<List<Image>> getImages(int artifactId);
 
-    @Query("SELECT * FROM Images WHERE artifactID = :artifactId")
+    @Query("SELECT * FROM Images WHERE artifactId = :artifactId")
     List<Image> getStaticImages(int artifactId);
+
+    @Query("SELECT id FROM Images WHERE artifactId = :artifactId ORDER BY id DESC LIMIT 1")
+    int getLastImageId(int artifactId);
+
+
 }

@@ -80,6 +80,9 @@ public class SingleArtifactPage extends AppCompatActivity{
         artifactViewModel.getArtifact().observe(this, new Observer<Artifact>() {
             @Override
             public void onChanged(Artifact artifact) {
+                if (artifact == null)
+                    return ;
+
                 if (bar != null) {
                     bar.setTitle(artifact.getTitle());
                     bar.setSubtitle(artifact.getDate());
@@ -87,7 +90,7 @@ public class SingleArtifactPage extends AppCompatActivity{
 
                 title_content.setText(artifact.getTitle());
                 date_content.setText(artifact.getDate());
-                desc_content.setText(artifact.getDesc());
+                desc_content.setText(artifact.getDesc() == null ? "NO TEXT DESCRIPTION" : artifact.getDesc());
 
                 if (artifact.getVideo() != null) {
                     Glide.with(getApplicationContext()).load(artifact.getVideo()).into(videoCover);

@@ -5,11 +5,9 @@ import android.graphics.Bitmap;
 import androidx.annotation.NonNull;
 import androidx.room.*;
 
-@Entity(tableName = "Images",
-    indices = {@Index(value = {"id", "artifactId"}, unique = true)})  // primaryKeys = {"id", "artifactId"}
+@Entity(tableName = "Images", primaryKeys = {"id", "artifactId"})  // indices = {@Index(value = {"id", "artifactId"}, unique = true)}
 public class Image {
 
-    @PrimaryKey(autoGenerate = true)
     private int id;
     private int artifactId;
 

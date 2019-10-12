@@ -17,6 +17,7 @@ import com.example.homesweethome.ArtifactDatabase.Entities.Image;
 import com.example.homesweethome.R;
 import com.example.homesweethome.UI.SingleImagePage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
@@ -79,6 +80,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     }
 
     public void addImage(Image image) {
+        if (images == null)
+            images = new ArrayList<>();
         this.images.add(image);
         notifyItemInserted(images.size()-1);
     }

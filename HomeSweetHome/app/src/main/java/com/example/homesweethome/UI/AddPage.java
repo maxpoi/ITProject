@@ -4,22 +4,16 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
-import android.text.Editable;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,8 +35,6 @@ import com.example.homesweethome.HelperClasses.ImageProcessor;
 import com.example.homesweethome.R;
 import com.example.homesweethome.ViewModels.ArtifactViewModel;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -52,12 +44,17 @@ public class AddPage extends AppCompatActivity {
     private final int REQUEST_LOAD_IMAGE_CODE = 1;
     private final int REQUEST_LOAD_VIDEO_CODE = 2;
     private final int REQUEST_INPUT_CODE = 3;
+    private final int FIRST_ARTIFACT_ID = 0;
+
     String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    String tag;
 
     private Artifact artifact;
-    private ArtifactViewModel artifactViewModel;
+    private int artifactId;
     private List<Image> newImages;
+    private int nextImageId;
 
+    private ArtifactViewModel artifactViewModel;
     private ImageAdapter imageAdapter;
     private boolean saveButtonPressed = false;
     private Uri uriImage, uriVideo;
@@ -91,22 +88,27 @@ public class AddPage extends AppCompatActivity {
         recyclerView.setAdapter(imageAdapter);
 
         Intent intent = getIntent();
-        final String tag = intent.getStringExtra(DataTag.TAG.toString());
-        artifact = new Artifact(intent.getIntExtra(DataTag.ARTIFACT_ID.toString(), 0));
+        tag = intent.getStringExtra(DataTag.TAG.toString());
+        artifactId = intent.getIntExtra(DataTag.ARTIFACT_ID.toString(), FIRST_ARTIFACT_ID);
+
+        artifact = new Artifact(artifactId);
         newImages = new ArrayList<>();
+        nextImageId = 0;
 
-        ArtifactViewModel.ArtifactViewModelFactory artifactViewModelFactory = new ArtifactViewModel.ArtifactViewModelFactory(getApplication(), artifact.getId());
+        ArtifactViewModel.ArtifactViewModelFactory artifactViewModelFactory = new ArtifactViewModel.ArtifactViewModelFactory(getApplication(), artifactId);
         artifactViewModel = new ViewModelProvider(this, artifactViewModelFactory).get(ArtifactViewModel.class);
-        artifactViewModel.getArtifactImages().observe(this, new Observer<List<Image>>() {
-            @Override
-            public void onChanged(List<Image> images) {
-                imageAdapter.setImages(images);
-            }
-        });
 
-        Artifact staticArtifact = artifactViewModel.getStaticArtifact(artifact.getId());
-        if (staticArtifact != null)
-            artifact = new Artifact(staticArtifact);
+        if (tag.equals(DataTag.ADD.toString())) {
+            imageAdapter.setImages(null);
+        } else {
+            nextImageId += artifactViewModel.getLastImageId(artifactId) + 1;
+            artifactViewModel.getArtifactImages().observe(this, new Observer<List<Image>>() {
+                @Override
+                public void onChanged(List<Image> images) {
+                    imageAdapter.setImages(images);
+                }
+            });
+        }
 
         // perform upload action
         Button uploadImageButton, uploadVideoButton;
@@ -140,29 +142,31 @@ public class AddPage extends AppCompatActivity {
         dateDay = findViewById(R.id.edit_date_day);
         videoCover = findViewById(R.id.add_page_video);
 
-        artifactViewModel.getArtifact().observe(this, new Observer<Artifact>() {
-            @Override
-            public void onChanged(Artifact artifact) {
-                if (artifact != null) {
-                    title.setText(artifact.getTitle());
-                    desc.setText(artifact.getDesc());
+        if (tag.equals(DataTag.EDIT.toString())) {
+            artifactViewModel.getArtifact().observe(this, new Observer<Artifact>() {
+                @Override
+                public void onChanged(Artifact artifact) {
+                    if (artifact != null) {
+                        title.setText(artifact.getTitle());
+                        desc.setText(artifact.getDesc());
 
-                    String date = artifact.getDate();
-                    if (date != null) {
-                        String[] dates = date.split("/");
-                        dateYear.setText(dates[0]);
-                        dateMonth.setText(dates[1]);
-                        dateDay.setText(dates[2]);
-                    }
+                        String date = artifact.getDate();
+                        if (date != null) {
+                            String[] dates = date.split("/");
+                            dateYear.setText(dates[0]);
+                            dateMonth.setText(dates[1]);
+                            dateDay.setText(dates[2]);
+                        }
 
-                    if (artifact.getVideo() != null) {
-                        videoCover.setVisibility(View.VISIBLE);
-                        Glide.with(getApplicationContext()).load(artifact.getVideo()).into(videoCover);
-                        findViewById(R.id.add_page_video_background).setVisibility(View.INVISIBLE);
+                        if (artifact.getVideo() != null) {
+                            videoCover.setVisibility(View.VISIBLE);
+                            Glide.with(getApplicationContext()).load(artifact.getVideo()).into(videoCover);
+                            findViewById(R.id.add_page_video_background).setVisibility(View.INVISIBLE);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
 
         desc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -307,17 +311,23 @@ public class AddPage extends AppCompatActivity {
     private void openSingleArtifactPage() {
         Intent intent;
         intent = new Intent(this, SingleArtifactPage.class);
-        intent.putExtra(DataTag.ARTIFACT_ID.toString(), artifact.getId());
+        intent.putExtra(DataTag.ARTIFACT_ID.toString(), artifactId);
         startActivity(intent);
     }
 
     private void saveArtifact() {
         // set cell context
+        String date = dateYear.getText().toString() + "/" + dateMonth.getText().toString() + "/" + dateDay.getText().toString();
+
         artifact.setTitle(title.getText().toString());
         artifact.setDesc(desc.getText().toString());
-
-        String date = dateYear.getText().toString() + "/" + dateMonth.getText().toString() + "/" + dateDay.getText().toString();
         artifact.setDate(date);
+
+        if (artifact.getCoverImagePath() == null) {
+            List<Image> artifactImages = artifactViewModel.getArtifactStaticImages(artifactId);
+            String coverImagePath = artifactImages.size() == 0 ? newImages.get(0).getLowResImagePath() : artifactImages.get(0).getLowResImagePath();
+            artifact.setCoverImagePath(coverImagePath);
+        }
 
         artifactViewModel.addArtifact(artifact);
         for (Image image : newImages) artifactViewModel.addImage(image);
@@ -327,11 +337,18 @@ public class AddPage extends AppCompatActivity {
     }
 
     private void createImage() {
-        final String folderPath = ImageProcessor.PARENT_FOLDER_PATH + artifact.getId();
+        String folderPath = ImageProcessor.PARENT_FOLDER_PATH + artifactId;
 
-        int imageId =  artifactViewModel.getArtifactStaticImages(artifact.getId()).size() + newImages.size();
+        int imageId = nextImageId;
+//        if (tag.equals(DataTag.ADD.toString())) {
+//            imageId = artifactViewModel.getLastImageId(artifactId);
+//        }
         final Image image = new Image(imageId);
-        image.setArtifactId(artifact.getId());
+        image.setArtifactId(artifactId);
+
+        image.setLowResImagePath(folderPath + ImageProcessor.LOW_RES_IMAGE_FOLDER_NAME + imageId + ImageProcessor.IMAGE_TYPE);
+        image.setMediumResImagePath(folderPath + ImageProcessor.MEDIUM_RES_IMAGE_FOLDER_NAME + imageId + ImageProcessor.IMAGE_TYPE);
+        image.setHighResImagePath(folderPath + ImageProcessor.HIGH_RES_IMAGE_FOLDER_NAME + imageId + ImageProcessor.IMAGE_TYPE);
 
         // https://androidclarified.com/pick-image-gallery-camera-android/
         String[] filePathColumn = { MediaStore.Images.Media.DATA };
@@ -345,24 +362,15 @@ public class AddPage extends AppCompatActivity {
         String filePath = cursor.getString(columnIndex);
         cursor.close();
 
-//        String filePath = uriImage.getPath();
-        image.setLowResImagePath(folderPath + ImageProcessor.LOW_RES_IMAGE_FOLDER_NAME + imageId + ImageProcessor.IMAGE_TYPE);
-        image.setMediumResImagePath(folderPath + ImageProcessor.MEDIUM_RES_IMAGE_FOLDER_NAME + imageId + ImageProcessor.IMAGE_TYPE);
-        image.setHighResImagePath(folderPath + ImageProcessor.HIGH_RES_IMAGE_FOLDER_NAME + imageId + ImageProcessor.IMAGE_TYPE);
-
         image.setLowImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
         image.setMediumImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToMediumBitmap(filePath));
         image.setHighImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToHighBitmap(filePath));
 
         image.setOriginalPath(filePath);
 
-        if (artifact.getCoverImagePath() == null) {
-            artifact.setCoverImagePath(image.getLowResImagePath());
-        }
-
         newImages.add(image);
         imageAdapter.addImage(image);
-        findViewById(R.id.recyclerview_frame).setActivated(false);
+        nextImageId += 1;
     }
 
     private void uploadVideo() {
@@ -431,32 +439,54 @@ public class AddPage extends AppCompatActivity {
             validDate = false;
         }
 
+        // will be activated if not valid
         findViewById(R.id.edit_date_year).setActivated(!isValidYear());
         findViewById(R.id.edit_date_month).setActivated(!isValidMonth());
         findViewById(R.id.edit_date_day).setActivated(!isValidDay());
+        findViewById(R.id.edit_date_day).setActivated(isFutureDate());
         return validDate;
     }
 
     private boolean isValidYear() {
         return dateYear.getText() != null
                 && dateYear.getText().toString().matches(DataTag.DATE_PATTERN.toString())
+                && Integer.parseInt(dateYear.getText().toString()) >= Calendar.YEAR
                 && Integer.parseInt(dateYear.getText().toString()) <= Calendar.getInstance().get(Calendar.YEAR);
     }
 
     private boolean isValidMonth() {
         return dateMonth.getText() != null
                 && dateMonth.getText().toString().matches(DataTag.DATE_PATTERN.toString())
-                && Integer.parseInt(dateMonth.getText().toString()) <= (Calendar.getInstance().get(Calendar.MONTH) + 1);
+                && Integer.parseInt(dateMonth.getText().toString()) <= Calendar.DECEMBER+1
+                && Integer.parseInt(dateMonth.getText().toString()) > 0;
     }
 
     private boolean isValidDay() {
         return dateDay.getText() != null
                 && dateDay.getText().toString().matches(DataTag.DATE_PATTERN.toString())
-                && Integer.parseInt(dateDay.getText().toString()) <= Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+                && Integer.parseInt(dateDay.getText().toString()) <= Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH)
+                &&  Integer.parseInt(dateDay.getText().toString()) > 0;
+    }
+
+    private boolean isFutureDate() {
+        if (dateYear.getText() != null && dateMonth.getText() != null && dateDay.getText() != null) {
+            if (Integer.parseInt(dateYear.getText().toString()) > Calendar.getInstance().get(Calendar.YEAR))
+                return true;
+
+            if (Integer.parseInt(dateYear.getText().toString()) == Calendar.getInstance().get(Calendar.YEAR)) {
+                if (Integer.parseInt(dateMonth.getText().toString()) > (Calendar.getInstance().get(Calendar.MONTH) + 1))
+                    return true;
+
+                if (Integer.parseInt(dateMonth.getText().toString()) == (Calendar.getInstance().get(Calendar.MONTH) + 1)) {
+                    return (Integer.parseInt(dateDay.getText().toString()) > Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                }
+            }
+        }
+        return false;
     }
 
     private boolean isValidDate() {
-        return isValidYear() && isValidMonth() && isValidDay();
+        return isValidYear() && isValidMonth() && isValidDay() && !isFutureDate();
     }
 
     private boolean checkPhotos() {
