@@ -1,5 +1,9 @@
 package com.example.homesweethome.HelperClasses;
 
+import android.app.ExpandableListActivity;
+import android.net.Uri;
+import android.provider.ContactsContract;
+
 import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
 import com.example.homesweethome.ArtifactDatabase.Entities.Image;
 import com.example.homesweethome.ViewModels.ArtifactListViewModel;
@@ -11,19 +15,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.io.Writer;
 import java.util.List;
 
 public class SynchronizeHandler {
-    //private StorageReference mStorageRef;
-    private ArtifactListViewModel artifactListViewModel;
-    private ArtifactViewModel artifactViewModel;
-    private StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
+    private static ArtifactListViewModel artifactListViewModel;
+    private static ArtifactViewModel artifactViewModel;
+    private static StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+    private static String email;
 
-    SynchronizeHandler(ArtifactListViewModel artifactListViewModel,
-                       ArtifactViewModel artifactViewModel){
-        this.artifactListViewModel = artifactListViewModel;
-        this.artifactViewModel = artifactViewModel;
-    }
+//    SynchronizeHandler(ArtifactListViewModel artifactListViewModel,
+//                       ArtifactViewModel artifactViewModel){
+//        this.artifactListViewModel = artifactListViewModel;
+//        this.artifactViewModel = artifactViewModel;
+//    }
 
     public void uploadAll() throws JSONException {
         JSONObject jsonObject = new JSONObject();
@@ -52,7 +60,49 @@ public class SynchronizeHandler {
         jsonObject.put("forms", artifactjsonArray);
     }
 
-    public void createReference() {
 
+    public static boolean uploadUserProfile(String email){
+        setEmail("13171209963@163.com");
+        boolean isSuccessful = uploadFile(SynchronizeHandler.email + "/" + "databases/",
+                new File(ImageProcessor.DATABASE_PATH));
+        isSuccessful = isSuccessful && uploadFile(SynchronizeHandler.email + "/" + "files",
+                new File(ImageProcessor.PARENT_FOLDER_PATH));
+        return isSuccessful;
+    }
+
+    private static void setEmail(String email){
+        SynchronizeHandler.email = email;
+    }
+
+
+
+    private static boolean uploadFile(String curPath, File file) {
+        File[] fileList = file.listFiles();
+        boolean isSuccessful = true;
+        try {
+            if(fileList.length == 0){
+                // TODO: create empty directory???
+            }
+
+            for (File subFile : fileList) {
+                System.out.println(subFile.getName());
+                if (subFile.isDirectory()) {
+                    isSuccessful = isSuccessful && uploadFile(curPath + subFile.getName() + "/", subFile);
+                }
+                if (subFile.isFile()) {
+                    StorageReference curRef = storageRef.child(curPath + subFile.getName());
+                    System.out.println("current path is :" + curRef.getPath());
+                    Uri FileUri = Uri.fromFile(subFile);
+                    curRef.putFile(FileUri);
+                }
+            }
+            return isSuccessful;
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            isSuccessful = false;
+        }
+        return isSuccessful;
     }
 }
