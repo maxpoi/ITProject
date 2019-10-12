@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.example.homesweethome.UI.LoginPage;
 import com.example.homesweethome.R;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class RetrievePasswordActivity extends AppCompatActivity implements View.OnClickListener{
 
     EditText mTextEmail;
@@ -79,6 +81,7 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
                 } else if (emailNotRegistered(email)) {
                     failedByNotRegistered();
                 } else {
+//                    FirebaseAuth.getInstance().
                     Intent registerIntent = new Intent(RetrievePasswordActivity.this, EmailValidationActivity.class);
                     startActivity(registerIntent);
                 }

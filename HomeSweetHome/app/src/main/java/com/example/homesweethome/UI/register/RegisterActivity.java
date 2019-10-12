@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
                     //startActivity(MessageIntent);
                 } else{
 //                    // TODO: store input register data into database
-                    Task<AuthResult> authResultTask = FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>(){
 
                                 @Override
@@ -97,7 +97,6 @@ public class RegisterActivity extends AppCompatActivity {
                                             mTextPassword.setError(getString(R.string.app_name));
                                         }
                                         else {
-//                                          Toast.makeText(getApplicationContext(), "afsedasdfsadfafsza", Toast.LENGTH_SHORT).show();
                                             Intent MessageIntent = new Intent(RegisterActivity.this, RegisterSuccessActivity.class);
                                             startActivity(MessageIntent);
                                         }
