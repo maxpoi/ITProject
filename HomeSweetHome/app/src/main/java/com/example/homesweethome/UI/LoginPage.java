@@ -58,33 +58,40 @@ public class LoginPage extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMain();
-//                String email = mTextEmail.getText().toString();
-//                String password = mTextPassword.getText().toString();
-//                if (!isEmailAddressValid(email)){
-//                    failedByEmail();
-//                } else if (!isPasswordValid(password)){
-//                    failedByPassword();
-//                } else{
-//                    FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginPage.this, new OnCompleteListener<AuthResult>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<AuthResult> task) {
-//                            if (task.isSuccessful()) {
-//                                Intent MessageIntent = new Intent(LoginPage.this, HomePage.class);
-//                                startActivity(MessageIntent);
-//                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//
-//                            } else {
-//                                // If sign in fails, display a message to the user.
-//                                failedByDismatch();
-//                            }
-//
-//                            // ...
-//                        }
-//                    });
-//                    // TODO: login data into database
-//
-//                }
+                String email = mTextEmail.getText().toString();
+                String password = mTextPassword.getText().toString();
+                if (!isEmailAddressValid(email)){
+                    failedByEmail();
+                } else if (!isPasswordValid(password)){
+                    failedByPassword();
+                } else{
+                    FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginPage.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                assert user != null;
+                                if(user.isEmailVerified()){
+                                    Intent MessageIntent = new Intent(LoginPage.this, HomePage.class);
+                                    startActivity(MessageIntent);
+                                }
+                                else{
+                                    user.sendEmailVerification();
+                                    failedByNotVerified();
+                                }
+
+
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                failedByDismatch();
+                            }
+
+                            // ...
+                        }
+                    });
+                    // TODO: login data into database
+
+                }
             }
         });
 
@@ -189,6 +196,21 @@ public class LoginPage extends AppCompatActivity {
         AlertDialog alertDialog = new AlertDialog.Builder(LoginPage.this).create();
         alertDialog.setTitle("Dismatch Email and Password");
         alertDialog.setMessage("Email and Password are not matched, please enter again");
+
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    public void failedByNotVerified(){
+        AlertDialog alertDialog = new AlertDialog.Builder(LoginPage.this).create();
+        alertDialog.setTitle("Account Is Not Verified");
+        alertDialog.setMessage("Account Is Not Verified, We just send a " +
+                "verification email to you, please go to verify it");
 
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
