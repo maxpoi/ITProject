@@ -73,6 +73,7 @@ public class LoginPage extends AppCompatActivity {
                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                 assert user != null;
                                 if(user.isEmailVerified()){
+
                                     Intent MessageIntent = new Intent(LoginPage.this, HomePage.class);
                                     startActivity(MessageIntent);
                                 }
@@ -80,17 +81,12 @@ public class LoginPage extends AppCompatActivity {
                                     user.sendEmailVerification();
                                     failedByNotVerified();
                                 }
-
-
                             } else {
                                 // If sign in fails, display a message to the user.
                                 failedByDismatch();
                             }
-
-                            // ...
                         }
                     });
-                    // TODO: login data into database
 
                 }
             }
