@@ -62,7 +62,9 @@ public class SynchronizeHandler {
 
 
     public static boolean uploadUserProfile(String email){
-        setEmail("13171209963@163.com");
+
+
+        setEmail(email);
         boolean isSuccessful = uploadFile(SynchronizeHandler.email + "/" + "databases/",
                 new File(ImageProcessor.DATABASE_PATH));
         isSuccessful = isSuccessful && uploadFile(SynchronizeHandler.email + "/" + "files",
@@ -106,3 +108,4 @@ public class SynchronizeHandler {
         return isSuccessful;
     }
 }
+
