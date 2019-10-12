@@ -1,7 +1,8 @@
 # ITProject
 
 
-git pull \d /d \r /r \n /n
+git pull 
+
 git branch your-branch-name
 git checkout your-branch-name
 --- do your work ---
