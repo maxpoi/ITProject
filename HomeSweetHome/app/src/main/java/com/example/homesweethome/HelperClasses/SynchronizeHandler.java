@@ -82,7 +82,6 @@ public class SynchronizeHandler {
             }
 
             for (File subFile : fileList) {
-                System.out.println(subFile.getName());
                 if (subFile.isDirectory()) {
                     isSuccessful = isSuccessful && uploadFile(curPath + subFile.getName() + "/", subFile);
                 }
@@ -110,14 +109,10 @@ public class SynchronizeHandler {
             public void onComplete(@NonNull Task<ListResult> task) {
                 ArrayList<StorageReference> prefixesRefs = (ArrayList<StorageReference>) task.getResult().getPrefixes();
                 for (StorageReference curRef : prefixesRefs) {
-                    System.out.println("prefixs refs: " + curRef.getPath());
                     downloadFile(curPath + curRef.getName() + "/", curRef);
                 }
                 ArrayList<StorageReference> itemsRefs = (ArrayList<StorageReference>) task.getResult().getItems();
                 for (StorageReference curRef : itemsRefs) {
-                    System.out.println("prefixs items: " + curRef.getPath());
-                    String[] seperatedFileName = curRef.getName().split("\\.",2);
-                    System.out.println(Arrays.toString(seperatedFileName));
                     try {
                         File directory = new File(curPath);
                         checkDirectory(directory);
@@ -139,7 +134,6 @@ public class SynchronizeHandler {
 
     private static void checkDirectory(File tempFile) throws Exception {
         if(!tempFile.exists()){
-            System.out.println("current file is not existed");
             if(!tempFile.mkdirs()){
                 throw new Exception("create directory fail");
             }
