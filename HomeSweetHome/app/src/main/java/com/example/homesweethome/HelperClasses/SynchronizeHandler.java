@@ -4,11 +4,20 @@ import android.app.ExpandableListActivity;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
+import androidx.annotation.NonNull;
+
 import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
 import com.example.homesweethome.ArtifactDatabase.Entities.Image;
 import com.example.homesweethome.ViewModels.ArtifactListViewModel;
 import com.example.homesweethome.ViewModels.ArtifactViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONException;
@@ -17,72 +26,58 @@ import org.json.JSONArray;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SynchronizeHandler {
-    private static ArtifactListViewModel artifactListViewModel;
-    private static ArtifactViewModel artifactViewModel;
-    private static StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-    private static String email;
+    private static SynchronizeHandler instance = null;
 
-//    SynchronizeHandler(ArtifactListViewModel artifactListViewModel,
-//                       ArtifactViewModel artifactViewModel){
-//        this.artifactListViewModel = artifactListViewModel;
-//        this.artifactViewModel = artifactViewModel;
-//    }
+    private ArtifactListViewModel artifactListViewModel;
+    private ArtifactViewModel artifactViewModel;
+    private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+    private String email;
 
-    public void uploadAll() throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-        JSONArray artifactjsonArray = new JSONArray();
-        // Change all the artifact and their pictures to JSON one by one
-        for(Artifact artifact : artifactListViewModel.getAllStaticArtifacts()) {
-            JSONObject artifactJson = new JSONObject();
-            artifactJson.put("artifact_id", artifact.getId());
-            artifactJson.put("artifact_video", artifact.getVideo());
-            artifactJson.put("artifact_audio", artifact.getAudio());
-            artifactJson.put("artifact_date", artifact.getDate());
-            artifactJson.put("artifact_desc", artifact.getDesc());
-            artifactJson.put("artifact_title", artifact.getTitle());
-            artifactJson.put("artifact_cover", artifact.getCoverImagePath());
-            artifactjsonArray.put(artifactJson);
+    private SynchronizeHandler(){}
 
-            // Change the pictures attached to this artifacts into JSON
-            List<Image> images = artifactViewModel.getArtifactStaticImages(artifact.getId());
-            for (int i = 0; i < images.size(); i++) {
-                JSONObject imageJson = new JSONObject();
-                imageJson.put("image_id", images.get(i).getId());
-                imageJson.put("image_video", images.get(i).getArtifactId());
-                artifactjsonArray.put(imageJson);
-            }
+    public static SynchronizeHandler getInstance(){
+        if(instance == null){
+            instance = new SynchronizeHandler();
         }
-        jsonObject.put("forms", artifactjsonArray);
+        return instance;
     }
 
-
-    public static boolean uploadUserProfile(String email){
-
+    public boolean uploadUser(String email){
 
         setEmail(email);
-        boolean isSuccessful = uploadFile(SynchronizeHandler.email + "/" + "databases/",
+        boolean isSuccessful = uploadFile(this.email + "/" + "databases/",
                 new File(ImageProcessor.DATABASE_PATH));
-        isSuccessful = isSuccessful && uploadFile(SynchronizeHandler.email + "/" + "files",
+        isSuccessful = isSuccessful && uploadFile(this.email + "/" + "files/",
                 new File(ImageProcessor.PARENT_FOLDER_PATH));
         return isSuccessful;
     }
 
-    private static void setEmail(String email){
-        SynchronizeHandler.email = email;
+    public boolean downloadUser(String email){
+
+        setEmail(email);
+        return downloadFile(ImageProcessor.SHARED_PATH, storageRef.child(this.email));
+    }
+
+    private void setEmail(String email){
+        this.email = email;
     }
 
 
 
-    private static boolean uploadFile(String curPath, File file) {
+    private boolean uploadFile(String curPath, File file) {
         File[] fileList = file.listFiles();
         boolean isSuccessful = true;
         try {
             if(fileList.length == 0){
+                StorageReference curRef = storageRef.child(curPath);
                 // TODO: create empty directory???
             }
 
@@ -93,7 +88,6 @@ public class SynchronizeHandler {
                 }
                 if (subFile.isFile()) {
                     StorageReference curRef = storageRef.child(curPath + subFile.getName());
-                    System.out.println("current path is :" + curRef.getPath());
                     Uri FileUri = Uri.fromFile(subFile);
                     curRef.putFile(FileUri);
                 }
@@ -107,5 +101,63 @@ public class SynchronizeHandler {
         }
         return isSuccessful;
     }
+
+
+    private boolean downloadFile(final String curPath, StorageReference ref){
+        boolean isSuccessful = true;
+        ref.listAll().addOnCompleteListener(new OnCompleteListener<ListResult>() {
+            @Override
+            public void onComplete(@NonNull Task<ListResult> task) {
+                ArrayList<StorageReference> prefixesRefs = (ArrayList<StorageReference>) task.getResult().getPrefixes();
+                for (StorageReference curRef : prefixesRefs) {
+                    System.out.println("prefixs refs: " + curRef.getPath());
+                    downloadFile(curPath + curRef.getName() + "/", curRef);
+                }
+                ArrayList<StorageReference> itemsRefs = (ArrayList<StorageReference>) task.getResult().getItems();
+                for (StorageReference curRef : itemsRefs) {
+                    System.out.println("prefixs items: " + curRef.getPath());
+                    String[] seperatedFileName = curRef.getName().split("\\.",2);
+                    System.out.println(Arrays.toString(seperatedFileName));
+                    try {
+                        File directory = new File(curPath);
+                        checkDirectory(directory);
+                        File tempFile = new File(curPath + curRef.getName());
+                        checkFile(tempFile);
+                        curRef.getFile(tempFile);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+            }
+        });
+
+
+        return false;
+    }
+
+    private static void checkDirectory(File tempFile) throws Exception {
+        if(!tempFile.exists()){
+            System.out.println("current file is not existed");
+            if(!tempFile.mkdirs()){
+                throw new Exception("create directory fail");
+            }
+        }
+    }
+
+    private static void checkFile(File tempFile) throws Exception {
+        if(tempFile.exists()){
+            if(!tempFile.delete()){
+                throw new Exception("delete old file fail");
+            }
+        }
+        if(!tempFile.createNewFile()){
+            throw new Exception("create file fail");
+        }
+    }
+
+
+
 }
 

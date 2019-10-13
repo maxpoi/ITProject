@@ -32,6 +32,7 @@ public class ImageProcessor {
     // parent folder path + artifact_id + resolution_type + image_id + image_type
     public static String PARENT_FOLDER_PATH;
     public static String DATABASE_PATH = "/data/user/0/com.example.homesweethome/databases/";
+    public static String SHARED_PATH = "/data/user/0/com.example.homesweethome/";
     public static String LOW_RES_IMAGE_FOLDER_NAME = "/low_image/";
     public static String MEDIUM_RES_IMAGE_FOLDER_NAME = "/medium_image/";
     public static String HIGH_RES_IMAGE_FOLDER_NAME = "/high_image/";
