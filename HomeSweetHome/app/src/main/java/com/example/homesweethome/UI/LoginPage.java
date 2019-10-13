@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.homesweethome.HelperClasses.SynchronizeHandler;
 import com.example.homesweethome.R;
 import com.example.homesweethome.UI.register.*;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -61,6 +62,7 @@ public class LoginPage extends AppCompatActivity {
 //                openMain();
                 String email = mTextEmail.getText().toString();
                 String password = mTextPassword.getText().toString();
+
                 if (!isEmailAddressValid(email)){
                     failedByEmail();
                 } else if (!isPasswordValid(password)){
