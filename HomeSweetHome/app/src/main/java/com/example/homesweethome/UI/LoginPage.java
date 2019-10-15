@@ -58,41 +58,41 @@ public class LoginPage extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                openMain();
-                String email = mTextEmail.getText().toString();
-                String password = mTextPassword.getText().toString();
-                if (!isEmailAddressValid(email)){
-                    failedByEmail();
-                } else if (!isPasswordValid(password)){
-                    failedByPassword();
-                } else{
-                    FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginPage.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                assert user != null;
-                                if(user.isEmailVerified()){
-                                    Intent MessageIntent = new Intent(LoginPage.this, HomePage.class);
-                                    startActivity(MessageIntent);
-                                }
-                                else{
-                                    user.sendEmailVerification();
-                                    failedByNotVerified();
-                                }
-
-
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                failedByDismatch();
-                            }
-
-                            // ...
-                        }
-                    });
-                    // TODO: login data into database
-
-                }
+                openMain();
+//                String email = mTextEmail.getText().toString();
+//                String password = mTextPassword.getText().toString();
+//                if (!isEmailAddressValid(email)){
+//                    failedByEmail();
+//                } else if (!isPasswordValid(password)){
+//                    failedByPassword();
+//                } else{
+//                    FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginPage.this, new OnCompleteListener<AuthResult>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<AuthResult> task) {
+//                            if (task.isSuccessful()) {
+//                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//                                assert user != null;
+//                                if(user.isEmailVerified()){
+//                                    Intent MessageIntent = new Intent(LoginPage.this, HomePage.class);
+//                                    startActivity(MessageIntent);
+//                                }
+//                                else{
+//                                    user.sendEmailVerification();
+//                                    failedByNotVerified();
+//                                }
+//
+//
+//                            } else {
+//                                // If sign in fails, display a message to the user.
+//                                failedByDismatch();
+//                            }
+//
+//                            // ...
+//                        }
+//                    });
+//                    // TODO: login data into database
+//
+//                }
             }
         });
 
