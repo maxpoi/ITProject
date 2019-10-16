@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;

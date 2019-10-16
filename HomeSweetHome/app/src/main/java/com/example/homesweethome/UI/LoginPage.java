@@ -2,6 +2,7 @@ package com.example.homesweethome.UI;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,6 +19,7 @@ import com.example.homesweethome.R;
 import com.example.homesweethome.UI.register.*;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.resources.MaterialResources;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -59,38 +61,38 @@ public class LoginPage extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                openMain();
-                String email = mTextEmail.getText().toString();
-                String password = mTextPassword.getText().toString();
-
-                if (!isEmailAddressValid(email)){
-                    failedByEmail();
-                } else if (!isPasswordValid(password)){
-                    failedByPassword();
-                } else{
-                    FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginPage.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                assert user != null;
-                                if(user.isEmailVerified()){
-
-                                    Intent MessageIntent = new Intent(LoginPage.this, HomePage.class);
-                                    startActivity(MessageIntent);
-                                }
-                                else{
-                                    user.sendEmailVerification();
-                                    failedByNotVerified();
-                                }
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                failedByDismatch();
-                            }
-                        }
-                    });
-
-                }
+                openMain();
+//            String email = mTextEmail.getText().toString();
+//            String password = mTextPassword.getText().toString();
+//
+//            if (!isEmailAddressValid(email)){
+//                failedByEmail();
+//            } else if (!isPasswordValid(password)){
+//                failedByPassword();
+//            } else{
+//                FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginPage.this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//                            assert user != null;
+//                            if(user.isEmailVerified()){
+//
+//                                Intent MessageIntent = new Intent(LoginPage.this, HomePage.class);
+//                                startActivity(MessageIntent);
+//                            }
+//                            else{
+//                                user.sendEmailVerification();
+//                                failedByNotVerified();
+//                            }
+//                        } else {
+//                            // If sign in fails, display a message to the user.
+//                            failedByDismatch();
+//                        }
+//                    }
+//                });
+//
+//            }
             }
         });
 

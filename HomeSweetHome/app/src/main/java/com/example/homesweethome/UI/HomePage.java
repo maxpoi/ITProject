@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -19,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
 import com.example.homesweethome.HelperClasses.ArtifactAdapter;
 import com.example.homesweethome.HelperClasses.DataTag;
+import com.example.homesweethome.HelperClasses.HomeSweetHome;
 import com.example.homesweethome.R;
 import com.example.homesweethome.UI.timeline.TimelineActivity;
 import com.example.homesweethome.ViewModels.ArtifactListViewModel;
@@ -26,7 +30,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
-import java.util.Random;
 
 public class HomePage extends AppCompatActivity
                   implements NavigationView.OnNavigationItemSelectedListener{
@@ -36,6 +39,7 @@ public class HomePage extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.nag_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,9 +77,19 @@ public class HomePage extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.navigation_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        toggle.setDrawerIndicatorEnabled(true);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        Switch darkModeSwitch = findViewById(R.id.dark_mode_switch);
+        darkModeSwitch.setChecked( ((HomeSweetHome)getApplication()).useDarkMode());
+        darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ((HomeSweetHome)getApplication()).setDarkMode(isChecked);
+            }
+        });
     }
 
     @Override

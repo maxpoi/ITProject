@@ -47,7 +47,7 @@
         <item name="android:textStyle">italic</item>
     </style>
 
-    <style name="Theme_Dialog" parent="@style/Theme.AppCompat.Dialog">
+    <style name="Theme_Dialog" parent="@style/Theme.AppCompat.DayNight.Dialog">
         ...
         <item name="android:windowBackground">@android:drawable/dialog_holo_light_frame</item>
         <item name="android:windowMinWidthMajor">97%</item>

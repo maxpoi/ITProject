@@ -15,6 +15,7 @@ import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GestureDetectorCompat;
 
 import com.example.homesweethome.HelperClasses.DataTag;
