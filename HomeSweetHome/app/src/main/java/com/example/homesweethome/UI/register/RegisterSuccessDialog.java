@@ -26,10 +26,14 @@ public class RegisterSuccessDialog  extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_background_dialog);
+       // setContentView(R.layout.activity_background_dialog);
 
         //TODO
-        button = (Button) findViewById(R.id.button_ok);
+
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.activity_background_dialog);
+        button = (Button) dialog.findViewById(R.id.button_ok);
+        dialog.show();
 
         // add button listener
         button.setOnClickListener(new OnClickListener() {

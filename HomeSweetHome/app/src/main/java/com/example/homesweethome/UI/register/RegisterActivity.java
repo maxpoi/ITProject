@@ -2,6 +2,7 @@ package com.example.homesweethome.UI.register;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
+import com.example.homesweethome.UI.HomePage;
 import com.example.homesweethome.UI.LoginPage;
 import com.example.homesweethome.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,13 +35,15 @@ public class RegisterActivity extends AppCompatActivity {
     EditText mTextPassword;
     EditText mTextCnfPassword;
     Button mButtonRegister;
-    TextView mTextViewLogin;
-    TextView mTextViewForgetPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        // return button on top left
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Register");
 
 /*
         // Find the activity_toolbar view inside the activity layout
@@ -58,8 +63,6 @@ public class RegisterActivity extends AppCompatActivity {
         mTextPassword = (EditText) findViewById(R.id.register_password);
         mTextCnfPassword = (EditText) findViewById(R.id.register_cfn_password);
         mButtonRegister = (Button) findViewById(R.id.button_register);
-        mTextViewLogin = (TextView) findViewById(R.id.textView1);
-        mTextViewForgetPassword = (TextView) findViewById(R.id.textView2);
 
         mTextEmail.addTextChangedListener(afterTextChangedListener);
         mTextPassword.addTextChangedListener(afterTextChangedListener);
@@ -74,18 +77,12 @@ public class RegisterActivity extends AppCompatActivity {
                 String cnfPassword = mTextCnfPassword.getText().toString();
                 if (!isEmailAddressValid(email)){
                     failedByEmail();
-                    //Intent MessageIntent = new Intent(RegisterActivity.this, RegisterFailActivity.class);
-                    //startActivity(MessageIntent);
                 } else if (!isPasswordValid(password)){
                     failedByPassword();
-                    //Intent MessageIntent = new Intent(RegisterActivity.this, RegisterFailActivity.class);
-                    //startActivity(MessageIntent);
                 } else if (!isCnfPasswordValid(password, cnfPassword)){
                     failedByCnfPassword();
-                    //Intent MessageIntent = new Intent(RegisterActivity.this, RegisterFailActivity.class);
-                    //startActivity(MessageIntent);
                 } else{
-//                    // TODO: store input register data into database
+                    // store input register data into database
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>(){
 
@@ -112,51 +109,23 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
-        // Jump to forget-password page
-        mTextViewForgetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent registerIntent = new Intent(RegisterActivity.this, RetrievePasswordActivity.class);
-                startActivity(registerIntent);
-            }
-        });
-        // Jump to login page
-        mTextViewLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent registerIntent = new Intent(RegisterActivity.this, LoginPage.class);
-                startActivity(registerIntent);
-            }
-        });
-
-
-        /*passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
-                }
-                return false;
-            }
-        });*/
-
-
-
     }
-/*
-    // Menu icons are inflated just as they were with actionbar
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                openLoginPage();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
-*/
+
+    private void openLoginPage() {
+        Intent intent = new Intent(getApplicationContext(), LoginPage.class);
+        startActivity(intent);
+    }
 
     TextWatcher afterTextChangedListener = new TextWatcher() {
         @Override
@@ -194,7 +163,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else {
             return false;
-            //return !email.trim().isEmpty();
         }
     }
 
@@ -215,7 +183,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else {
             return false;
-            //return !password.trim().isEmpty();
         }
     }
 

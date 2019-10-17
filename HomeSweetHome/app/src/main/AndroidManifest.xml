@@ -28,10 +28,11 @@
         <activity android:name=".UI.AddPage" />
         <activity android:name=".UI.SingleImagePage"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
-        <activity android:name=".UI.register.EmailValidationActivity" />
+        <activity android:name=".UI.register.ResetPasswordActivity" />
         <activity android:name=".UI.register.RegisterActivity" />
         <activity android:name=".UI.register.RegisterSuccessActivity" />
         <activity android:name=".UI.register.RetrievePasswordActivity" />
+        <activity android:name=".UI.timeline.TimelineAdaptor" />
         <activity android:name=".UI.timeline.TimelineActivity" />
         <activity android:name=".UI.register.RegisterSuccessDialog" />
         <activity android:name=".UI.SearchPage" />

@@ -20,7 +20,7 @@ public class RegisterSuccessActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_success);
 
         mButton = (Button) findViewById(R.id.button_return);
-        mText = (TextView) findViewById(R.id.textView1);
+        mText = (TextView) findViewById(R.id.register_success);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

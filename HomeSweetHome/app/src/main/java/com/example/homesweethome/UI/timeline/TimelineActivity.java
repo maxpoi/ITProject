@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -11,12 +12,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
 import com.example.homesweethome.HelperClasses.ImageProcessor;
+import com.example.homesweethome.UI.HomePage;
 import com.example.homesweethome.UI.LoginPage;
 import com.example.homesweethome.R;
 import com.example.homesweethome.ViewModels.ArtifactListViewModel;
@@ -28,37 +31,77 @@ import java.util.List;
 import java.util.Map;
 
 public class TimelineActivity extends AppCompatActivity {
-    //UserCache userCache = UserCache.getInstance();
+
     float axis = 7;
     final float pointSize = 100;
     final float width = 1440;
-    //float height = 2450;
     final float height = 7650;
     private ArtifactListViewModel artifactListViewModel;
     private List<Artifact> martifacts;
-    //private LinearLayout linearLayout;
     private FrameLayout linearLayout;
-    //private LinkedList<ImageButton> imageButtons;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline_old);
+
+        // return button on top left
+        final ActionBar bar = getSupportActionBar();
+        bar.setDisplayHomeAsUpEnabled(true);
+        bar.setTitle("Timeline");
+        bar.setDisplayHomeAsUpEnabled(true);
+
         artifactListViewModel = new ViewModelProvider(this).get(ArtifactListViewModel.class);
         artifactListViewModel.getArtifacts().observe(this, new Observer<List<Artifact>>() {
             @Override
             public void onChanged(List<Artifact> artifacts) {
-                createImageView(artifacts);
-                createButtonView(artifacts);
-                createTextView(artifacts);
+                if (artifacts!=null){
+                    generateTimeline(artifacts);
+                }
+                else{}
             }
         });
-
-
-        //createImageView();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                openHomePage();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
+    private void openHomePage() {
+        Intent intent = new Intent(getApplicationContext(), HomePage.class);
+        startActivity(intent);
+    }
+    public void generateTimeline(List<Artifact> artifacts){
+        createImageView(artifacts);
+        createButtonView(artifacts);
+        createTextView(artifacts);
+        generateStartingYear(artifacts);
+    }
+
+    public String getStartingYear(List<Artifact> martifacts){
+        if (martifacts == null){
+            return null;
+        }
+        String year = martifacts.get(0).getDate().substring(0,4);
+        return year;
+    }
+
+    // Dynamically generate the startin year to tell the user when the story started
+    public void generateStartingYear(List<Artifact> martifacts){
+        TextView start_year = (TextView)this.findViewById(R.id.starting_year);
+        String year = getStartingYear(martifacts);
+        start_year.setText(year);
+
+    }
+
+    // get the year from date of artifact
     public ArrayList<String> getYearFromDate(List<Artifact> martifacts){
         ArrayList<String> years = new ArrayList<String>();
         if (martifacts == null){
@@ -69,7 +112,6 @@ public class TimelineActivity extends AppCompatActivity {
         }
         return years;
     }
-
 
     // turn image path into bitmap
     public ArrayList<Bitmap> getBitmaps(List<Artifact> martifacts){
@@ -87,14 +129,12 @@ public class TimelineActivity extends AppCompatActivity {
         return bitmaps;
     }
 
-
+    // Generate images
     public void createImageView(List<Artifact> artifacts){
         if (artifacts == null){
             return ;
         }
         linearLayout = (FrameLayout)this.findViewById(R.id.timeline_f_layout);
-
-        //addImageButton();
 
         // testing algorithm of images
         ArrayList<Bitmap> bitmaps = new ArrayList<Bitmap>();
@@ -106,12 +146,11 @@ public class TimelineActivity extends AppCompatActivity {
         bitmaps = getBitmaps(artifacts);
 
         map = mappingYearInterval(years);
-        float margin = 10;
+        float margin = 5;
 
         ArrayList<Float> pointLocation = new ArrayList<Float>();
         pointLocation = initPoints(height, years, pointSize);
         if (pointLocation!=null){
-            System.out.println("PPPointLLLLLLLLLocation is "+pointLocation.toString());
         }
         timelineImages = createImageLocs(pointLocation, bitmaps, map, years, width, height, pointSize, margin);
 
@@ -156,6 +195,7 @@ public class TimelineActivity extends AppCompatActivity {
         return timelineImages;
     }
 
+    // remove duplicate years from a list of years
     public static ArrayList<String> removeDuplicate(ArrayList<String> years){
         ArrayList<String> arr = new ArrayList<String>();
         for (String year: years){
@@ -215,9 +255,8 @@ public class TimelineActivity extends AppCompatActivity {
         return map;
     }
 
-
+    // Generate buttons
     public void createButtonView(List<Artifact> artifacts){
-        System.out.println("???????????????????");
         if (artifacts == null){
             return ;
         }
@@ -240,8 +279,8 @@ public class TimelineActivity extends AppCompatActivity {
 
     }
 
+    // draw button
     public void addButton(float height, String year){
-        System.out.println("DRAW BUTTON!");
         Button btnShow = new Button(this);
         btnShow.setText(year);
         btnShow.setBackgroundColor(45);
@@ -260,22 +299,17 @@ public class TimelineActivity extends AppCompatActivity {
 
         // Add Button to LinearLayout
         if (linearLayout != null) {
-            System.out.println("kkkkkkkkkkkkkkkkkkkkk");
             linearLayout.addView(btnShow);
         }
     }
 
+    // generate points on the time line
     public ArrayList<Float> initPoints(Float height, ArrayList<String> years, float pointSize){
         //assert(years != null);
         if (years.size() == 0){
-            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
             return null;
         }
-        else{
-            System.out.println("0000000000000000000000000000000");
-        }
         Collections.sort(years);
-        System.out.println("Years is "+years.toString());
         String minYear_ = years.get(0);
         String maxYear_ = years.get(years.size() - 1);
         ArrayList<Float> points = new ArrayList<Float>();
@@ -285,12 +319,10 @@ public class TimelineActivity extends AppCompatActivity {
         }
         int minYear = Integer.parseInt(minYear_);
         int maxYear = Integer.parseInt(maxYear_);
-        //TODO: magic number
-        //float startHeight = 200;
         float initHeight = 100 + pointSize/2;
         float finalHeight = height - initHeight;
-        System.out.println("Final Height is -- " + finalHeight);
-        System.out.println("DuplicatedYears is -- " + getDuplicateYears(years));
+        //System.out.println("Final Height is -- " + finalHeight);
+        //System.out.println("DuplicatedYears is -- " + getDuplicateYears(years));
         float unit = (finalHeight - initHeight) / (maxYear - minYear + getDuplicateYears(years));
         Map<Integer,Integer> checkMap = new HashMap<Integer, Integer>();
         float accumulation = 0;
@@ -319,10 +351,10 @@ public class TimelineActivity extends AppCompatActivity {
                 // ignore
             }
         }
-        System.out.println("PPPPPPPPPoint is "+ points.toString());
         return points;
     }
 
+    // get years corresponding to the artifacts
     public int getDuplicateYears(ArrayList<String> years){
         int num = 0;
         Map<String, Integer> map = new HashMap<String, Integer>();
@@ -337,6 +369,7 @@ public class TimelineActivity extends AppCompatActivity {
         return num;
     }
 
+    // calculate what the image size should be
     public float getImageSize(float height, float pointSize, ArrayList<String> years, float margin){
         assert(years != null);
         Collections.sort(years);
@@ -352,13 +385,13 @@ public class TimelineActivity extends AppCompatActivity {
         float initHeight = 100 + pointSize/2;
         float finalHeight = height - initHeight;
         float unit = (finalHeight - initHeight) / (maxYear - minYear + getDuplicateYears(years));
-        System.out.println("UUUUUUUUUUUUUUUUUUUUUUunit is "+unit);
         if (unit - margin < 70){
             return 70;
         }
         return unit - margin;
     }
 
+    // Generate year texts
     public void createTextView(List<Artifact> artifacts){
         if (artifacts == null){
             return ;
@@ -382,6 +415,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     }
 
+    // write text
     public void addText(float height, String year){
         TextView textView = new TextView(this);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(300,190);

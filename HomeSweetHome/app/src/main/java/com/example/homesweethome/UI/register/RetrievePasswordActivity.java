@@ -4,11 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,26 +27,58 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
 
     EditText mTextEmail;
     Button mButtonValidation;
-    Button mButtonLogin;
-    Button mButtonRegister;
+    private Button dialogButton;
+    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_retrieve_password);
-
+        setContentView(R.layout.activity_email_validation_);
+        // return button on top left
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Retrieve Password");
 
         mTextEmail = (EditText) findViewById(R.id.email);
         mButtonValidation = (Button) findViewById(R.id.button_retrieve);
-        mButtonLogin = (Button) findViewById(R.id.return_to_login);
-        mButtonRegister = (Button) findViewById(R.id.return_to_register);
 
         mTextEmail.addTextChangedListener(afterTextChangedListener);
 
-        mButtonValidation.setOnClickListener(this);
-        mButtonLogin.setOnClickListener(this);
-        mButtonRegister.setOnClickListener(this);
+        //mButtonValidation.setOnClickListener(this);
+        mButtonValidation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.activity_background_dialog);
+                dialogButton = (Button) dialog.findViewById(R.id.button_ok);
+                dialog.show();
 
+                // add button listener
+                dialogButton.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View arg0) {
+                        Intent MessageIntent = new Intent(RetrievePasswordActivity.this, LoginPage.class);
+                        startActivity(MessageIntent);
+                    }
+                });
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                openLoginPage();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openLoginPage() {
+        Intent intent = new Intent(getApplicationContext(), LoginPage.class);
+        startActivity(intent);
     }
 
     TextWatcher afterTextChangedListener = new TextWatcher() {
@@ -69,13 +104,6 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.return_to_login:
-                Toast.makeText(this, "jump to login page", Toast.LENGTH_SHORT).show();
-
-                // TODO: Jump to login page
-                Intent loginIntent = new Intent(RetrievePasswordActivity.this, LoginPage.class);
-                startActivity(loginIntent);
-                break;
             case R.id.button_retrieve:
                 Toast.makeText(this, "retrieve the password", Toast.LENGTH_SHORT).show();
                 String email = mTextEmail.getText().toString();
@@ -97,14 +125,9 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
                             }
                         }
                     });
-//                    Intent registerIntent = new Intent(RetrievePasswordActivity.this, EmailValidationActivity.class);
+//                    Intent registerIntent = new Intent(RetrievePasswordActivity.this, ResetPasswordActivity.class);
 //                    startActivity(registerIntent);
                 }
-                break;
-            case R.id.return_to_register:
-                Toast.makeText(this, "jump to register page", Toast.LENGTH_SHORT).show();
-                Intent registerIntent = new Intent(RetrievePasswordActivity.this, RegisterActivity.class);
-                startActivity(registerIntent);
                 break;
             default:
                 break;

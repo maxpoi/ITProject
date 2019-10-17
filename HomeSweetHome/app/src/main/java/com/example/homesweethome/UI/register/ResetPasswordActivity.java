@@ -24,7 +24,7 @@ import com.example.homesweethome.R;
 import static com.example.homesweethome.R.layout.activity_background_dialog;
 
 
-public class EmailValidationActivity extends AppCompatActivity {
+public class ResetPasswordActivity extends AppCompatActivity {
     private MutableLiveData<RegisterFormState> mRegisterFormState = new MutableLiveData<>();
     EditText mTextPassword;
     EditText mTextCnfPassword;
@@ -53,7 +53,7 @@ public class EmailValidationActivity extends AppCompatActivity {
                 } else{
                     password_reset();
                     // TODO: store renewed password  into database
-                    //Intent MessageIntent = new Intent(EmailValidationActivity.this, RegisterSuccessActivity.class);
+                    //Intent MessageIntent = new Intent(ResetPasswordActivity.this, RegisterSuccessActivity.class);
                     //startActivity(MessageIntent);
                 }
             }
@@ -73,7 +73,7 @@ public class EmailValidationActivity extends AppCompatActivity {
                 } else{
                     password_reset();
                     // TODO: store renewed password  into database
-                    //Intent MessageIntent = new Intent(EmailValidationActivity.this, RegisterSuccessActivity.class);
+                    //Intent MessageIntent = new Intent(ResetPasswordActivity.this, RegisterSuccessActivity.class);
                     //startActivity(MessageIntent);
                 }
             }
@@ -152,7 +152,7 @@ public class EmailValidationActivity extends AppCompatActivity {
 
 
         /*
-        AlertDialog alertDialog = new AlertDialog.Builder(EmailValidationActivity.this).create();
+        AlertDialog alertDialog = new AlertDialog.Builder(ResetPasswordActivity.this).create();
         alertDialog.setTitle("Invalid Password");
         alertDialog.setMessage("Password is invalid, please enter a password with length 6-20 contains only digits and letters.");
 
@@ -181,7 +181,7 @@ public class EmailValidationActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
         /*
-        AlertDialog alertDialog = new AlertDialog.Builder(EmailValidationActivity.this).create();
+        AlertDialog alertDialog = new AlertDialog.Builder(ResetPasswordActivity.this).create();
         alertDialog.setTitle("Unmatched Password");
         alertDialog.setMessage("The password you input does not match each other.");
 
@@ -196,7 +196,7 @@ public class EmailValidationActivity extends AppCompatActivity {
 
     public void password_reset(){
 
-        final Dialog dialog = new Dialog(EmailValidationActivity.this);
+        final Dialog dialog = new Dialog(ResetPasswordActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.setContentView(activity_background_dialog);

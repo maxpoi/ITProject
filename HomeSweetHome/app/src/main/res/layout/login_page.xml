@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="60dp"
         android:text="@string/welcome_word"
         android:textColor="@color/welcometext"
         android:textSize="40sp" />
@@ -62,7 +62,7 @@
         android:layout_height="54dp"
         android:layout_gravity="center"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="45dp"
         android:layout_marginRight="50dp"
         android:background="@drawable/login_button_pressed"
 
@@ -81,5 +81,18 @@
         android:text="@string/register_button"
         android:textAllCaps="false"
         android:textColor="@android:color/black" />
+
+    <Button
+        android:id="@+id/retrieve_password"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="50dp"
+        android:background="@android:color/darker_gray"
+        android:text="@string/forget_password"
+        android:textColor="@android:color/black"
+        />
 
 </LinearLayout>

@@ -20,7 +20,6 @@ public class RegisterFailActivity extends AppCompatActivity implements View.OnCl
 
         mButton = (Button) findViewById(R.id.button_return);
         mButton2 = (Button) findViewById(R.id.button2);
-        mText = (TextView) findViewById(R.id.textView1);
 
         mButton.setOnClickListener(this);
         mButton2.setOnClickListener(this);

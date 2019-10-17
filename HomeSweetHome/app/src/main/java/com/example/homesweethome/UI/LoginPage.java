@@ -30,6 +30,7 @@ public class LoginPage extends AppCompatActivity {
     EditText mTextPassword;
     Button loginButton;
     Button registerButton;
+    Button retrievePassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,17 +38,25 @@ public class LoginPage extends AppCompatActivity {
 
         loginButton = (Button) findViewById(R.id.login_button);
         registerButton = (Button) findViewById(R.id.register_button);
+        retrievePassword = (Button) findViewById(R.id.retrieve_password);
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openMain();
             }
         });
-
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openRegister();
+            }
+        });
+        retrievePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent retrievePassword = new Intent(LoginPage.this, RetrievePasswordActivity.class);
+                startActivity(retrievePassword);
             }
         });
 
