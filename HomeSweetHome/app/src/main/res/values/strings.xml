@@ -4,8 +4,8 @@
     <string name="prompt_password">Enter your password here.</string>
     <string name="login_button">Log In</string>
     <string name="register_button">Don\'t have an account? Create one!</string>
-    <string name="welcome_word">Welcome!</string>
-    <string name="nav_home">🏙  Home</string>
+    <string name="welcome_word">🎉 Welcome! 🎉</string>
+    <string name="nav_home">🏙         Home</string>
     <string name="header_text">Replace this with sth else</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -46,9 +46,9 @@
     <string name="return_">Return"</string>
     <string name="email_validation">Send an email for you to validate</string>
     <string name="reset_password">Reset Password</string>
-    <string name="nav_search">🔍  Search</string>
+    <string name="nav_search">🔍          Search</string>
     <string name="search_background">Type a word to search!\nSplit word with space to search on multiple key words!</string>
-    <string name="nav_timeline">📽  Timeline</string>
+    <string name="nav_timeline">📽         Timeline</string>
     <string name="date_year_hint"><i> YYYY</i></string>
     <string name="date_month_hint"><i> MM</i></string>
     <string name="date_day_hint"><i> DD</i></string>
@@ -56,6 +56,8 @@
     <string name="dark_mode_switch">Click to switch to dark mode 🌚</string>
     <string name="introduction"><i>Self-introduction</i></string>
     <string name="date_of_birth"><i>Date of birth</i></string>
+    <string name="dark_mode_switch">Click to switch to dark mode 🌑</string>
+
 
 
 </resources>

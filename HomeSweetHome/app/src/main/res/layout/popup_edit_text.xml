@@ -17,7 +17,7 @@
             android:layout_margin="5dp"
             android:gravity="top|left"
             android:textSize="20sp"
-            android:textColor="@android:color/black" />
+            android:textColor="@color/popupTextColor" />
 
         <Button
             android:id="@+id/save_button"

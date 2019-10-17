@@ -7,4 +7,5 @@
     <color name="actionBarTextColor">@android:color/white</color>
     <color name="welcometext">@android:color/black</color>
     <color name="uploadButtonColor">#f34573</color>
+    <color name="popupTextColor">@android:color/black</color>
 </resources>

@@ -5,6 +5,7 @@
     <color name="colorAccent">#a23131</color>
     <color name="backgroundFloat">#222831</color>
     <color name="welcometext">@android:color/darker_gray</color>
-    <color name="uploadButtonColor">#ffd9534f</color>
+    <color name="uploadButtonColor">#db2d43</color>
     <color name="actionBarTextColor">@android:color/darker_gray</color>
+    <color name="popupTextColor">@android:color/darker_gray</color>
 </resources>
