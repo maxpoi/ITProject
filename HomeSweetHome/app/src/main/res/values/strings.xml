@@ -54,12 +54,20 @@
     <string name="date_day_hint"><i> DD</i></string>
     <string name="date_seperator"><i>/</i></string>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="dark_mode_switch">Click to switch to dark mode 🌑</string>
 =======
     <string name="dark_mode_switch">Click to switch to dark mode 🌚</string>
     <string name="introduction"><i>Self-introduction</i></string>
     <string name="date_of_birth"><i>Date of birth</i></string>
 >>>>>>> tinazhangNew
+=======
+    <string name="dark_mode_switch">Click to switch to dark mode 🌚</string>
+    <string name="introduction"><i>Self-introduction</i></string>
+    <string name="date_of_birth"><i>Date of birth</i></string>
+    <string name="dark_mode_switch">Click to switch to dark mode 🌑</string>
+
+>>>>>>> a40d7055cf98d3f345a2e70686bff913d4c0b85c
 
 
 </resources>
