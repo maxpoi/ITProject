@@ -53,7 +53,13 @@
     <string name="date_month_hint"><i> MM</i></string>
     <string name="date_day_hint"><i> DD</i></string>
     <string name="date_seperator"><i>/</i></string>
+<<<<<<< HEAD
     <string name="dark_mode_switch">Click to switch to dark mode 🌑</string>
+=======
+    <string name="dark_mode_switch">Click to switch to dark mode 🌚</string>
+    <string name="introduction"><i>Self-introduction</i></string>
+    <string name="date_of_birth"><i>Date of birth</i></string>
+>>>>>>> tinazhangNew
 
 
 </resources>
