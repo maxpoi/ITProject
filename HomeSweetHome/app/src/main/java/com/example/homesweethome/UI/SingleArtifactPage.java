@@ -13,6 +13,7 @@ import android.widget.VideoView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -23,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
 import com.example.homesweethome.ArtifactDatabase.Entities.Image;
 import com.example.homesweethome.HelperClasses.DataTag;
+import com.example.homesweethome.HelperClasses.HomeSweetHome;
 import com.example.homesweethome.HelperClasses.ImageAdapter;
 import com.example.homesweethome.R;
 import com.example.homesweethome.ViewModels.ArtifactViewModel;
@@ -34,11 +36,12 @@ public class SingleArtifactPage extends AppCompatActivity{
     private ArtifactViewModel artifactViewModel;
     private int artifactId;
 
+    private boolean enableDeletion = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_artifact_page);
-
         final ActionBar bar = getSupportActionBar();
         if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(true);
@@ -55,7 +58,7 @@ public class SingleArtifactPage extends AppCompatActivity{
         LinearLayoutManager lm = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(lm);
 
-        final ImageAdapter ia = new ImageAdapter(getApplicationContext());
+        final ImageAdapter ia = new ImageAdapter(getApplicationContext(), enableDeletion);
         rv.setAdapter(ia);
 
         Intent intent = getIntent();
@@ -79,6 +82,9 @@ public class SingleArtifactPage extends AppCompatActivity{
         artifactViewModel.getArtifact().observe(this, new Observer<Artifact>() {
             @Override
             public void onChanged(Artifact artifact) {
+                if (artifact == null)
+                    return ;
+
                 if (bar != null) {
                     bar.setTitle(artifact.getTitle());
                     bar.setSubtitle(artifact.getDate());
@@ -86,7 +92,7 @@ public class SingleArtifactPage extends AppCompatActivity{
 
                 title_content.setText(artifact.getTitle());
                 date_content.setText(artifact.getDate());
-                desc_content.setText(artifact.getDesc());
+                desc_content.setText(artifact.getDesc() == null ? "NO TEXT DESCRIPTION" : artifact.getDesc());
 
                 if (artifact.getVideo() != null) {
                     Glide.with(getApplicationContext()).load(artifact.getVideo()).into(videoCover);
@@ -130,6 +136,7 @@ public class SingleArtifactPage extends AppCompatActivity{
             public void onClick(View v) {
                 artifactViewModel.deleteArtifact(artifactViewModel.getStaticArtifact(artifactId));
                 artifactViewModel.deleteArtifactImages(artifactId);
+                ((HomeSweetHome)getApplication()).getImageProcessor().deleteImageListFromLocal(artifactId);
                 openHomePage();
             }
         });

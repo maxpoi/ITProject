@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#393e46</color>
+    <color name="colorPrimaryDark">#222831</color>
+    <color name="colorAccent">#a23131</color>
+    <color name="backgroundFloat">#222831</color>
+    <color name="welcometext">@android:color/darker_gray</color>
+    <color name="uploadButtonColor">#ffd9534f</color>
+    <color name="actionBarTextColor">@android:color/darker_gray</color>
+</resources>

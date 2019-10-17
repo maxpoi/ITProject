@@ -59,4 +59,7 @@ public class ArtifactViewModel extends AndroidViewModel {
 
     public List<Image> getArtifactStaticImages(int artifactId) { return artifactRepository.getArtifactStaticImages(artifactId); }
     public Artifact getStaticArtifact(int artifactId) { return artifactRepository.getStaticArtifact(artifactId); }
+
+    public int getLastArtifactId() { return artifactRepository.getLastArtifactId(); }
+    public int getLastImageId(int artifactId) { return artifactRepository.getLastImageId(artifactId); }
 }

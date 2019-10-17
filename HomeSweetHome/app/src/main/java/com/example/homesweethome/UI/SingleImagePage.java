@@ -13,9 +13,11 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -43,29 +45,14 @@ public class SingleImagePage extends AppCompatActivity implements
 
         Intent intent = getIntent();
         String imagePath = intent.getStringExtra(DataTag.IMAGE_PATH.toString());
-        int artifactId = intent.getIntExtra(DataTag.ARTIFACT_ID.toString(), 0);
-        final int imageId = intent.getIntExtra(DataTag.IMAGE_ID.toString(), 0);
         final ImageView img = (ImageView) findViewById(R.id.single_image);
 
         if (imagePath != null) {
             Bitmap imageBitmap = ((HomeSweetHome) getApplication()).getImageProcessor().decodeFileToHighBitmap(imagePath);
             Glide.with(getApplicationContext()).asBitmap().load(imageBitmap).into(img);
         } else {
-            ArtifactViewModel.ArtifactViewModelFactory artifactViewModelFactory = new ArtifactViewModel.ArtifactViewModelFactory(getApplication(), artifactId);
-            ArtifactViewModel artifactViewModel = new ViewModelProvider(this, artifactViewModelFactory).get(ArtifactViewModel.class);
-            artifactViewModel.getArtifactImages().observe(this, new Observer<List<Image>>() {
-                @Override
-                public void onChanged(List<Image> images) {
-                    Image image = images.get(imageId);
-                    if (image.getHighImageBitmap() == null) {
-                        String imagePath = image.getHighResImagePath();
-                        Bitmap imageBitmap = ((HomeSweetHome) getApplication()).getImageProcessor().decodeFileToHighBitmap(imagePath);
-                        Glide.with(getApplicationContext()).asBitmap().load(imageBitmap).into(img);
-                    } else {
-                        Glide.with(getApplicationContext()).asBitmap().load(image.getHighImageBitmap()).into(img);
-                    }
-                }
-            });
+            Toast toast = Toast.makeText(this, "No Image found in this phone", Toast.LENGTH_SHORT);
+            toast.show();
         }
 
         detector = new GestureDetectorCompat(this,this);

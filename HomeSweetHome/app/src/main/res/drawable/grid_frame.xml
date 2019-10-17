@@ -20,7 +20,7 @@
         android:top="10dp" />
 
     <solid
-        android:color="@android:color/transparent" />
+        android:color="@color/backgroundFloat" />
 
 
 </shape>

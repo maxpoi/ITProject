@@ -23,8 +23,14 @@ public interface ArtifactDAO {
     @Query("SELECT * FROM Artifacts WHERE id = :id")
     Artifact getStaticArtifact(int id);
 
-    @Query("SELECT * FROM artifacts")
+    @Query("SELECT id FROM Artifacts ORDER BY id DESC LIMIT 1")
+    int getLastArtifactId();
+
+    @Query("SELECT * FROM artifacts ORDER BY id DESC")
     LiveData<List<Artifact>> getAllArtifacts();
+
+    @Query("SELECT * FROM artifacts ORDER BY id DESC")
+    List<Artifact> getAllStaticArtifacts();
 
     @Query("SELECT coverImagePath FROM artifacts")
     LiveData<List<String>> getCoverImagesPath();

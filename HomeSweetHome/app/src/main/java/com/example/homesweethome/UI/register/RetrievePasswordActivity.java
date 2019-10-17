@@ -1,5 +1,6 @@
 package com.example.homesweethome.UI.register;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -15,6 +16,10 @@ import android.widget.Toast;
 
 import com.example.homesweethome.UI.LoginPage;
 import com.example.homesweethome.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class RetrievePasswordActivity extends AppCompatActivity implements View.OnClickListener{
 
     EditText mTextEmail;
@@ -79,8 +84,21 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
                 } else if (emailNotRegistered(email)) {
                     failedByNotRegistered();
                 } else {
-                    Intent registerIntent = new Intent(RetrievePasswordActivity.this, EmailValidationActivity.class);
-                    startActivity(registerIntent);
+                    FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener(RetrievePasswordActivity.this, new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(RetrievePasswordActivity.this, "please go check your email for reset password", Toast.LENGTH_SHORT).show();
+                                Intent loginIntent = new Intent(RetrievePasswordActivity.this, LoginPage.class);
+                                startActivity(loginIntent);
+                            }
+                            else{
+                                Toast.makeText(RetrievePasswordActivity.this, "email is not exist, please check and try again", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+//                    Intent registerIntent = new Intent(RetrievePasswordActivity.this, EmailValidationActivity.class);
+//                    startActivity(registerIntent);
                 }
                 break;
             case R.id.return_to_register:

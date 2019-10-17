@@ -1,6 +1,8 @@
 package com.example.homesweethome.UI;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,9 +14,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.homesweethome.HelperClasses.SynchronizeHandler;
 import com.example.homesweethome.R;
 import com.example.homesweethome.UI.register.*;
-import com.example.homesweethome.UI.timeline.TimelineActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.resources.MaterialResources;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -53,18 +61,38 @@ public class LoginPage extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String email = mTextEmail.getText().toString();
-                String password = mTextPassword.getText().toString();
-                if (!isEmailAddressValid(email)){
-                    failedByEmail();
-                } else if (!isPasswordValid(password)){
-                    failedByPassword();
-                } else{
-                    // TODO: login data into database
-                    Intent MessageIntent = new Intent(LoginPage.this, HomePage.class);
-                    startActivity(MessageIntent);
-                }
+                openMain();
+//            String email = mTextEmail.getText().toString();
+//            String password = mTextPassword.getText().toString();
+//
+//            if (!isEmailAddressValid(email)){
+//                failedByEmail();
+//            } else if (!isPasswordValid(password)){
+//                failedByPassword();
+//            } else{
+//                FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginPage.this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//                            assert user != null;
+//                            if(user.isEmailVerified()){
+//
+//                                Intent MessageIntent = new Intent(LoginPage.this, HomePage.class);
+//                                startActivity(MessageIntent);
+//                            }
+//                            else{
+//                                user.sendEmailVerification();
+//                                failedByNotVerified();
+//                            }
+//                        } else {
+//                            // If sign in fails, display a message to the user.
+//                            failedByDismatch();
+//                        }
+//                    }
+//                });
+//
+//            }
             }
         });
 
@@ -155,6 +183,35 @@ public class LoginPage extends AppCompatActivity {
         AlertDialog alertDialog = new AlertDialog.Builder(LoginPage.this).create();
         alertDialog.setTitle("Invalid Password");
         alertDialog.setMessage("Password is invalid, please enter a password with length 6-20 contains only digits and letters.");
+
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    public void failedByDismatch(){
+        AlertDialog alertDialog = new AlertDialog.Builder(LoginPage.this).create();
+        alertDialog.setTitle("Dismatch Email and Password");
+        alertDialog.setMessage("Email and Password are not matched, please enter again");
+
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    public void failedByNotVerified(){
+        AlertDialog alertDialog = new AlertDialog.Builder(LoginPage.this).create();
+        alertDialog.setTitle("Account Is Not Verified");
+        alertDialog.setMessage("Account Is Not Verified, We just send a " +
+                "verification email to you, please go to verify it");
 
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
