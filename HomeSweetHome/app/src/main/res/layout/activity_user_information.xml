@@ -3,5 +3,31 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/dateOfBirth"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:hint="@string/date_of_birth"
+        android:inputType="date"
+        android:selectAllOnFocus="true" />
+
+    <EditText
+        android:id="@+id/introduction"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:hint="@string/introduction"
+        android:inputType="text"
+        android:selectAllOnFocus="true" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:hint="@string/register_email"
+        android:inputType="textEmailAddress"
+        android:selectAllOnFocus="true" />
 
 </LinearLayout>
