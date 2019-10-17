@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/actionBarTextColor</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -53,8 +54,26 @@
         <item name="android:windowMinWidthMajor">97%</item>
         <item name="android:windowMinWidthMinor">97%</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:background">#f5f0e6</item>
+        <item name="android:background">#f5f0e3</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+<!--    <style name="Day_Theme" parent="@style/Theme.AppCompat.DayNight">-->
+<!--        <item name="colorPrimary">#589167</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="colorAccent">#f0134d</item>-->
+<!--        <item name="colorBackgroundFloating">#f5f0e3</item>-->
+<!--    </style>-->
+
+    <style name="Day_Theme" parent="Theme.AppCompat.DayNight">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/backgroundFloat</item>
+        <item name="android:textColorPrimary">@color/actionBarTextColor</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+    </style>
+
 </resources>

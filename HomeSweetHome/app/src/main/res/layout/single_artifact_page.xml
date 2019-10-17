@@ -90,7 +90,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:src="@android:drawable/ic_menu_delete"
-            app:backgroundTint="#E91E63" />
+            app:backgroundTint="#443737" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/edit_button"
@@ -102,7 +102,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:src="@android:drawable/ic_menu_edit"
-            app:backgroundTint="#E91E63" />
+            app:backgroundTint="#719192" />
     </RelativeLayout>
 
 
