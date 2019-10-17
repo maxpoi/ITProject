@@ -6,6 +6,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText mTextPassword;
     EditText mTextCnfPassword;
     Button mButtonRegister;
+    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,14 +98,39 @@ public class RegisterActivity extends AppCompatActivity {
                                             mTextPassword.setError(getString(R.string.app_name));
                                         }
                                         else {
-                                            Intent MessageIntent = new Intent(RegisterActivity.this, RegisterSuccessActivity.class);
-                                            startActivity(MessageIntent);
+                                            final Dialog dialog = new Dialog(context);
+                                            dialog.setContentView(R.layout.activity_background_dialog);
+
+                                            // set title
+                                            TextView title = (TextView) dialog.findViewById(R.id.title);
+                                            title.setText("Register Success!");
+                                            title.setTextSize(20);
+
+                                            // set text, image and button
+                                            TextView text = (TextView) dialog.findViewById(R.id.text);
+                                            text.setText("An email is sent for verification, please reset your password through the email");
+                                            text.setTextSize(17);
+                                            ImageView image = (ImageView) dialog.findViewById(R.id.image_title);
+                                            image.setImageResource(R.drawable.ic_launcher_background);
+
+                                            Button dialogButton = (Button) dialog.findViewById(R.id.button_ok);
+                                            // if button is clicked, close the custom dialog
+                                            dialogButton.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    Intent MessageIntent = new Intent(RegisterActivity.this, LoginPage.class);
+                                                    startActivity(MessageIntent);
+
+                                                }
+                                            });
+
+                                            dialog.show();
+
                                         }
                                     }
 
                                     else {
-                                        Intent intent = new Intent(RegisterActivity.this, RegisterFailActivity.class);
-                                        startActivity(intent);
+                                        failedByInternet();
                                         finish();
                                     }
                                 }
@@ -215,6 +244,20 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    public void failedByInternet(){
+        AlertDialog alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
+        alertDialog.setTitle("Register Fail");
+        alertDialog.setMessage("Internet is busy, email is failed to be sent. Please try again.");
+
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 
     public void failedByEmail(){
