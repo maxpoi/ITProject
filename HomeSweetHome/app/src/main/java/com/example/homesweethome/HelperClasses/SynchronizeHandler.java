@@ -1,37 +1,19 @@
 package com.example.homesweethome.HelperClasses;
 
-import android.app.ExpandableListActivity;
 import android.net.Uri;
-import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
 
-import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
-import com.example.homesweethome.ArtifactDatabase.Entities.Image;
 import com.example.homesweethome.ViewModels.ArtifactListViewModel;
 import com.example.homesweethome.ViewModels.ArtifactViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
-import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONArray;
-
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class SynchronizeHandler {
     private static SynchronizeHandler instance = null;

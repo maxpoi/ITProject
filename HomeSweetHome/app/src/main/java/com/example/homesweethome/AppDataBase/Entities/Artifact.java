@@ -1,10 +1,7 @@
-package com.example.homesweethome.ArtifactDatabase.Entities;
+package com.example.homesweethome.AppDataBase.Entities;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.*;
-
-import java.util.ArrayList;
 
 @Entity(tableName = "Artifacts")
 public class Artifact {

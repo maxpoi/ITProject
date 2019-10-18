@@ -1,8 +1,7 @@
-package com.example.homesweethome.ArtifactDatabase.Entities;
+package com.example.homesweethome.AppDataBase.Entities;
 
 import android.graphics.Bitmap;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.*;
 

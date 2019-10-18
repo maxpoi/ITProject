@@ -5,8 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Base64;
 
-import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
-import com.example.homesweethome.ArtifactDatabase.Entities.Image;
+import com.example.homesweethome.AppDataBase.Entities.Image;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

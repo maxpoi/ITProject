@@ -1,35 +1,23 @@
 package com.example.homesweethome.UI;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GestureDetectorCompat;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
-import com.example.homesweethome.ArtifactDatabase.Entities.Image;
 import com.example.homesweethome.HelperClasses.DataTag;
 import com.example.homesweethome.HelperClasses.HomeSweetHome;
 import com.example.homesweethome.R;
-import com.example.homesweethome.ViewModels.ArtifactViewModel;
-
-import java.util.List;
 
 public class SingleImagePage extends AppCompatActivity implements
         GestureDetector.OnGestureListener,

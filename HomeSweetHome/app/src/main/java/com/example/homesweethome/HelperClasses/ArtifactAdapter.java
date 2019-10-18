@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
+import com.example.homesweethome.AppDataBase.Entities.Artifact;
 import com.example.homesweethome.R;
 import com.example.homesweethome.UI.SingleArtifactPage;
 

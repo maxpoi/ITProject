@@ -5,10 +5,8 @@ import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.example.homesweethome.ArtifactDatabase.ArtifactDatabase;
-import com.example.homesweethome.ArtifactRepository;
-
-import java.util.Random;
+import com.example.homesweethome.AppDataBase.AppDatabase;
+import com.example.homesweethome.AppRepository;
 
 public class HomeSweetHome extends Application {
 
@@ -23,8 +21,8 @@ public class HomeSweetHome extends Application {
         applyDarkMode();
     }
 
-    public ArtifactDatabase getDatabase() { return ArtifactDatabase.getDatabase(getApplicationContext()); }
-    public ArtifactRepository getRepository() { return ArtifactRepository.getInstance(getDatabase()); }
+    public AppDatabase getDatabase() { return AppDatabase.getDatabase(getApplicationContext()); }
+    public AppRepository getRepository() { return AppRepository.getInstance(getDatabase()); }
     public ImageProcessor getImageProcessor() { return ImageProcessor.getInstance(getApplicationContext().getFilesDir() + "/"); }
 
     public Boolean useDarkMode() { return themePreferences.getBoolean("dark", false); }

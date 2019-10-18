@@ -4,19 +4,14 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
-import com.example.homesweethome.ArtifactDatabase.Entities.Image;
+import com.example.homesweethome.AppDataBase.Entities.Artifact;
 import com.example.homesweethome.HelperClasses.DataTag;
 import com.example.homesweethome.R;
 import com.example.homesweethome.ViewModels.ArtifactViewModel;
-
-import java.util.List;
 
 public class PopUpText extends AppCompatActivity {
     @Override

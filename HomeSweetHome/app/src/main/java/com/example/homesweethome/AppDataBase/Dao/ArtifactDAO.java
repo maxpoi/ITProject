@@ -1,10 +1,9 @@
-package com.example.homesweethome.ArtifactDatabase.Dao;
+package com.example.homesweethome.AppDataBase.Dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.*;
 
-import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
-import com.example.homesweethome.ArtifactDatabase.Entities.Image;
+import com.example.homesweethome.AppDataBase.Entities.Artifact;
 
 import java.util.List;
 

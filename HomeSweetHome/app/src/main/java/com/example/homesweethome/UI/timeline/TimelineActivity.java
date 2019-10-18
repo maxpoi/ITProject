@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
+import com.example.homesweethome.AppDataBase.Entities.Artifact;
 import com.example.homesweethome.HelperClasses.ImageProcessor;
 import com.example.homesweethome.UI.HomePage;
 import com.example.homesweethome.UI.LoginPage;

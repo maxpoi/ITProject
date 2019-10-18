@@ -1,4 +1,4 @@
-package com.example.homesweethome.ArtifactDatabase.Entities;
+package com.example.homesweethome.AppDataBase.Entities;
 
 import androidx.room.Entity;
 import androidx.room.Fts4;

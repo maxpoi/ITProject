@@ -1,9 +1,9 @@
-package com.example.homesweethome.ArtifactDatabase.Dao;
+package com.example.homesweethome.AppDataBase.Dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.*;
 
-import com.example.homesweethome.ArtifactDatabase.Entities.Image;
+import com.example.homesweethome.AppDataBase.Entities.Image;
 
 import java.util.List;
 
@@ -30,6 +30,4 @@ public interface ImageDAO {
 
     @Query("SELECT id FROM Images WHERE artifactId = :artifactId ORDER BY id DESC LIMIT 1")
     int getLastImageId(int artifactId);
-
-
 }

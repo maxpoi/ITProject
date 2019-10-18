@@ -9,7 +9,6 @@ import android.widget.Switch;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -19,7 +18,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.homesweethome.ArtifactDatabase.Entities.Artifact;
+import com.example.homesweethome.AppDataBase.Entities.Artifact;
 import com.example.homesweethome.HelperClasses.ArtifactAdapter;
 import com.example.homesweethome.HelperClasses.DataTag;
 import com.example.homesweethome.HelperClasses.HomeSweetHome;
