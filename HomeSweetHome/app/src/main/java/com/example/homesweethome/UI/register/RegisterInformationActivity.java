@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.homesweethome.HelperClasses.DataTag;
 import com.example.homesweethome.R;
 import com.example.homesweethome.UI.LoginPage;
@@ -47,6 +48,7 @@ public class RegisterInformationActivity extends AppCompatActivity {
     private EditText intro;
     private Button finish_button;
     private Button head_protrait_button;
+    private ImageView head_protrait;
 
     private Uri uriImage;
     private String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -71,6 +73,7 @@ public class RegisterInformationActivity extends AppCompatActivity {
         intro = (EditText) findViewById(R.id.self_intro);
         finish_button = (Button) findViewById(R.id.next);
         head_protrait_button = (Button) findViewById(R.id.upload_image_button);
+        head_protrait = (ImageView) findViewById(R.id.head_portrait);
 
         name.addTextChangedListener(afterTextChangedListener);
         dob_year.addTextChangedListener(afterTextChangedListener);
@@ -90,7 +93,7 @@ public class RegisterInformationActivity extends AppCompatActivity {
             }
         });
 
-
+        //findViewById(R.id.add_page_video_background).setVisibility(View.INVISIBLE);
 
 
 
@@ -344,6 +347,8 @@ public class RegisterInformationActivity extends AppCompatActivity {
                     uriImage = data.getData();
                     if (checkPermissions()) {
                         // TODO: put image as head portrait into database
+                        head_protrait.setVisibility(View.VISIBLE);
+                        Glide.with(this.context).asBitmap().load(uriImage).into(head_protrait);
                         //createImage();
                     } else {
                         ActivityCompat.requestPermissions(this, permissions, REQUEST_LOAD_IMAGE_CODE);

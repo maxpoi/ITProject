@@ -17,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
         android:text="@string/name"
         android:textSize="20sp" />
     <EditText
@@ -25,6 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:hint="@string/name_attribute"
+        android:layout_marginLeft="5dp"
         android:inputType="text"
         android:selectAllOnFocus="true" />
     <LinearLayout
@@ -39,31 +41,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
         android:text="@string/head_portrait_text"
         android:textSize="20sp" />
-    <RelativeLayout
+    <ImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginLeft="10dp"
-        >
-        <include
-            layout="@layout/home_page"
-            android:layout_height="70dp"
-            android:layout_width="70dp"
-            />
-
-        <TextView
-            android:id="@+id/recyclerview_frame"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:background="@drawable/input_frame"
-            />
-
-        >
-
-    </RelativeLayout>
-
-        <Button
+        android:id="@+id/head_portrait"
+        android:background="@drawable/input_frame"
+        />
+    <Button
 
             android:gravity="center"
             android:id="@+id/upload_image_button"
@@ -83,11 +71,13 @@
         android:layout_height="wrap_content"
         android:text="@string/date_of_birth"
         android:textSize="20sp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="7dp"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp">
 
         <TextView
             android:id="@+id/date_input_background"
@@ -159,7 +149,9 @@
         android:layout_height="wrap_content"
         android:text="@string/gender"
         android:layout_marginTop="10dp"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_marginLeft="5dp"
+        />
 
 
     <EditText
@@ -169,6 +161,7 @@
         android:layout_marginTop="10dp"
         android:hint="@string/sex"
         android:inputType="textEmailAddress"
+        android:layout_marginLeft="5dp"
         android:selectAllOnFocus="true" />
 
     <TextView
@@ -177,12 +170,14 @@
         android:layout_height="wrap_content"
         android:text="@string/self_intro_text"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
         android:textSize="20sp" />
 
 
     <EditText
         android:id="@+id/self_intro"
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
+        android:layout_marginLeft="5dp"
         android:layout_height="70dp"
         android:layout_marginTop="10dp"
         android:hint="@string/intro_attribute"
@@ -197,7 +192,8 @@
 
         android:gravity="center"
         android:id="@+id/next"
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
+        android:layout_marginLeft="5dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="@string/finish"
