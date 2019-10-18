@@ -86,55 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (!isCnfPasswordValid(password, cnfPassword)){
                     failedByCnfPassword();
                 } else{
-                    // store input register data into database
-                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>(){
-
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (!task.isSuccessful()) {
-                                        // there was an error
-                                        if (mTextPassword.length() < 6) {
-                                            mTextPassword.setError(getString(R.string.app_name));
-                                        }
-                                        else {
-                                            final Dialog dialog = new Dialog(context);
-                                            dialog.setContentView(R.layout.activity_background_dialog);
-
-                                            // set title
-                                            TextView title = (TextView) dialog.findViewById(R.id.title);
-                                            title.setText("Register Success!");
-                                            title.setTextSize(20);
-
-                                            // set text, image and button
-                                            TextView text = (TextView) dialog.findViewById(R.id.text);
-                                            text.setText("An email is sent for verification, please reset your password through the email");
-                                            text.setTextSize(17);
-                                            ImageView image = (ImageView) dialog.findViewById(R.id.image_title);
-                                            image.setImageResource(R.drawable.ic_launcher_background);
-
-                                            Button dialogButton = (Button) dialog.findViewById(R.id.button_ok);
-                                            // if button is clicked, close the custom dialog
-                                            dialogButton.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View view) {
-                                                    Intent MessageIntent = new Intent(RegisterActivity.this, LoginPage.class);
-                                                    startActivity(MessageIntent);
-
-                                                }
-                                            });
-
-                                            dialog.show();
-
-                                        }
-                                    }
-
-                                    else {
-                                        failedByInternet();
-                                        finish();
-                                    }
-                                }
-                            });
+                    openRegisterInformationActivity();
                 }
             }
         });
@@ -153,6 +105,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void openLoginPage() {
         Intent intent = new Intent(getApplicationContext(), LoginPage.class);
+        startActivity(intent);
+    }
+
+    private void openRegisterInformationActivity() {
+        Intent intent = new Intent(getApplicationContext(), RegisterInformationActivity.class);
         startActivity(intent);
     }
 

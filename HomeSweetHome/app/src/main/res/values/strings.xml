@@ -53,21 +53,23 @@
     <string name="date_month_hint"><i> MM</i></string>
     <string name="date_day_hint"><i> DD</i></string>
     <string name="date_seperator"><i>/</i></string>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <string name="dark_mode_switch">Click to switch to dark mode 🌑</string>
-=======
-    <string name="dark_mode_switch">Click to switch to dark mode 🌚</string>
     <string name="introduction"><i>Self-introduction</i></string>
-    <string name="date_of_birth"><i>Date of birth</i></string>
->>>>>>> tinazhangNew
-=======
-    <string name="dark_mode_switch">Click to switch to dark mode 🌚</string>
-    <string name="introduction"><i>Self-introduction</i></string>
-    <string name="date_of_birth"><i>Date of birth</i></string>
-    <string name="dark_mode_switch">Click to switch to dark mode 🌑</string>
 
->>>>>>> a40d7055cf98d3f345a2e70686bff913d4c0b85c
+    <string name="date_of_birth"><i>Date of birth:</i></string>
+    <string name="dark_mode_switch">Click to switch to dark mode 🌚</string>
+    <string name="sex"><i>Male/Female</i></string>
+    <string name="gender"><i>Gender:</i></string>
+    <string name="self_intro_text"><i>Self-introduction:</i></string>
+    <string name="individual_info"><i>Individual Information</i></string>
+    <string name="name"><i>Name:</i></string>
+    <string name="name_attribute"><i>(Could be your nickname, 1-50 charaters)</i></string>
+    <string name="intro_attribute"><i>(0-300 characters)</i></string>
+    <string name="upload_head_portrait_button"><i>Click to upload head portrait</i></string>
+    <string name="finish"><i>Finish</i></string>
+    <string name="head_portrait_text"><i>Head portrait: </i></string>
+
+
+
 
 
 </resources>

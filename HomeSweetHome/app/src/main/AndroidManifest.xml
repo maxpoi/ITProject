@@ -32,7 +32,7 @@
         <activity android:name=".UI.register.RegisterActivity" />
         <activity android:name=".UI.register.RegisterSuccessActivity" />
         <activity android:name=".UI.register.RetrievePasswordActivity" />
-        <activity android:name=".UI.timeline.TimelineAdaptor" />
+        <activity android:name=".UI.register.RegisterInformationActivity" />
         <activity android:name=".UI.timeline.TimelineActivity" />
         <activity android:name=".UI.register.RegisterSuccessDialog" />
         <activity android:name=".UI.SearchPage" />
