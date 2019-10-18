@@ -1,11 +1,14 @@
 package com.example.homesweethome.UI.register;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,10 +18,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import com.example.homesweethome.HelperClasses.DataTag;
 import com.example.homesweethome.R;
 import com.example.homesweethome.UI.LoginPage;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,13 +37,19 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 public class RegisterInformationActivity extends AppCompatActivity {
+    private final int REQUEST_LOAD_IMAGE_CODE = 1;
+
     private EditText name;
     private EditText dob_year;
     private EditText dob_month;
     private EditText dob_day;
     private EditText gender;
     private EditText intro;
-    private Button finishButton;
+    private Button finish_button;
+    private Button head_protrait_button;
+
+    private Uri uriImage;
+    private String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
 
     final Context context = this;
@@ -55,7 +69,8 @@ public class RegisterInformationActivity extends AppCompatActivity {
         dob_day = (EditText) findViewById(R.id.edit_date_day);
         gender = (EditText) findViewById(R.id.sex);
         intro = (EditText) findViewById(R.id.self_intro);
-        finishButton = (Button) findViewById(R.id.next);
+        finish_button = (Button) findViewById(R.id.next);
+        head_protrait_button = (Button) findViewById(R.id.upload_image_button);
 
         name.addTextChangedListener(afterTextChangedListener);
         dob_year.addTextChangedListener(afterTextChangedListener);
@@ -65,7 +80,21 @@ public class RegisterInformationActivity extends AppCompatActivity {
         intro.addTextChangedListener(afterTextChangedListener);
 
 
-        finishButton.setOnClickListener(new View.OnClickListener() {
+        head_protrait_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+//                String[] mimeTypes = {"image/jpeg", "image/png"}; // force to only upload those 2 types
+                startActivityForResult(intent, REQUEST_LOAD_IMAGE_CODE);
+            }
+        });
+
+
+
+
+
+        finish_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -156,7 +185,7 @@ public class RegisterInformationActivity extends AppCompatActivity {
             String dobDayInput = dob_day.getText().toString().trim();
             String genderInput = gender.getText().toString().trim();
 
-            finishButton.setEnabled(!nameInput.isEmpty() && ! dobDayInput.isEmpty() && !dobMonthInput.isEmpty( )&& !dobYearInput.isEmpty()&& !genderInput.isEmpty());
+            finish_button.setEnabled(!nameInput.isEmpty() && ! dobDayInput.isEmpty() && !dobMonthInput.isEmpty( )&& !dobYearInput.isEmpty()&& !genderInput.isEmpty());
         }
 
         @Override
@@ -304,5 +333,43 @@ public class RegisterInformationActivity extends AppCompatActivity {
         Intent MessageIntent = new Intent(RegisterInformationActivity.this, RegisterSuccessActivity.class);
         startActivity(MessageIntent);
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && data != null) {
+            switch (requestCode) {
+                case REQUEST_LOAD_IMAGE_CODE:
+                    uriImage = data.getData();
+                    if (checkPermissions()) {
+                        // TODO: put image as head portrait into database
+                        //createImage();
+                    } else {
+                        ActivityCompat.requestPermissions(this, permissions, REQUEST_LOAD_IMAGE_CODE);
+                    }
+                    break;
+                /*
+                case REQUEST_INPUT_CODE:
+                    String input = data.getStringExtra(DataTag.INPUT_TEXT.toString());
+                    desc.setText(input);
+                    break;*/
+                default:
+                    Toast toast = Toast.makeText(getApplicationContext(), "Fail to upload, try again", Toast.LENGTH_SHORT);
+                    toast.show();
+                    break;
+            }
+        }
+    }
+
+    private boolean checkPermissions() {
+
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED)
+                return false;
+        }
+        return true;
+    }
+
 
 }
