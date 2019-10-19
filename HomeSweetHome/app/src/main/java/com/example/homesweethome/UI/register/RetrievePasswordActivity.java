@@ -47,20 +47,24 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
         mButtonValidation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.activity_background_dialog);
-                dialogButton = (Button) dialog.findViewById(R.id.button_ok);
-                dialog.show();
+                // TODO: send email to user email; call emailSentSuccess if success
+            }
+        });
+    }
 
-                // add button listener
-                dialogButton.setOnClickListener(new View.OnClickListener() {
+    public void emailSentSuccess(){
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.activity_background_dialog);
+        dialogButton = (Button) dialog.findViewById(R.id.button_ok);
+        dialog.show();
 
-                    @Override
-                    public void onClick(View arg0) {
-                        Intent MessageIntent = new Intent(RetrievePasswordActivity.this, LoginPage.class);
-                        startActivity(MessageIntent);
-                    }
-                });
+        // add button listener
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                Intent MessageIntent = new Intent(RetrievePasswordActivity.this, LoginPage.class);
+                startActivity(MessageIntent);
             }
         });
     }
