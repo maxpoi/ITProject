@@ -92,10 +92,18 @@ public enum DataTag {
         @Override
         public String toString() { return "newUserEmail"; }
     },
-    NEW_USER_PASSWORD{
+    NEW_USER_PASSWORD {
         @NonNull
         @Override
-        public String toString() { return "newUserPassword"; }
+        public String toString() {
+            return "newUserPassword";
+        }
+    },
+    SCREEN_SHOT_PATH {
+        @NonNull
+        @Override
+        public String toString() {
+            return "screen shot path";
+        }
     }
-
 }

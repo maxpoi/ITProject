@@ -45,6 +45,8 @@ public class ImageProcessor {
     public static String PORTRAIT_IMAGE = "/portraitImage/";
     public static String PORTRAIT_NAME = "portrait";
 
+    public static String TEMP_FOLDER = "/temp/";
+
     public static ImageProcessor getInstance(String path) {
         if (ourInstance == null) {
             PARENT_FOLDER_PATH = path;
