@@ -102,36 +102,31 @@ public class RegisterInformationActivity extends AppCompatActivity {
 
 
 
-        //UserViewModel.UserViewModelFactory userViewModelFactory = new UserViewModel.UserViewModelFactory(getApplication(), email_);
-        //userViewModel = new ViewModelProvider(this, userViewModelFactory).get(UserViewModel.class);
+        UserViewModel.UserViewModelFactory userViewModelFactory = new UserViewModel.UserViewModelFactory(getApplication(), getIntent().getStringExtra(DataTag.NEW_USER_EMAIL.toString()));
+        userViewModel = new ViewModelProvider(this, userViewModelFactory).get(UserViewModel.class);
+        userViewModel.getUser().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                if (user != null) {
+                    String date = user.getDOB();
+                    String[] dates = date.split("/");
+                    dob_year.setText(dates[0]);
+                    dob_month.setText(dates[1]);
+                    dob_day.setText(dates[2]);
+                    name.setText(user.getUserName());
+                    gender.setText(user.getGender());
+                    intro.setText(user.getDesc());
+                    /*
+                    if (user.getPortraitImagePath()!=null){
+                        head_protrait.setVisibility(View.VISIBLE);
+                        Glide.with(getApplicationContext()).load(user.getPortraitImagePath()).into(head_protrait);
+                        findViewById(R.id.head_portrait).setVisibility(View.INVISIBLE);
+                    }*/
 
-
-/*
-        if (tag.equals(DataTag.EDIT_USER_INFO.toString())) {
-            userViewModel.getUser().observe(this, new Observer<Artifact>() {
-                @Override
-                public void onChanged(Artifact artifact) {
-                    if (artifact != null) {
-                        name.setText(artifact.getTitle());
-                        dob_year.setText(artifact.getDesc());
-
-                        String date = artifact.getDate();
-                        if (date != null) {
-                            String[] dates = date.split("/");
-                            dateYear.setText(dates[0]);
-                            dateMonth.setText(dates[1]);
-                            dateDay.setText(dates[2]);
-                        }
-
-                        if (artifact.getVideo() != null) {
-                            videoCover.setVisibility(View.VISIBLE);
-                            Glide.with(getApplicationContext()).load(artifact.getVideo()).into(videoCover);
-                            findViewById(R.id.add_page_video_background).setVisibility(View.INVISIBLE);
-                        }
-                    }
                 }
-            });
-        }*/
+            }
+        });
+
 
 
         head_protrait_button.setOnClickListener(new View.OnClickListener() {
