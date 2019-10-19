@@ -27,8 +27,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
+import com.example.homesweethome.AppDataBase.Entities.Artifact;
 import com.example.homesweethome.AppDataBase.Entities.Image;
 import com.example.homesweethome.AppDataBase.Entities.User;
 import com.example.homesweethome.AppRepository;
@@ -38,6 +41,8 @@ import com.example.homesweethome.HelperClasses.ImageProcessor;
 import com.example.homesweethome.HelperClasses.SynchronizeHandler;
 import com.example.homesweethome.R;
 import com.example.homesweethome.UI.LoginPage;
+import com.example.homesweethome.ViewModels.ArtifactViewModel;
+import com.example.homesweethome.ViewModels.UserViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -58,6 +63,8 @@ public class RegisterInformationActivity extends AppCompatActivity {
     private Button finish_button;
     private Button head_protrait_button;
     private ImageView head_protrait;
+    private String tag;
+    private UserViewModel userViewModel;
 
     private Uri uriImage;
     private String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -92,6 +99,36 @@ public class RegisterInformationActivity extends AppCompatActivity {
         intro.addTextChangedListener(afterTextChangedListener);
 
 
+
+
+
+        UserViewModel.UserViewModelFactory userViewModelFactory = new UserViewModel.UserViewModelFactory(getApplication(), getIntent().getStringExtra(DataTag.NEW_USER_EMAIL.toString()));
+        userViewModel = new ViewModelProvider(this, userViewModelFactory).get(UserViewModel.class);
+        userViewModel.getUser().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                if (user != null) {
+                    String date = user.getDOB();
+                    String[] dates = date.split("/");
+                    dob_year.setText(dates[0]);
+                    dob_month.setText(dates[1]);
+                    dob_day.setText(dates[2]);
+                    name.setText(user.getUserName());
+                    gender.setText(user.getGender());
+                    intro.setText(user.getDesc());
+                    /*
+                    if (user.getPortraitImagePath()!=null){
+                        head_protrait.setVisibility(View.VISIBLE);
+                        Glide.with(getApplicationContext()).load(user.getPortraitImagePath()).into(head_protrait);
+                        findViewById(R.id.head_portrait).setVisibility(View.INVISIBLE);
+                    }*/
+
+                }
+            }
+        });
+
+
+
         head_protrait_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,7 +146,6 @@ public class RegisterInformationActivity extends AppCompatActivity {
         finish_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String name_ = name.getText().toString();
                 final String dob_year_ = dob_year.getText().toString();
                 final String dob_month_ = dob_month.getText().toString();

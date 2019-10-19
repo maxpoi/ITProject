@@ -105,5 +105,19 @@ public enum DataTag {
         public String toString() {
             return "screen shot path";
         }
+    },
+    BLANK_USER_INFO{
+        @NonNull
+        @Override
+        public String toString() {
+            return "blankUserInfo";
+        }
+    },
+    EDIT_USER_INFO{
+        @NonNull
+        @Override
+        public String toString() {
+            return "EditUserInfo";
+        }
     }
 }
