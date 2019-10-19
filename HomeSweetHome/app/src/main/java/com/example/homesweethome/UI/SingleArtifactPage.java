@@ -7,10 +7,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.homesweethome.AppDataBase.Entities.Artifact;
 import com.example.homesweethome.AppDataBase.Entities.Image;
+import com.example.homesweethome.DeprecatedClasses.ScreenshotGenerator;
 import com.example.homesweethome.HelperClasses.DataTag;
 import com.example.homesweethome.HelperClasses.HomeSweetHome;
 import com.example.homesweethome.HelperClasses.ImageAdapter;
@@ -44,10 +46,14 @@ public class SingleArtifactPage extends AppCompatActivity{
     private boolean enableDeletion = false;
 
     CardView text_card;
+    CardView screenshot_card;
     TextView title_content;
     TextView date_content;
     TextView desc_content;
     ImageView videoCover;
+    TextView screenshotText;
+
+    RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +66,7 @@ public class SingleArtifactPage extends AppCompatActivity{
             bar.setSubtitle("Have a good day");
         }
 
-        RecyclerView rv = (RecyclerView) findViewById(R.id.gallery);
+        rv = (RecyclerView) findViewById(R.id.gallery);
         rv.setHasFixedSize(true);
         rv.setItemViewCacheSize(100);
         rv.setDrawingCacheEnabled(true);
@@ -85,10 +91,12 @@ public class SingleArtifactPage extends AppCompatActivity{
         });
 
         text_card = findViewById(R.id.text_card);
+        screenshot_card = findViewById(R.id.screenshot_card);
         title_content = findViewById(R.id.title);
         date_content = findViewById(R.id.date);
         desc_content = findViewById(R.id.description);
         videoCover = findViewById(R.id.single_artifact_video);
+        screenshotText = findViewById(R.id.screenshot_text);
 
         artifactViewModel.getArtifact().observe(this, new Observer<Artifact>() {
             @Override
@@ -156,7 +164,8 @@ public class SingleArtifactPage extends AppCompatActivity{
         share_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                generateLongScreenShot();
+//                openScreenShot();
+                openScreenshot();
             }
         });
     }
@@ -172,43 +181,62 @@ public class SingleArtifactPage extends AppCompatActivity{
         }
     }
 
+    private void openScreenshot() {
+        screenshotText.setText(desc_content.getText().toString());
+        screenshot_card.setVisibility(View.VISIBLE);
+        screenshotText.setVisibility(View.VISIBLE);
+        text_card.setVisibility(View.GONE);
+
+        final LinearLayout scrollView = findViewById(R.id.inside);
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                generateLongScreenShot();
+            }
+        });
+    }
+
     private void generateLongScreenShot() {
         ProgressDialog dialog = new ProgressDialog(this);
         dialog.setMessage("Generating screen shot...");
         dialog.show();
 
-        ViewGroup.LayoutParams params = desc_content.getLayoutParams();
-        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        desc_content.setLayoutParams(params);
-        videoCover.setVisibility(View.GONE);
-
         ScrollView scrollView = findViewById(R.id.single_artifact_scroll_view);
-        Bitmap screenShotBitmap = Bitmap.createBitmap(scrollView.getChildAt(0).getHeight(), scrollView.getChildAt(0).getWidth(), Bitmap.Config.ARGB_8888);
+        Bitmap screenShotBitmap = Bitmap.createBitmap(scrollView.getWidth(), scrollView.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(screenShotBitmap);
         Drawable bgDrawable = scrollView.getBackground();
         if (bgDrawable != null)
             bgDrawable.draw(canvas);
         else
-            canvas.drawColor(Color.WHITE);
+            canvas.drawColor(Color.GRAY);
         scrollView.draw(canvas);
 
-        String path = ImageProcessor.PARENT_FOLDER_PATH + ImageProcessor.TEMP_FOLDER;
+        String path = getExternalFilesDir(Environment.DIRECTORY_DCIM).getPath() + '/' + ImageProcessor.SCREENSHOT_TEMP_FILE;
+        System.out.println(path);
         Image screenshot = new Image(path, path, path);
         screenshot.setHighImageBitmap(screenShotBitmap);
 
         List<Image> tempList = new ArrayList<>();
         tempList.add(screenshot);
-        ((HomeSweetHome)getApplication()).getImageProcessor().saveImageListToLocal(tempList);
+        ((HomeSweetHome) getApplication()).getImageProcessor().saveImageListToLocal(tempList);
 
         dialog.dismiss();
         Toast.makeText(this, "Successfully generate screen shot!", Toast.LENGTH_SHORT).show();
 
-        openScreenShot(path);
-    }
+        screenshot_card.setVisibility(View.GONE);
+        screenshotText.setVisibility(View.GONE);
+        text_card.setVisibility(View.VISIBLE);
 
-    private void openScreenShot(String path) {
         Intent intent = new Intent(getApplicationContext(), PopUpImage.class);
         intent.putExtra(DataTag.SCREEN_SHOT_PATH.toString(), path);
+        startActivity(intent);
+    }
+
+    private void openScreenShot() {
+        Intent intent = new Intent(getApplicationContext(), ScreenshotGenerator.class);
+        intent.putExtra(DataTag.IMAGE_ID.toString(), ((LinearLayoutManager)rv.getLayoutManager()).findFirstVisibleItemPosition());
+        intent.putExtra(DataTag.ARTIFACT_ID.toString(), artifactId);
+
         startActivity(intent);
     }
 

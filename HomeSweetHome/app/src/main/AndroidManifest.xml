@@ -44,6 +44,8 @@
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
         <activity android:name=".UI.PopUpImage"
             android:theme="@style/Theme_Dialog"/>
+        <activity android:name=".DeprecatedClasses.ScreenshotGenerator"
+            android:theme="@style/Theme_Dialog"/>
     </application>
 
 </manifest>

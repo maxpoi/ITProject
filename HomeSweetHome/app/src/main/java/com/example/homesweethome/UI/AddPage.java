@@ -402,6 +402,9 @@ public class AddPage extends AppCompatActivity {
             toast.show();
             return ;
         }
+
+        // TODO
+        // copy video file to desire the folder.
         artifact.setVideo(sourcePath);
 
         Glide.with(this).load(uriVideo).into(videoCover);
