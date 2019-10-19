@@ -98,20 +98,22 @@ public class RegisterInformationActivity extends AppCompatActivity {
         gender.addTextChangedListener(afterTextChangedListener);
         intro.addTextChangedListener(afterTextChangedListener);
 
+        UserViewModel.UserViewModelFactory userViewModelFactory = new UserViewModel.UserViewModelFactory(getApplication(), getIntent().getStringExtra(DataTag.NEW_USER_EMAIL.toString()));
+        userViewModel = new ViewModelProvider(this, userViewModelFactory).get(UserViewModel.class);
 
-
-        userViewModel.getUser().observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                if (user != null) {
-                    String date = user.getDOB();
-                    String[] dates = date.split("/");
-                    dob_year.setText(dates[0]);
-                    dob_month.setText(dates[1]);
-                    dob_day.setText(dates[2]);
-                    name.setText(user.getUserName());
-                    gender.setText(user.getGender());
-                    intro.setText(user.getDesc());
+        if (userViewModel.getUser()!=null){
+            userViewModel.getUser().observe(this, new Observer<User>() {
+                @Override
+                public void onChanged(User user) {
+                    if (user != null) {
+                        String date = user.getDOB();
+                        String[] dates = date.split("/");
+                        dob_year.setText(dates[0]);
+                        dob_month.setText(dates[1]);
+                        dob_day.setText(dates[2]);
+                        name.setText(user.getUserName());
+                        gender.setText(user.getGender());
+                        intro.setText(user.getDesc());
                     /*
                     if (user.getPortraitImagePath()!=null){
                         head_protrait.setVisibility(View.VISIBLE);
@@ -119,12 +121,13 @@ public class RegisterInformationActivity extends AppCompatActivity {
                         findViewById(R.id.head_portrait).setVisibility(View.INVISIBLE);
                     }*/
 
+                    }
                 }
-            }
-        });
+            });
+        }
 
-        UserViewModel.UserViewModelFactory userViewModelFactory = new UserViewModel.UserViewModelFactory(getApplication(), getIntent().getStringExtra(DataTag.NEW_USER_EMAIL.toString()));
-        userViewModel = new ViewModelProvider(this, userViewModelFactory).get(UserViewModel.class);
+
+
 
 
 

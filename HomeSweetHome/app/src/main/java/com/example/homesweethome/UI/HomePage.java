@@ -44,14 +44,17 @@ public class HomePage extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*userViewModel.getUser().observe(this, new Observer<User>() {
+        UserViewModel.UserViewModelFactory userViewModelFactory = new UserViewModel.UserViewModelFactory(getApplication(), getIntent().getStringExtra(DataTag.NEW_USER_EMAIL.toString()));
+        userViewModel = new ViewModelProvider(this, userViewModelFactory).get(UserViewModel.class);
+
+        userViewModel.getUser().observe(this, new Observer<User>() {
                 @Override
                 public void onChanged(User user) {
                     if (user != null) {
                         memail = user.getEmail();
                     }
                 }
-            });*/
+            });
 
         setContentView(R.layout.nag_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -118,8 +121,10 @@ public class HomePage extends AppCompatActivity
                 break;
             case R.id.nav_timeline:
                 openTimelinePage();
+                break;
             case R.id.nav_logout:
                 logout();
+                break;
             default:
                 // do nothing;
                 break;

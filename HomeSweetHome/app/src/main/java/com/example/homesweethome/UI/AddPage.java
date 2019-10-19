@@ -35,6 +35,8 @@ import com.example.homesweethome.HelperClasses.ImageProcessor;
 import com.example.homesweethome.HelperClasses.SynchronizeHandler;
 import com.example.homesweethome.R;
 import com.example.homesweethome.ViewModels.ArtifactViewModel;
+import com.example.homesweethome.ViewModels.UserViewModel;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,6 +74,10 @@ public class AddPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_page);
+
+        //UserViewModel.UserViewModelFactory userViewModelFactory = new UserViewModel.UserViewModelFactory(getApplication(), getIntent().getStringExtra(DataTag.NEW_USER_EMAIL.toString()));
+        //userViewModel = new ViewModelProvider(this, userViewModelFactory).get(UserViewModel.class);
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Add a new Artifact");
@@ -205,8 +211,7 @@ public class AddPage extends AppCompatActivity {
                 if (!checkField()) { return; }
                 saveButtonPressed = true;
                 saveArtifact();
-                SynchronizeHandler.getInstance().uploadUser(((HomeSweetHome) getApplication())
-                        .getRepository().getUser().getValue().getEmail());
+                SynchronizeHandler.getInstance().uploadUser(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                 if (tag.equals(DataTag.ADD.toString())) {
                     openMain();
                 } else {
