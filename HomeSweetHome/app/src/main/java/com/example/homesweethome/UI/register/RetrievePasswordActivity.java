@@ -47,6 +47,9 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
         mButtonValidation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.activity_background_dialog);
                 dialogButton = (Button) dialog.findViewById(R.id.button_ok);

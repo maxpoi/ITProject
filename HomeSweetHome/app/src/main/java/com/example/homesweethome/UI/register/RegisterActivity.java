@@ -113,7 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void openRegisterInformationActivity(String email, String password) {
         Intent intent = new Intent(getApplicationContext(), RegisterInformationActivity.class);
         intent.putExtra(DataTag.NEW_USER_EMAIL.toString(),  email);
-        intent.putExtra(DataTag.NEW_USER_PASSWORD.toString(), email);
+        intent.putExtra(DataTag.NEW_USER_PASSWORD.toString(), password);
         startActivity(intent);
     }
 

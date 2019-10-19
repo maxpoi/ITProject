@@ -20,6 +20,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.homesweethome.UI.LoginPage;
 import com.example.homesweethome.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import static com.example.homesweethome.R.layout.activity_background_dialog;
 
