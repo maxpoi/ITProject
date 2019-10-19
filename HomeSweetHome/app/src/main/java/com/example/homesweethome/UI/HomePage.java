@@ -19,12 +19,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.homesweethome.AppDataBase.Entities.Artifact;
+import com.example.homesweethome.AppDataBase.Entities.User;
 import com.example.homesweethome.HelperClasses.ArtifactAdapter;
 import com.example.homesweethome.HelperClasses.DataTag;
 import com.example.homesweethome.HelperClasses.HomeSweetHome;
+import com.example.homesweethome.HelperClasses.SynchronizeHandler;
 import com.example.homesweethome.R;
+import com.example.homesweethome.UI.register.RegisterInformationActivity;
 import com.example.homesweethome.UI.timeline.TimelineActivity;
 import com.example.homesweethome.ViewModels.ArtifactListViewModel;
+import com.example.homesweethome.ViewModels.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -34,10 +38,20 @@ public class HomePage extends AppCompatActivity
                   implements NavigationView.OnNavigationItemSelectedListener{
 
     private ArtifactListViewModel artifactListViewModel;
+    private UserViewModel userViewModel;
+    private String memail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*userViewModel.getUser().observe(this, new Observer<User>() {
+                @Override
+                public void onChanged(User user) {
+                    if (user != null) {
+                        memail = user.getEmail();
+                    }
+                }
+            });*/
 
         setContentView(R.layout.nag_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -104,6 +118,8 @@ public class HomePage extends AppCompatActivity
                 break;
             case R.id.nav_timeline:
                 openTimelinePage();
+            case R.id.nav_logout:
+                logout();
             default:
                 // do nothing;
                 break;
@@ -112,6 +128,11 @@ public class HomePage extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logout(){
+        SynchronizeHandler.getInstance().uploadUser(memail);
+        openLoginPage();
     }
 
     private void openHomePage() {
@@ -135,4 +156,12 @@ public class HomePage extends AppCompatActivity
         Intent intent = new Intent(getApplicationContext(), TimelineActivity.class);
         startActivity(intent);
     }
+
+    private void openLoginPage() {
+        Intent intent = new Intent(getApplicationContext(), LoginPage.class);
+        intent.putExtra(DataTag.NEW_USER_EMAIL.toString(), memail);
+        startActivity(intent);
+    }
+
+
 }

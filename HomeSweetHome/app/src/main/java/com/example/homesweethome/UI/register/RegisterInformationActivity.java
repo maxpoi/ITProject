@@ -100,10 +100,6 @@ public class RegisterInformationActivity extends AppCompatActivity {
 
 
 
-
-
-        UserViewModel.UserViewModelFactory userViewModelFactory = new UserViewModel.UserViewModelFactory(getApplication(), getIntent().getStringExtra(DataTag.NEW_USER_EMAIL.toString()));
-        userViewModel = new ViewModelProvider(this, userViewModelFactory).get(UserViewModel.class);
         userViewModel.getUser().observe(this, new Observer<User>() {
             @Override
             public void onChanged(User user) {
@@ -126,6 +122,10 @@ public class RegisterInformationActivity extends AppCompatActivity {
                 }
             }
         });
+
+        UserViewModel.UserViewModelFactory userViewModelFactory = new UserViewModel.UserViewModelFactory(getApplication(), getIntent().getStringExtra(DataTag.NEW_USER_EMAIL.toString()));
+        userViewModel = new ViewModelProvider(this, userViewModelFactory).get(UserViewModel.class);
+
 
 
 

@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.homesweethome.HelperClasses.DataTag;
 import com.example.homesweethome.HelperClasses.SynchronizeHandler;
 import com.example.homesweethome.R;
 import com.example.homesweethome.UI.register.*;
@@ -40,12 +41,6 @@ public class LoginPage extends AppCompatActivity {
         registerButton = (Button) findViewById(R.id.register_button);
         retrievePassword = (Button) findViewById(R.id.retrieve_password);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openMain();
-            }
-        });
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +61,7 @@ public class LoginPage extends AppCompatActivity {
 
         mTextEmail.addTextChangedListener(afterTextChangedListener);
         mTextPassword.addTextChangedListener(afterTextChangedListener);
+
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +99,7 @@ public class LoginPage extends AppCompatActivity {
                 });
 
             }
+
             }
         });
 
@@ -128,10 +125,13 @@ public class LoginPage extends AppCompatActivity {
         }
     };
 
-    private void openMain() {
+    private void openMain(String email, String password) {
         Intent intent = new Intent(this, HomePage.class);
+        intent.putExtra(DataTag.NEW_USER_EMAIL.toString(),  email);
+        intent.putExtra(DataTag.NEW_USER_PASSWORD.toString(), password);
         startActivity(intent);
     }
+
 
     private void openRegister() {
         Intent intent = new Intent(this, RegisterActivity.class);
@@ -231,4 +231,6 @@ public class LoginPage extends AppCompatActivity {
                 });
         alertDialog.show();
     }
+
+
 }
