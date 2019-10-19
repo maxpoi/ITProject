@@ -41,6 +41,10 @@ public class ImageProcessor {
     public static String VIDEO_FOLDER_NAME = "/video/";
     public static String VIDEO_NAME = "video.mp4";
 
+    // parent folder path + portrait_image_name + portrait_image_name
+    public static String PORTRAIT_IMAGE = "/portraitImage/";
+    public static String PORTRAIT_NAME = "portrait";
+
     public static ImageProcessor getInstance(String path) {
         if (ourInstance == null) {
             PARENT_FOLDER_PATH = path;
@@ -105,6 +109,7 @@ public class ImageProcessor {
         @Override
         protected Void doInBackground(Void... params) {
             for (Image image : images) {
+
                 File low = new File(image.getLowResImagePath());
                 File medium = new File(image.getMediumResImagePath());
                 File high = new File(image.getHighResImagePath());

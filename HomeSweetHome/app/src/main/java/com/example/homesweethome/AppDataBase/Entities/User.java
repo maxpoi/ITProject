@@ -1,5 +1,6 @@
 package com.example.homesweethome.AppDataBase.Entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -7,7 +8,8 @@ import androidx.room.PrimaryKey;
 public class User {
 
     @PrimaryKey
-    private int email;
+    @NonNull
+    private String email;
 
     private String userName;
     private String DOB;
@@ -15,7 +17,7 @@ public class User {
     private String desc;
     private String portraitImagePath;
 
-    public User(int email, String userName, String DOB, String gender, String desc, String portraitImagePath) {
+    public User(String email, String userName, String DOB, String gender, String desc, String portraitImagePath) {
         this.email = email;
         this.userName = userName;
         this.DOB = DOB;
@@ -24,8 +26,8 @@ public class User {
         this.portraitImagePath = portraitImagePath;
     }
 
-    public int getEmail() { return email; }
-    public void setEmail(int email) { this.email = email; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
     public String getUserName() { return userName; }
     public void setUserName(String userName) { this.userName = userName; }

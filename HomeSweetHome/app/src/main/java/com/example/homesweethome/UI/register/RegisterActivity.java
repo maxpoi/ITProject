@@ -23,6 +23,7 @@ import android.widget.Toast;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
+import com.example.homesweethome.HelperClasses.DataTag;
 import com.example.homesweethome.UI.HomePage;
 import com.example.homesweethome.UI.LoginPage;
 import com.example.homesweethome.R;
@@ -86,7 +87,8 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (!isCnfPasswordValid(password, cnfPassword)){
                     failedByCnfPassword();
                 } else{
-                    openRegisterInformationActivity();
+
+                    openRegisterInformationActivity(email, password);
                 }
             }
         });
@@ -108,8 +110,10 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void openRegisterInformationActivity() {
+    private void openRegisterInformationActivity(String email, String password) {
         Intent intent = new Intent(getApplicationContext(), RegisterInformationActivity.class);
+        intent.putExtra(DataTag.NEW_USER_EMAIL.toString(),  email);
+        intent.putExtra(DataTag.NEW_USER_PASSWORD.toString(), email);
         startActivity(intent);
     }
 

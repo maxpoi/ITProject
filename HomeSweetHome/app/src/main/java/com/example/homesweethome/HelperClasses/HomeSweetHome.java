@@ -2,7 +2,10 @@ package com.example.homesweethome.HelperClasses;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.homesweethome.AppDataBase.AppDatabase;

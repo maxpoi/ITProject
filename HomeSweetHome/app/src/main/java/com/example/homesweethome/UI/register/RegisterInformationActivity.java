@@ -8,8 +8,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
@@ -27,7 +29,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.example.homesweethome.AppDataBase.Entities.Image;
+import com.example.homesweethome.AppDataBase.Entities.User;
+import com.example.homesweethome.AppRepository;
 import com.example.homesweethome.HelperClasses.DataTag;
+import com.example.homesweethome.HelperClasses.HomeSweetHome;
+import com.example.homesweethome.HelperClasses.ImageProcessor;
+import com.example.homesweethome.HelperClasses.SynchronizeHandler;
 import com.example.homesweethome.R;
 import com.example.homesweethome.UI.LoginPage;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,6 +44,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterInformationActivity extends AppCompatActivity {
     private final int REQUEST_LOAD_IMAGE_CODE = 1;
@@ -102,11 +111,13 @@ public class RegisterInformationActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 String name_ = name.getText().toString();
-                String dob_year_ = dob_year.getText().toString();
-                String dob_month_ = dob_month.getText().toString();
-                String dob_day_ = dob_day.getText().toString();
-                String gender_ = gender.getText().toString();
-                String intro_ = intro.getText().toString();
+                final String dob_year_ = dob_year.getText().toString();
+                final String dob_month_ = dob_month.getText().toString();
+                final String dob_day_ = dob_day.getText().toString();
+                final String gender_ = gender.getText().toString();
+                final String intro_ = intro.getText().toString();
+                final String email_ = getIntent().getStringExtra(DataTag.NEW_USER_EMAIL.toString());
+                final String password_ = getIntent().getStringExtra(DataTag.NEW_USER_PASSWORD.toString());
 
                 if (!isNameValid(name_)){
                     failedByName();
@@ -119,54 +130,62 @@ public class RegisterInformationActivity extends AppCompatActivity {
                 }else{
                     // store input register data into database
                     //TODO: store input register data into database
-            //        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-            //                .addOnCompleteListener(RegisterInformationActivity.this, new OnCompleteListener<AuthResult>(){
 
-            //                    @Override
-            //                    public void onComplete(@NonNull Task<AuthResult> task) {
-            //                        if (!task.isSuccessful()) {
-            //                            // there was an error
-            //                            if (mTextPassword.length() < 6) {
-            //                                mTextPassword.setError(getString(R.string.app_name));
-            //                            }
-            //                            else {
-                                            final Dialog dialog = new Dialog(context);
-                                            dialog.setContentView(R.layout.activity_background_dialog);
+                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(email_, password_)
+                            .addOnCompleteListener(RegisterInformationActivity.this, new OnCompleteListener<AuthResult>(){
 
-                                            // set title
-                                            TextView title = (TextView) dialog.findViewById(R.id.title);
-                                            title.setText("Register Success!");
-                                            title.setTextSize(20);
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
 
-                                            // set text, image and button
-                                            TextView text = (TextView) dialog.findViewById(R.id.text);
-                                            text.setText("You have registered a new account. Please login now.");
-                                            text.setTextSize(17);
-                                            ImageView image = (ImageView) dialog.findViewById(R.id.image_title);
-                                            image.setImageResource(R.drawable.ic_launcher_background);
+                                        if (checkPermissions()) {
+//                                            // do nothing
+                                        } else {
+                                            System.out.println("requset permission");
+                                            ActivityCompat.requestPermissions(RegisterInformationActivity.this, permissions, REQUEST_LOAD_IMAGE_CODE);
+                                        }
 
-                                            Button dialogButton = (Button) dialog.findViewById(R.id.button_ok);
-                                            // if button is clicked, close the custom dialog
-                                            dialogButton.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View view) {
-                                                    Intent MessageIntent = new Intent(RegisterInformationActivity.this, LoginPage.class);
-                                                    startActivity(MessageIntent);
+                                        saveToDatabase(email_, password_, dob_year_,
+                                                dob_month_, dob_day_, gender_, intro_);
+                                        SynchronizeHandler.getInstance().uploadUser(email_);
 
-                                                }
-                                            });
 
-                                            dialog.show();
+                                        final Dialog dialog = new Dialog(context);
+                                        dialog.setContentView(R.layout.activity_background_dialog);
 
-                 //                       }
-                 //                   }
+                                        // set title
+                                        TextView title = (TextView) dialog.findViewById(R.id.title);
+                                        title.setText("Register Success!");
+                                        title.setTextSize(20);
 
-                //                    else {
-                //                        failedByInternet();
-                //                        finish();
-                 //                   }
-                 //               }
-                 //           });
+                                        // set text, image and button
+                                        TextView text = (TextView) dialog.findViewById(R.id.text);
+                                        text.setText("You have registered a new account. Please login now.");
+                                        text.setTextSize(17);
+                                        ImageView image = (ImageView) dialog.findViewById(R.id.image_title);
+                                        image.setImageResource(R.drawable.ic_launcher_background);
+
+                                        Button dialogButton = (Button) dialog.findViewById(R.id.button_ok);
+                                        // if button is clicked, close the custom dialog
+                                        dialogButton.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                Intent MessageIntent = new Intent(RegisterInformationActivity.this, LoginPage.class);
+                                                startActivity(MessageIntent);
+
+                                            }
+                                        });
+
+                                        dialog.show();
+
+
+                                    }
+
+                                    else {
+                                        failedByInternet();
+                                    }
+                                }
+                            });
 
 
                 }
@@ -376,5 +395,58 @@ public class RegisterInformationActivity extends AppCompatActivity {
         return true;
     }
 
+    public void saveToDatabase(String email_, String password_, String dob_year_, String dob_month_, String dob_day_, String gender_, String intro_){
+        // https://androidclarified.com/pick-image-gallery-camera-android/
+        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+        // Get the cursor
+        Cursor cursor = getContentResolver().query(uriImage, filePathColumn, null, null, null);
+        // Move to first row
+        cursor.moveToFirst();
+        //Get the column index of MediaStore.Images.Media.DATA
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        //Gets the String value in the column
+        String filePath = cursor.getString(columnIndex);
+        cursor.close();
 
+        List<Image> portrait = new ArrayList<>();
+        String imagePath = ImageProcessor.PARENT_FOLDER_PATH +
+                ImageProcessor.PORTRAIT_IMAGE +
+                ImageProcessor.PORTRAIT_NAME +
+                ImageProcessor.IMAGE_TYPE;
+
+        Image portraitImage = new Image(imagePath, imagePath, imagePath);
+        portraitImage.setLowImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
+        portraitImage.setMediumImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
+        portraitImage.setHighImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
+
+        portrait.add(portraitImage);
+
+        ((HomeSweetHome)getApplication()).getImageProcessor().saveImageListToLocal(portrait);
+        User newUser = new User(
+                email_,
+                password_,
+                dob_year_ +
+                        DataTag.DATE_SEPERATOR.toString() +
+                        dob_month_ + DataTag.DATE_SEPERATOR.toString() +
+                        dob_day_,
+                gender_,
+                intro_,
+                imagePath);
+        ((HomeSweetHome)getApplication()).getRepository().addUser(newUser);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        boolean allAllowed = true;
+        switch (requestCode) {
+            case REQUEST_LOAD_IMAGE_CODE:
+                for (int res : grantResults)
+                    allAllowed = allAllowed && (res == PackageManager.PERMISSION_GRANTED);
+        }
+
+        if (!allAllowed) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Please give permissions to access.", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
 }

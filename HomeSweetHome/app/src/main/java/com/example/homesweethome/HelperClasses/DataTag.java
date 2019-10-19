@@ -86,5 +86,16 @@ public enum DataTag {
         public String toString() {
             return "\\d+";
         }
+    },
+    NEW_USER_EMAIL {
+        @NonNull
+        @Override
+        public String toString() { return "newUserEmail"; }
+    },
+    NEW_USER_PASSWORD{
+        @NonNull
+        @Override
+        public String toString() { return "newUserPassword"; }
     }
+
 }
