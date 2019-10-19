@@ -15,6 +15,7 @@
         android:layout_marginBottom="20dp">
 
         <LinearLayout
+            android:id="@+id/inside"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -39,10 +40,27 @@
             <include
                 layout="@layout/home_page"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="280dp"
                 android:layout_marginTop="5dp"
                 android:focusable="false"
                 android:focusableInTouchMode="false"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/screenshot_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
+                app:cardCornerRadius="5dp">
+
+                <TextView
+                    android:id="@+id/screenshot_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:textSize="20sp" />
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/text_card"
