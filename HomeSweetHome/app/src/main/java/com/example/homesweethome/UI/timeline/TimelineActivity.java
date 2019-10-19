@@ -83,14 +83,28 @@ public class TimelineActivity extends AppCompatActivity {
         createButtonView(artifacts);
         createTextView(artifacts);
         generateStartingYear(artifacts);
+        generateWelcomeText(artifacts);
     }
 
     public String getStartingYear(List<Artifact> martifacts){
         if (martifacts == null){
             return null;
         }
+        if (martifacts.size()<=0){
+            return null;
+        }
         String year = martifacts.get(0).getDate().substring(0,4);
         return year;
+    }
+
+    public void generateWelcomeText(List<Artifact> artifacts){
+
+        if (artifacts.size()<=0){
+            TextView start_year = (TextView)this.findViewById(R.id.welcome_text);
+            start_year.setTextSize(20);
+            start_year.setText("You have no artifacts added yet. Start your story by adding one.");
+        }
+        else{}
     }
 
     // Dynamically generate the startin year to tell the user when the story started
@@ -426,7 +440,6 @@ public class TimelineActivity extends AppCompatActivity {
         params.setMargins(40 ,(int)height,0,0);
         textView.setLayoutParams(params);
         if (linearLayout != null) {
-            System.out.println("kkkkkkkkkkkkkkkkkkkkk");
             linearLayout.addView(textView);
         }
     }
