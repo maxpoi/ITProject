@@ -18,11 +18,11 @@ public interface UserDAO {
     @Delete
     void delete(User user);
 
-    @Query("SELECT * FROM User WHERE email = :userEmail")
-    LiveData<User> getUser(String userEmail);
+    @Query("SELECT * FROM User")
+    LiveData<User> getUser();
 
-    @Query("SELECT * FROM User WHERE email = :userEmail")
-    User getStaticUser(String userEmail);
+    @Query("SELECT * FROM User")
+    User getStaticUser();
 
     @Query("SELECT portraitImagePath FROM User WHERE email = :userEmail")
     LiveData<String> getPortraitImagePath(String userEmail);

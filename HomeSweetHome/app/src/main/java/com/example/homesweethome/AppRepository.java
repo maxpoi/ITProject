@@ -39,13 +39,13 @@ public class AppRepository {
     /*******************************************************
      *                   Getter for User                   *
      *******************************************************/
-    public LiveData<User> getUser(final String userEmail) { return appDatabase.userDAO().getUser(userEmail); }
+    public LiveData<User> getUser() { return appDatabase.userDAO().getUser(); }
     public LiveData<String> getUserPortraitImagePath(final String userEmail) { return appDatabase.userDAO().getPortraitImagePath(userEmail); }
 
     /*******************************************************
      *                   Add/Delete User                   *
      *******************************************************/
-    public void addUser(User user) { appDatabase.userDAO().insert(user); }
+    public void addUser(User user) { new insertUserAsyncTask(appDatabase).execute(user); }
     public void deleteUser(User user) { appDatabase.userDAO().delete(user); }
 
 
@@ -216,6 +216,17 @@ public class AppRepository {
         @Override
         protected Void doInBackground(final Image... params) {
             appDatabase.imageDAO().insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class insertUserAsyncTask extends AsyncTask<User, Void, Void> {
+        private AppDatabase appDatabase;
+        insertUserAsyncTask(AppDatabase appDatabase) { this.appDatabase = appDatabase; }
+
+        @Override
+        protected Void doInBackground(final User... params) {
+            appDatabase.userDAO().insert(params[0]);
             return null;
         }
     }

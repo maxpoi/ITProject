@@ -396,32 +396,39 @@ public class RegisterInformationActivity extends AppCompatActivity {
     }
 
     public void saveToDatabase(String email_, String password_, String dob_year_, String dob_month_, String dob_day_, String gender_, String intro_){
-        // https://androidclarified.com/pick-image-gallery-camera-android/
-        String[] filePathColumn = { MediaStore.Images.Media.DATA };
-        // Get the cursor
-        Cursor cursor = getContentResolver().query(uriImage, filePathColumn, null, null, null);
-        // Move to first row
-        cursor.moveToFirst();
-        //Get the column index of MediaStore.Images.Media.DATA
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        //Gets the String value in the column
-        String filePath = cursor.getString(columnIndex);
-        cursor.close();
 
-        List<Image> portrait = new ArrayList<>();
-        String imagePath = ImageProcessor.PARENT_FOLDER_PATH +
+                String imagePath = ImageProcessor.PARENT_FOLDER_PATH +
                 ImageProcessor.PORTRAIT_IMAGE +
                 ImageProcessor.PORTRAIT_NAME +
                 ImageProcessor.IMAGE_TYPE;
 
-        Image portraitImage = new Image(imagePath, imagePath, imagePath);
-        portraitImage.setLowImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
-        portraitImage.setMediumImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
-        portraitImage.setHighImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
+        //        System.out.println("saving to database");
+//        // https://androidclarified.com/pick-image-gallery-camera-android/
+//        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+//        // Get the cursor
+//        Cursor cursor = getContentResolver().query(uriImage, filePathColumn, null, null, null);
+//        // Move to first row
+//        cursor.moveToFirst();
+//        //Get the column index of MediaStore.Images.Media.DATA
+//        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//        //Gets the String value in the column
+//        String filePath = cursor.getString(columnIndex);
+//        cursor.close();
+//        System.out.println("file path is : " + filePath);
+//
+//        List<Image> portrait = new ArrayList<>();
 
-        portrait.add(portraitImage);
+//
+//        Image portraitImage = new Image(imagePath, imagePath, imagePath);
+//        portraitImage.setLowImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
+//        portraitImage.setMediumImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
+//        portraitImage.setHighImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
+//
+//        portrait.add(portraitImage);
+//
+//        ((HomeSweetHome)getApplication()).getImageProcessor().saveImageListToLocal(portrait);
 
-        ((HomeSweetHome)getApplication()).getImageProcessor().saveImageListToLocal(portrait);
+
         User newUser = new User(
                 email_,
                 password_,

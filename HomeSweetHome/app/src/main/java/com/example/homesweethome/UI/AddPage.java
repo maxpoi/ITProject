@@ -32,6 +32,7 @@ import com.example.homesweethome.HelperClasses.DataTag;
 import com.example.homesweethome.HelperClasses.HomeSweetHome;
 import com.example.homesweethome.HelperClasses.ImageAdapter;
 import com.example.homesweethome.HelperClasses.ImageProcessor;
+import com.example.homesweethome.HelperClasses.SynchronizeHandler;
 import com.example.homesweethome.R;
 import com.example.homesweethome.ViewModels.ArtifactViewModel;
 
@@ -204,7 +205,8 @@ public class AddPage extends AppCompatActivity {
                 if (!checkField()) { return; }
                 saveButtonPressed = true;
                 saveArtifact();
-
+                SynchronizeHandler.getInstance().uploadUser(((HomeSweetHome) getApplication())
+                        .getRepository().getUser().getValue().getEmail());
                 if (tag.equals(DataTag.ADD.toString())) {
                     openMain();
                 } else {

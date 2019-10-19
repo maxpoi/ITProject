@@ -21,7 +21,7 @@ public class UserViewModel extends AndroidViewModel {
     public UserViewModel(@NonNull Application application, AppRepository appRepository, String userEmail) {
         super(application);
         this.appRepository = appRepository;
-        user = appRepository.getUser(userEmail);
+        user = appRepository.getUser();
         protraitImagePath = appRepository.getUserPortraitImagePath(userEmail);
     }
 
