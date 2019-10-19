@@ -67,6 +67,7 @@
     <string name="upload_head_portrait_button"><i>Click to upload portrait</i></string>
     <string name="finish"><i>Finish</i></string>
     <string name="head_portrait_text"><i>Portrait: </i></string>
+    <string name="logout"><i>logout</i></string>
 
 
 
