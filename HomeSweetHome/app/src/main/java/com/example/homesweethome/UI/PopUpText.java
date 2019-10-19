@@ -20,7 +20,6 @@ public class PopUpText extends AppCompatActivity {
         setContentView(R.layout.popup_text);
 
         final TextView desc = findViewById(R.id.description);
-
         final int artifactId = getIntent().getIntExtra(DataTag.ARTIFACT_ID.toString(), 0);
         ArtifactViewModel.ArtifactViewModelFactory artifactViewModelFactory = new ArtifactViewModel.ArtifactViewModelFactory(getApplication(), artifactId);
         ArtifactViewModel artifactViewModel = new ViewModelProvider(this, artifactViewModelFactory).get(ArtifactViewModel.class);
