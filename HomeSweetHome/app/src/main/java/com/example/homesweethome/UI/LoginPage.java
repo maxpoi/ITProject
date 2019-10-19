@@ -83,6 +83,7 @@ public class LoginPage extends AppCompatActivity {
                             assert user != null;
                             if(user.isEmailVerified()){
                                 SynchronizeHandler.getInstance().downloadUser(email);
+                                while(!SynchronizeHandler.getInstance().successDownLoad){}
                                 Intent MessageIntent = new Intent(LoginPage.this, HomePage.class);
                                 startActivity(MessageIntent);
                             }

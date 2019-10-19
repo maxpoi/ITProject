@@ -23,6 +23,8 @@ public class SynchronizeHandler {
     private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     private String email;
 
+    public boolean successDownLoad = false;
+
     private SynchronizeHandler(){}
 
     public static SynchronizeHandler getInstance(){
@@ -44,9 +46,12 @@ public class SynchronizeHandler {
 
     public boolean downloadUser(String email){
 
+        successDownLoad = false;
         setEmail(email);
         return downloadFile(ImageProcessor.SHARED_PATH, storageRef.child(this.email));
     }
+
+
 
     private void setEmail(String email){
         this.email = email;
@@ -84,8 +89,34 @@ public class SynchronizeHandler {
     }
 
 
+//    private boolean downloadFile(final String curPath, StorageReference ref){
+//        boolean isSuccessful = true;
+//        ref.listAll().addOnCompleteListener(new OnCompleteListener<ListResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<ListResult> task) {
+//                ArrayList<StorageReference> prefixesRefs = (ArrayList<StorageReference>) task.getResult().getPrefixes();
+//                for (StorageReference curRef : prefixesRefs) {
+//                    downloadFile(curPath + curRef.getName() + "/", curRef);
+//                }
+//                ArrayList<StorageReference> itemsRefs = (ArrayList<StorageReference>) task.getResult().getItems();
+//                for (StorageReference curRef : itemsRefs) {
+//                    try {
+//                        File directory = new File(curPath);
+//                        checkDirectory(directory);
+//                        File tempFile = new File(curPath + curRef.getName());
+//                        checkFile(tempFile);
+//                        curRef.getFile(tempFile);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
+//        return false;
+//    }
+
     private boolean downloadFile(final String curPath, StorageReference ref){
-        boolean isSuccessful = true;
+        final boolean isSuccessful = true;
         ref.listAll().addOnCompleteListener(new OnCompleteListener<ListResult>() {
             @Override
             public void onComplete(@NonNull Task<ListResult> task) {
@@ -102,16 +133,14 @@ public class SynchronizeHandler {
                         checkFile(tempFile);
                         curRef.getFile(tempFile);
                     } catch (Exception e) {
+                        SynchronizeHandler.getInstance().successDownLoad = false;
                         e.printStackTrace();
                     }
-
                 }
-
             }
         });
-
-
-        return false;
+        successDownLoad = true;
+        return successDownLoad;
     }
 
     private static void checkDirectory(File tempFile) throws Exception {
