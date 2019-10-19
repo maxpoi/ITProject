@@ -42,6 +42,8 @@
             android:theme="@style/Theme_Dialog"/>
         <activity android:name=".UI.VideoPlayPage"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity android:name=".UI.PopUpImage"
+            android:theme="@style/Theme_Dialog"/>
     </application>
 
 </manifest>
