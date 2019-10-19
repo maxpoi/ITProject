@@ -41,6 +41,8 @@ public class ImageProcessor {
     public static String VIDEO_FOLDER_NAME = "/video/";
     public static String VIDEO_NAME = "video.mp4";
 
+    public static String TEMP_FOLDER = "/temp/";
+
     public static ImageProcessor getInstance(String path) {
         if (ourInstance == null) {
             PARENT_FOLDER_PATH = path;

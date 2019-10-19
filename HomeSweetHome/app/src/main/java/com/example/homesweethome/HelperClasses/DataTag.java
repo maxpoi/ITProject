@@ -86,5 +86,12 @@ public enum DataTag {
         public String toString() {
             return "\\d+";
         }
+    },
+    SCREEN_SHOT_PATH {
+        @NonNull
+        @Override
+        public String toString() {
+            return "screen shot path";
+        }
     }
 }

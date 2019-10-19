@@ -1,11 +1,19 @@
 package com.example.homesweethome.UI;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,10 +29,12 @@ import com.example.homesweethome.AppDataBase.Entities.Image;
 import com.example.homesweethome.HelperClasses.DataTag;
 import com.example.homesweethome.HelperClasses.HomeSweetHome;
 import com.example.homesweethome.HelperClasses.ImageAdapter;
+import com.example.homesweethome.HelperClasses.ImageProcessor;
 import com.example.homesweethome.R;
 import com.example.homesweethome.ViewModels.ArtifactViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SingleArtifactPage extends AppCompatActivity{
@@ -32,6 +42,12 @@ public class SingleArtifactPage extends AppCompatActivity{
     private int artifactId;
 
     private boolean enableDeletion = false;
+
+    CardView text_card;
+    TextView title_content;
+    TextView date_content;
+    TextView desc_content;
+    ImageView videoCover;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +84,11 @@ public class SingleArtifactPage extends AppCompatActivity{
             }
         });
 
-        final CardView text_card = findViewById(R.id.text_card);
-        final TextView title_content = findViewById(R.id.title);
-        final TextView date_content = findViewById(R.id.date);
-        final TextView desc_content = findViewById(R.id.description);
-        final ImageView videoCover = findViewById(R.id.single_artifact_video);
+        text_card = findViewById(R.id.text_card);
+        title_content = findViewById(R.id.title);
+        date_content = findViewById(R.id.date);
+        desc_content = findViewById(R.id.description);
+        videoCover = findViewById(R.id.single_artifact_video);
 
         artifactViewModel.getArtifact().observe(this, new Observer<Artifact>() {
             @Override
@@ -135,6 +151,14 @@ public class SingleArtifactPage extends AppCompatActivity{
                 openHomePage();
             }
         });
+
+        final FloatingActionButton share_button = findViewById(R.id.share_button);
+        share_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generateLongScreenShot();
+            }
+        });
     }
 
     @Override
@@ -146,6 +170,46 @@ public class SingleArtifactPage extends AppCompatActivity{
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void generateLongScreenShot() {
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("Generating screen shot...");
+        dialog.show();
+
+        ViewGroup.LayoutParams params = desc_content.getLayoutParams();
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        desc_content.setLayoutParams(params);
+        videoCover.setVisibility(View.GONE);
+
+        ScrollView scrollView = findViewById(R.id.single_artifact_scroll_view);
+        Bitmap screenShotBitmap = Bitmap.createBitmap(scrollView.getChildAt(0).getHeight(), scrollView.getChildAt(0).getWidth(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(screenShotBitmap);
+        Drawable bgDrawable = scrollView.getBackground();
+        if (bgDrawable != null)
+            bgDrawable.draw(canvas);
+        else
+            canvas.drawColor(Color.WHITE);
+        scrollView.draw(canvas);
+
+        String path = ImageProcessor.PARENT_FOLDER_PATH + ImageProcessor.TEMP_FOLDER;
+        Image screenshot = new Image(path, path, path);
+        screenshot.setHighImageBitmap(screenShotBitmap);
+
+        List<Image> tempList = new ArrayList<>();
+        tempList.add(screenshot);
+        ((HomeSweetHome)getApplication()).getImageProcessor().saveImageListToLocal(tempList);
+
+        dialog.dismiss();
+        Toast.makeText(this, "Successfully generate screen shot!", Toast.LENGTH_SHORT).show();
+
+        openScreenShot(path);
+    }
+
+    private void openScreenShot(String path) {
+        Intent intent = new Intent(getApplicationContext(), PopUpImage.class);
+        intent.putExtra(DataTag.SCREEN_SHOT_PATH.toString(), path);
+        startActivity(intent);
     }
 
     private void openHomePage() {
