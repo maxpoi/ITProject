@@ -40,7 +40,7 @@ public class ImageProcessor {
     // parent folder path + artifact_id + video_folder_name + video_name
     public static String VIDEO_FOLDER_NAME = "/video/";
     public static String VIDEO_NAME = "video.mp4";
-    
+
     // parent folder path + portrait_image_name + portrait_image_name
     public static String PORTRAIT_IMAGE = "/portraitImage/";
     public static String PORTRAIT_NAME = "portrait";

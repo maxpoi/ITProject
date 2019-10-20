@@ -16,14 +16,16 @@ public class User {
     private String gender;
     private String desc;
     private String portraitImagePath;
+    private String backgroundImagePath;
 
-    public User(String email, String userName, String DOB, String gender, String desc, String portraitImagePath) {
+    public User(String email, String userName, String DOB, String gender, String desc, String portraitImagePath, String backgroundImagePath) {
         this.email = email;
         this.userName = userName;
         this.DOB = DOB;
         this.gender = gender;
         this.desc = desc;
         this.portraitImagePath = portraitImagePath;
+        this.backgroundImagePath = backgroundImagePath;
     }
 
     public String getEmail() { return email; }
@@ -40,6 +42,9 @@ public class User {
 
     public String getDesc() { return desc; }
     public void setDesc(String desc) { this.desc = desc; }
+
+    public String getBackgroundImagePath() { return backgroundImagePath; }
+    public void setBackgroundImagePath(String backgroundImagePath) { this.backgroundImagePath = backgroundImagePath; }
 
     public String getPortraitImagePath() { return portraitImagePath; }
     public void setPortraitImagePath(String portraitImagePath) { this.portraitImagePath = portraitImagePath; }

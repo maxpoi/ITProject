@@ -27,7 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/input_frame"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="@color/editTextColor"/>
 
         <TextView
             android:id="@+id/add_page_date_title"
@@ -56,7 +57,8 @@
                 android:inputType="date"
                 android:singleLine="true"
                 android:hint="@string/date_year_hint"
-                android:textAlignment="viewStart" />
+                android:textAlignment="viewStart"
+                android:textColor="@color/editTextColor"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -79,7 +81,8 @@
                 android:inputType="date"
                 android:singleLine="true"
                 android:hint="@string/date_month_hint"
-                android:textAlignment="viewStart"/>
+                android:textAlignment="viewStart"
+                android:textColor="@color/editTextColor"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -102,7 +105,8 @@
                 android:inputType="date"
                 android:singleLine="true"
                 android:hint="@string/date_day_hint"
-                android:textAlignment="viewStart"/>
+                android:textAlignment="viewStart"
+                android:textColor="@color/editTextColor"/>
 
         </RelativeLayout>
 

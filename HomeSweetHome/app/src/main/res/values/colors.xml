@@ -9,5 +9,6 @@
     <color name="uploadButtonColor">#f34573</color>
     <color name="popupTextColor">@android:color/black</color>
     <color name="editTextColor">@android:color/black</color>
+    <color name="actionbarColor">@android:color/white</color>
 
 </resources>

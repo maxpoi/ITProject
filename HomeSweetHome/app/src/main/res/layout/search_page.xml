@@ -12,7 +12,8 @@
         android:minHeight="60dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:background="@drawable/input_frame"/>
+        android:background="@drawable/input_frame"
+        android:textColor="@color/editTextColor"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

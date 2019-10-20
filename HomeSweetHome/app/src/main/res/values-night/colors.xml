@@ -9,4 +9,5 @@
     <color name="actionBarTextColor">@android:color/darker_gray</color>
     <color name="popupTextColor">@android:color/darker_gray</color>
     <color name="editTextColor">@android:color/darker_gray</color>
+    <color name="actionbarColor">@android:color/background_dark</color>
 </resources>

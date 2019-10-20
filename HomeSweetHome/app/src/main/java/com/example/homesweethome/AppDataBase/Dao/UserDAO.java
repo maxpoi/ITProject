@@ -26,4 +26,7 @@ public interface UserDAO {
 
     @Query("SELECT portraitImagePath FROM User WHERE email = :userEmail")
     LiveData<String> getPortraitImagePath(String userEmail);
+
+    @Query("SELECT backgroundImagePath FROM User WHERE email = :userEmail")
+    LiveData<String> getBackgroundImagePath(String userEmail);
 }
