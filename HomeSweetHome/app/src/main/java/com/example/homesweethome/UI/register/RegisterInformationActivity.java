@@ -477,7 +477,8 @@ public class RegisterInformationActivity extends AppCompatActivity {
                         dob_day_,
                 gender_,
                 intro_,
-                imagePath);
+                imagePath,
+                null);
         ((HomeSweetHome)getApplication()).getRepository().addUser(newUser);
     }
 
