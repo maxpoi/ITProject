@@ -7,11 +7,13 @@ import androidx.lifecycle.LiveData;
 import com.example.homesweethome.AppDataBase.AppDatabase;
 import com.example.homesweethome.AppDataBase.Dao.ArtifactDAO;
 import com.example.homesweethome.AppDataBase.Dao.ImageDAO;
+import com.example.homesweethome.AppDataBase.Dao.UserDAO;
 import com.example.homesweethome.AppDataBase.Entities.Artifact;
 import com.example.homesweethome.AppDataBase.Entities.Image;
 import com.example.homesweethome.AppDataBase.Entities.User;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class AppRepository {
 
@@ -41,6 +43,14 @@ public class AppRepository {
      *******************************************************/
     public LiveData<User> getUser() { return appDatabase.userDAO().getUser(); }
     public LiveData<String> getUserPortraitImagePath(final String userEmail) { return appDatabase.userDAO().getPortraitImagePath(userEmail); }
+    public User getStaticUser() {
+        try {
+            return new getStaticUser(appDatabase.userDAO()).execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     /*******************************************************
      *                   Add/Delete User                   *
@@ -185,6 +195,16 @@ public class AppRepository {
         @Override
         protected Artifact doInBackground(Integer... artifactIds) {
             return artifactDAO.getStaticArtifact(artifactIds[0]);
+        }
+    }
+
+    private static class getStaticUser extends AsyncTask<Void, Void, User> {
+        private UserDAO userDAO;
+        getStaticUser(UserDAO userDAO) { this.userDAO = userDAO; }
+
+        @Override
+        protected User doInBackground(Void... params) {
+            return userDAO.getStaticUser();
         }
     }
 

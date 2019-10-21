@@ -40,6 +40,7 @@ import com.example.homesweethome.HelperClasses.HomeSweetHome;
 import com.example.homesweethome.HelperClasses.ImageProcessor;
 import com.example.homesweethome.HelperClasses.SynchronizeHandler;
 import com.example.homesweethome.R;
+import com.example.homesweethome.UI.HomePage;
 import com.example.homesweethome.UI.LoginPage;
 import com.example.homesweethome.ViewModels.ArtifactViewModel;
 import com.example.homesweethome.ViewModels.UserViewModel;
@@ -170,6 +171,10 @@ public class RegisterInformationActivity extends AppCompatActivity {
                     // store input register data into database
                     //TODO: store input register data into database
 
+                    String tag = getIntent().getStringExtra(DataTag.TAG.toString());
+                    if(tag!=null && tag.equals(DataTag.EDIT.toString()))
+                        return ;
+
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email_, password_)
                             .addOnCompleteListener(RegisterInformationActivity.this, new OnCompleteListener<AuthResult>(){
 
@@ -259,8 +264,13 @@ public class RegisterInformationActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+
             case android.R.id.home:
-                openLoginPage();
+                String tag = getIntent().getStringExtra(DataTag.TAG.toString());
+                if (tag!=null && tag.equals(DataTag.EDIT.toString()))
+                    openHomePage();
+                else
+                    openLoginPage();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -436,36 +446,37 @@ public class RegisterInformationActivity extends AppCompatActivity {
 
     public void saveToDatabase(String email_, String password_, String dob_year_, String dob_month_, String dob_day_, String gender_, String intro_){
 
-                String imagePath = ImageProcessor.PARENT_FOLDER_PATH +
-                ImageProcessor.PORTRAIT_IMAGE +
-                ImageProcessor.PORTRAIT_NAME +
-                ImageProcessor.IMAGE_TYPE;
+        String imagePath = ImageProcessor.PARENT_FOLDER_PATH +
+        ImageProcessor.PORTRAIT_IMAGE +
+        ImageProcessor.PORTRAIT_NAME +
+        ImageProcessor.IMAGE_TYPE;
 
-        //        System.out.println("saving to database");
-//        // https://androidclarified.com/pick-image-gallery-camera-android/
-//        String[] filePathColumn = { MediaStore.Images.Media.DATA };
-//        // Get the cursor
-//        Cursor cursor = getContentResolver().query(uriImage, filePathColumn, null, null, null);
-//        // Move to first row
-//        cursor.moveToFirst();
-//        //Get the column index of MediaStore.Images.Media.DATA
-//        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//        //Gets the String value in the column
-//        String filePath = cursor.getString(columnIndex);
-//        cursor.close();
-//        System.out.println("file path is : " + filePath);
-//
-//        List<Image> portrait = new ArrayList<>();
+        System.out.println("saving to database");
 
-//
-//        Image portraitImage = new Image(imagePath, imagePath, imagePath);
-//        portraitImage.setLowImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
-//        portraitImage.setMediumImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
-//        portraitImage.setHighImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
-//
-//        portrait.add(portraitImage);
-//
-//        ((HomeSweetHome)getApplication()).getImageProcessor().saveImageListToLocal(portrait);
+        // https://androidclarified.com/pick-image-gallery-camera-android/
+        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+        // Get the cursor
+        Cursor cursor = getContentResolver().query(uriImage, filePathColumn, null, null, null);
+        // Move to first row
+        cursor.moveToFirst();
+        //Get the column index of MediaStore.Images.Media.DATA
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        //Gets the String value in the column
+        String filePath = cursor.getString(columnIndex);
+        cursor.close();
+        System.out.println("file path is : " + filePath);
+
+        List<Image> portrait = new ArrayList<>();
+
+
+        Image portraitImage = new Image(imagePath, imagePath, imagePath);
+        portraitImage.setLowImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
+        portraitImage.setMediumImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
+        portraitImage.setHighImageBitmap(((HomeSweetHome)getApplication()).getImageProcessor().decodeFileToLowBitmap(filePath));
+
+        portrait.add(portraitImage);
+
+        ((HomeSweetHome)getApplication()).getImageProcessor().saveImageListToLocal(portrait);
 
 
         User newUser = new User(
@@ -477,7 +488,8 @@ public class RegisterInformationActivity extends AppCompatActivity {
                         dob_day_,
                 gender_,
                 intro_,
-                imagePath);
+                imagePath,
+                null);
         ((HomeSweetHome)getApplication()).getRepository().addUser(newUser);
     }
 
@@ -494,5 +506,10 @@ public class RegisterInformationActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(), "Please give permissions to access.", Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+
+    private void openHomePage() {
+        Intent intent = new Intent(getApplicationContext(), HomePage.class);
+        startActivity(intent);
     }
 }

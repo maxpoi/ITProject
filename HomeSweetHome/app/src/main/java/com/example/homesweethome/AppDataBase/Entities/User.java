@@ -2,6 +2,7 @@ package com.example.homesweethome.AppDataBase.Entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "User")
@@ -26,6 +27,17 @@ public class User {
         this.desc = desc;
         this.portraitImagePath = portraitImagePath;
         this.backgroundImagePath = backgroundImagePath;
+    }
+
+    @Ignore
+    public User(User user) {
+        this.email = user.getEmail();
+        this.userName = user.getUserName();
+        this.DOB = user.getDOB();
+        this.gender = user.getGender();
+        this.desc = user.getDesc();
+        this.portraitImagePath = user.getPortraitImagePath();
+        this.backgroundImagePath = user.getBackgroundImagePath();
     }
 
     public String getEmail() { return email; }

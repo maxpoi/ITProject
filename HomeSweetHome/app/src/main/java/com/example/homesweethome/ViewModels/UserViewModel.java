@@ -51,4 +51,6 @@ public class UserViewModel extends AndroidViewModel {
 
     public void addUser(User user) { appRepository.addUser(user); }
     public void deleteUser(User user) { appRepository.deleteUser(user); }
+
+    public User getStaticUser() { return appRepository.getStaticUser(); }
 }

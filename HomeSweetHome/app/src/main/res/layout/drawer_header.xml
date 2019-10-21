@@ -10,7 +10,8 @@
         android:id="@+id/user_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/images" />
 
     <ImageView
         android:id="@+id/user_portrait"
@@ -18,7 +19,8 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/portrait_mask" />
+        android:background="@drawable/portrait_mask"
+        app:srcCompat="@drawable/icon" />
 
     <TextView
         android:id="@+id/user_desc"

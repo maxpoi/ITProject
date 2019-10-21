@@ -82,8 +82,8 @@ public class LoginPage extends AppCompatActivity {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             assert user != null;
                             if(user.isEmailVerified()){
-                                SynchronizeHandler.getInstance().downloadUser(email);
-                                while(!SynchronizeHandler.getInstance().successDownLoad){}
+//                                SynchronizeHandler.getInstance().downloadUser(email);
+//                                while(!SynchronizeHandler.getInstance().successDownLoad){}
                                 Intent MessageIntent = new Intent(LoginPage.this, HomePage.class);
                                 startActivity(MessageIntent);
                             }

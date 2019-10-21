@@ -45,6 +45,10 @@ public class ImageProcessor {
     public static String PORTRAIT_IMAGE = "/portraitImage/";
     public static String PORTRAIT_NAME = "portrait";
 
+    // parent folder path + portrait_image_name + portrait_image_name
+    public static String BACKGROUND_IMAGE_FOLDER = "/backgroundImage/";
+    public static String BACKGROUND_IMAGE_NAME = "background.jpeg";
+
     public static String TEMP_FOLDER = "/temp/";
     public static String SCREENSHOT_TEMP_FILE = "temp.jpeg";
 

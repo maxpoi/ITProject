@@ -18,10 +18,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
-            android:text="Timeline"
+            android:text="🎉 Timeline 🎉"
             android:gravity="center"
             android:textStyle="bold"
-            android:textSize="60dp"
+            android:textSize="50dp"
             />
 
         <TextView
