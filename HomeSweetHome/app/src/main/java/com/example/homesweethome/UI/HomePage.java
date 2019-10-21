@@ -312,6 +312,7 @@ public class HomePage extends AppCompatActivity
     private void openUserEditPage() {
         Intent intent = new Intent(getApplicationContext(), RegisterInformationActivity.class);
         intent.putExtra(DataTag.TAG.toString(), DataTag.EDIT.toString());
+        intent.putExtra(DataTag.NEW_USER_EMAIL.toString(), memail);
         startActivity(intent);
     }
 

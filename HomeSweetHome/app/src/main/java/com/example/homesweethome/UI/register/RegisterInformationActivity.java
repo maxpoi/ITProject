@@ -150,7 +150,7 @@ public class RegisterInformationActivity extends AppCompatActivity {
         finish_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name_ = name.getText().toString();
+                final String name_ = name.getText().toString();
                 final String dob_year_ = dob_year.getText().toString();
                 final String dob_month_ = dob_month.getText().toString();
                 final String dob_day_ = dob_day.getText().toString();
@@ -172,8 +172,12 @@ public class RegisterInformationActivity extends AppCompatActivity {
                     //TODO: store input register data into database
 
                     String tag = getIntent().getStringExtra(DataTag.TAG.toString());
-                    if(tag!=null && tag.equals(DataTag.EDIT.toString()))
-                        return ;
+                    if(tag!=null && tag.equals(DataTag.EDIT.toString())) {
+                        saveToDatabase(email_, name_, dob_year_,
+                                dob_month_, dob_day_, gender_, intro_);
+                        openHomePage();
+                        return;
+                    }
 
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email_, password_)
                             .addOnCompleteListener(RegisterInformationActivity.this, new OnCompleteListener<AuthResult>(){
@@ -189,7 +193,7 @@ public class RegisterInformationActivity extends AppCompatActivity {
                                             ActivityCompat.requestPermissions(RegisterInformationActivity.this, permissions, REQUEST_LOAD_IMAGE_CODE);
                                         }
 
-                                        saveToDatabase(email_, password_, dob_year_,
+                                        saveToDatabase(email_, name_, dob_year_,
                                                 dob_month_, dob_day_, gender_, intro_);
                                         SynchronizeHandler.getInstance().uploadUser(email_);
 
@@ -444,7 +448,7 @@ public class RegisterInformationActivity extends AppCompatActivity {
         return true;
     }
 
-    public void saveToDatabase(String email_, String password_, String dob_year_, String dob_month_, String dob_day_, String gender_, String intro_){
+    public void saveToDatabase(String email_, String username, String dob_year_, String dob_month_, String dob_day_, String gender_, String intro_){
 
         String imagePath = ImageProcessor.PARENT_FOLDER_PATH +
         ImageProcessor.PORTRAIT_IMAGE +
@@ -452,6 +456,7 @@ public class RegisterInformationActivity extends AppCompatActivity {
         ImageProcessor.IMAGE_TYPE;
 
         System.out.println("saving to database");
+
 
         // https://androidclarified.com/pick-image-gallery-camera-android/
         String[] filePathColumn = { MediaStore.Images.Media.DATA };
@@ -481,7 +486,7 @@ public class RegisterInformationActivity extends AppCompatActivity {
 
         User newUser = new User(
                 email_,
-                password_,
+                username,
                 dob_year_ +
                         DataTag.DATE_SEPERATOR.toString() +
                         dob_month_ + DataTag.DATE_SEPERATOR.toString() +
