@@ -10,7 +10,7 @@
         android:text="@string/individual_info"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:textSize="40sp" />
+        android:textSize="33sp" />
 
     <TextView
         android:id="@+id/name_text"
@@ -27,6 +27,7 @@
         android:layout_marginTop="10dp"
         android:hint="@string/name_attribute"
         android:layout_marginLeft="5dp"
+        android:textColor="@color/editTextColor"
         android:inputType="text"
         android:selectAllOnFocus="true" />
     <LinearLayout
@@ -92,6 +93,7 @@
             android:background="@drawable/input_frame"
             android:inputType="date"
             android:singleLine="true"
+            android:textColor="@color/editTextColor"
             android:hint="@string/date_year_hint"
             android:textAlignment="viewStart" />
 
@@ -102,6 +104,7 @@
             android:layout_toEndOf="@id/edit_date_year"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
+            android:textColor="@color/editTextColor"
             android:text="@string/date_seperator"
             android:textSize="30sp"
             android:textStyle="italic" />
@@ -115,6 +118,7 @@
             android:background="@drawable/input_frame"
             android:inputType="date"
             android:singleLine="true"
+            android:textColor="@color/editTextColor"
             android:hint="@string/date_month_hint"
             android:textAlignment="viewStart"/>
 
@@ -139,6 +143,7 @@
             android:hint="@string/date_day_hint"
             android:inputType="date"
             android:singleLine="true"
+            android:textColor="@color/editTextColor"
             android:textAlignment="viewStart" />
 
     </RelativeLayout>
@@ -162,6 +167,7 @@
         android:hint="@string/sex"
         android:inputType="textEmailAddress"
         android:layout_marginLeft="5dp"
+        android:textColor="@color/editTextColor"
         android:selectAllOnFocus="true" />
 
     <TextView
@@ -184,7 +190,7 @@
         android:background="@drawable/input_frame"
         android:gravity="top|start"
         android:inputType="text"
-
+        android:textColor="@color/editTextColor"
         android:textSize="20sp"
         android:selectAllOnFocus="true" />
 

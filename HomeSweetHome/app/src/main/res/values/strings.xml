@@ -60,7 +60,7 @@
     <string name="sex"><i>Male/Female</i></string>
     <string name="gender"><i>Gender*:</i></string>
     <string name="self_intro_text"><i>Personalized Signature:</i></string>
-    <string name="individual_info"><i>Personal Information</i></string>
+    <string name="individual_info"><i>👴Personal Information👵</i></string>
     <string name="name"><i>Name*:</i></string>
     <string name="name_attribute"><i>(Could be your nickname, 1-50 charaters)</i></string>
     <string name="intro_attribute"><i>(0-100 characters)</i></string>

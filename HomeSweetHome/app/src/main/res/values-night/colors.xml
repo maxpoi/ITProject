@@ -10,4 +10,9 @@
     <color name="popupTextColor">@android:color/darker_gray</color>
     <color name="editTextColor">@android:color/darker_gray</color>
     <color name="actionbarColor">@android:color/background_dark</color>
+    <color name="timelineText">#6e2142</color>
+    <color name="timelineLine">#ffd692</color>
+    <color name="timelineIntro">#e16363</color>
+    <color name="timelineButton">#943855</color>
+
 </resources>

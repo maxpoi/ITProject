@@ -18,13 +18,16 @@
         android:layout_marginTop="30dp"
         android:hint="@string/register_email"
         android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true" />
+        android:selectAllOnFocus="true"
+        android:textColor="@color/editTextColor"
+
+        />
 
     <EditText
         android:id="@+id/register_password"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-
+        android:textColor="@color/editTextColor"
         android:layout_marginTop="36dp"
 
         android:hint="@string/register_password"
@@ -38,7 +41,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-
+        android:textColor="@color/editTextColor"
         android:autofillHints="@string/register_cfn_password"
         android:hint="@string/register_cfn_password"
         android:imeActionLabel="@string/register_cfn_password"

@@ -33,6 +33,7 @@ import com.example.homesweethome.HelperClasses.HomeSweetHome;
 import com.example.homesweethome.HelperClasses.ImageAdapter;
 import com.example.homesweethome.HelperClasses.ImageProcessor;
 import com.example.homesweethome.R;
+import com.example.homesweethome.UI.timeline.TimelineActivity;
 import com.example.homesweethome.ViewModels.ArtifactViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -53,6 +54,7 @@ public class SingleArtifactPage extends AppCompatActivity{
     ImageView videoCover;
     TextView screenshotText;
 
+    String tag;
     RecyclerView rv;
 
     @Override
@@ -172,13 +174,22 @@ public class SingleArtifactPage extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        String tag = getIntent().getStringExtra(DataTag.SINGLE_ARTIFACT.toString());
         switch (item.getItemId()) {
             case android.R.id.home:
-                openHomePage();
+                if (tag.equals(DataTag.SINGLE_ARTIFACT.toString()))
+                    openTimelinePage();
+                else
+                    openHomePage();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void openTimelinePage() {
+        Intent intent = new Intent(getApplicationContext(), TimelineActivity.class);
+        startActivity(intent);
     }
 
     private void openScreenshot() {

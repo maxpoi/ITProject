@@ -18,10 +18,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.homesweethome.AppDataBase.Entities.Artifact;
+import com.example.homesweethome.HelperClasses.DataTag;
 import com.example.homesweethome.HelperClasses.ImageProcessor;
 import com.example.homesweethome.UI.HomePage;
 import com.example.homesweethome.UI.LoginPage;
 import com.example.homesweethome.R;
+import com.example.homesweethome.UI.SingleArtifactPage;
 import com.example.homesweethome.ViewModels.ArtifactListViewModel;
 
 import java.util.ArrayList;
@@ -158,6 +160,7 @@ public class TimelineActivity extends AppCompatActivity {
 
         years = getYearFromDate(artifacts);
         bitmaps = getBitmaps(artifacts);
+        ArrayList<Integer> ids = getIds(artifacts);
 
         map = mappingYearInterval(years);
         float margin = 5;
@@ -166,18 +169,27 @@ public class TimelineActivity extends AppCompatActivity {
         pointLocation = initPoints(height, years, pointSize);
         if (pointLocation!=null){
         }
-        timelineImages = createImageLocs(pointLocation, bitmaps, map, years, width, height, pointSize, margin);
+        timelineImages = createImageLocs(ids,pointLocation, bitmaps, map, years, width, height, pointSize, margin);
 
         for (TimelineImage t: timelineImages){
             initButton(t, getImageSize(height, pointSize,years, margin), getImageSize(height, pointSize,years, margin));
         }
     }
 
+    private ArrayList<Integer> getIds(List<Artifact> artifacts) {
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+        if (artifacts==null){return null;}
+        for (Artifact a: artifacts){
+            ids.add(a.getId());
+        }
+        return ids;
+    }
+
     // calculate buttons' x and y
-    public ArrayList<TimelineImage> createImageLocs(ArrayList<Float> pointLocation,ArrayList<Bitmap> bitmaps, Map<Integer, Integer> map, ArrayList<String> years, float width, float height, float pointSize, float margin){
+    public ArrayList<TimelineImage> createImageLocs(ArrayList<Integer> ids, ArrayList<Float> pointLocation,ArrayList<Bitmap> bitmaps, Map<Integer, Integer> map, ArrayList<String> years, float width, float height, float pointSize, float margin){
         ArrayList<TimelineImage> timelineImages = new ArrayList<TimelineImage>();
-        for (Bitmap b: bitmaps){
-            timelineImages.add(new TimelineImage(b));
+        for (int i = 0; i < ids.size(); i++){
+            timelineImages.add(new TimelineImage(bitmaps.get(i),ids.get(i)));
         }
         int bitmapNum = 0;
         int buttonNum = 0;
@@ -234,7 +246,7 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     // add the buttons to the view and draw the buttons
-    public void initButton(TimelineImage timelineImage, float imageHeight, float imageWidth){
+    public void initButton(final TimelineImage timelineImage, float imageHeight, float imageWidth){
         Bitmap bitmap = timelineImage.getTimelineImage();
         float x = timelineImage.getTimelineImageX();
         float y = timelineImage.getTimelinImageY();
@@ -248,8 +260,14 @@ public class TimelineActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
-                Intent registerIntent = new Intent(TimelineActivity.this, LoginPage.class);
-                startActivity(registerIntent);
+                //Intent registerIntent = new Intent(TimelineActivity.this, LoginPage.class);
+                //startActivity(registerIntent);
+                String action_return = "visit_single_artifact";
+                Intent intent;
+                intent = new Intent(getApplicationContext(), SingleArtifactPage.class);
+                intent.putExtra(DataTag.ARTIFACT_ID.toString(), timelineImage.getId());
+                intent.putExtra(DataTag.SINGLE_ARTIFACT.toString(), action_return);
+                getApplicationContext().startActivity(intent);
             }
 
         });
@@ -297,7 +315,7 @@ public class TimelineActivity extends AppCompatActivity {
     public void addButton(float height, String year){
         Button btnShow = new Button(this);
         btnShow.setText(year);
-        btnShow.setBackgroundColor(45);
+        btnShow.setBackgroundColor(943855);
         btnShow.setBackgroundResource(R.drawable.ic_launcher_background);
         FrameLayout.LayoutParams rel_btn = new FrameLayout.LayoutParams(30,30);
         rel_btn.setMargins((int)width/2 + (int)axis/2 - (int)pointSize/2 ,(int)height,0,0);
@@ -307,6 +325,7 @@ public class TimelineActivity extends AppCompatActivity {
         btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO:
                 Toast.makeText(TimelineActivity.this, "ttt", Toast.LENGTH_LONG).show();
             }
         });
@@ -436,7 +455,7 @@ public class TimelineActivity extends AppCompatActivity {
         textView.setLayoutParams(params);
         textView.setTextSize(30);
         textView.setText(year);
-        textView.setTextColor(Color.BLUE);
+        textView.setTextColor(getResources().getColor(R.color.timelineIntro));
         params.setMargins(40 ,(int)height,0,0);
         textView.setLayoutParams(params);
         if (linearLayout != null) {

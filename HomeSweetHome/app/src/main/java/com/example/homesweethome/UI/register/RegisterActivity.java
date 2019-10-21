@@ -11,7 +11,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -111,9 +113,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void openRegisterInformationActivity(String email, String password) {
+        String action = "create";
         Intent intent = new Intent(getApplicationContext(), RegisterInformationActivity.class);
         intent.putExtra(DataTag.NEW_USER_EMAIL.toString(),  email);
         intent.putExtra(DataTag.NEW_USER_PASSWORD.toString(), password);
+        intent.putExtra(DataTag.TAG.toString(), action);
         startActivity(intent);
     }
 
@@ -209,8 +213,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void failedByInternet(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
-        alertDialog.setTitle("Register Fail");
-        alertDialog.setMessage("Internet is busy, email is failed to be sent. Please try again.");
+        alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Register Fail</font>"));
+        alertDialog.setMessage(Html.fromHtml("<font color='#272121'>Internet is busy, email is failed to be sent. Please try again.</font>"));
 
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
@@ -223,8 +227,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void failedByEmail(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
-        alertDialog.setTitle("Invalid Email");
-        alertDialog.setMessage("Email is invalid, please enter a valid email.");
+        alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Invalid Email</font>"));
+        alertDialog.setMessage(Html.fromHtml("<font color='#272121'>Email is invalid, please enter a valid email.</font>"));
 
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
@@ -237,8 +241,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void failedByPassword(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
-        alertDialog.setTitle("Invalid Password");
-        alertDialog.setMessage("Password is invalid, please enter a password with length 6-20 contains only digits and letters.");
+        alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Invalid Password</font>"));
+        alertDialog.setMessage(Html.fromHtml("<font color='#272121'>Password is invalid, please enter a password with length 6-20 contains only digits and letters.</font>"));
 
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
@@ -251,8 +255,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void failedByCnfPassword(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
-        alertDialog.setTitle("Unmatched Password");
-        alertDialog.setMessage("The password you input does not match each other.");
+        alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Unmatched Password</font>"));
+        alertDialog.setMessage(Html.fromHtml("<font color='#272121'>The password you input does not match each other.</font>"));
 
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {

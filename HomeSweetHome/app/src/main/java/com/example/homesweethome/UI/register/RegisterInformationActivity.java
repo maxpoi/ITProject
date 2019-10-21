@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
@@ -101,8 +102,9 @@ public class RegisterInformationActivity extends AppCompatActivity {
 
         UserViewModel.UserViewModelFactory userViewModelFactory = new UserViewModel.UserViewModelFactory(getApplication(), getIntent().getStringExtra(DataTag.NEW_USER_EMAIL.toString()));
         userViewModel = new ViewModelProvider(this, userViewModelFactory).get(UserViewModel.class);
+        String tag = getIntent().getStringExtra(DataTag.TAG.toString());
 
-        if (userViewModel.getUser()!=null){
+        if (userViewModel.getUser()!=null&&!tag.equals(DataTag.CREATE.toString())){
             userViewModel.getUser().observe(this, new Observer<User>() {
                 @Override
                 public void onChanged(User user) {
@@ -211,7 +213,7 @@ public class RegisterInformationActivity extends AppCompatActivity {
                                         text.setText("You have registered a new account. Please login now.");
                                         text.setTextSize(17);
                                         ImageView image = (ImageView) dialog.findViewById(R.id.image_title);
-                                        image.setImageResource(R.drawable.ic_launcher_background);
+                                        image.setImageResource(R.mipmap.ic_timeline_button_white_round);
 
                                         Button dialogButton = (Button) dialog.findViewById(R.id.button_ok);
                                         // if button is clicked, close the custom dialog
@@ -336,8 +338,8 @@ public class RegisterInformationActivity extends AppCompatActivity {
 
     public void failedByName(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterInformationActivity.this).create();
-        alertDialog.setTitle("Name Invalid");
-        alertDialog.setMessage("Name should be between 1 and 50 characters. Please enter again.");
+        alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Name Invalid</font>"));
+        alertDialog.setMessage(Html.fromHtml("<font color='#272121'>Name should be between 1 and 50 characters. Please enter again.</font>"));
 
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
@@ -350,8 +352,8 @@ public class RegisterInformationActivity extends AppCompatActivity {
 
     public void failedByGender(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterInformationActivity.this).create();
-        alertDialog.setTitle("Gender Invalid");
-        alertDialog.setMessage("Gender should be one of 'Male' and 'Female'. Please enter again.");
+        alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Gender Invalid</font>"));
+        alertDialog.setMessage(Html.fromHtml("<font color='#272121'>Gender should be one of 'Male' and 'Female'. Please enter again.</font>"));
 
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
@@ -364,8 +366,8 @@ public class RegisterInformationActivity extends AppCompatActivity {
 
     public void failedByDate(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterInformationActivity.this).create();
-        alertDialog.setTitle("Date of Birth Invalid");
-        alertDialog.setMessage("Date of birth is entered inappropriately. (Form should be YYYY-MM-DD). Please enter again.");
+        alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Date of Birth Invalid</font>"));
+        alertDialog.setMessage(Html.fromHtml("<font color='#272121'>Date of birth is entered inappropriately. (Form should be YYYY-MM-DD). Please enter again.</font>"));
 
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
@@ -378,8 +380,8 @@ public class RegisterInformationActivity extends AppCompatActivity {
 
     public void failedByIntro(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterInformationActivity.this).create();
-        alertDialog.setTitle("Self introduction Invalid");
-        alertDialog.setMessage("Length of self introduction should be between 1 and 300 characters. Please enter again.");
+        alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Personalized Signature Invalid</font>"));
+        alertDialog.setMessage(Html.fromHtml("<font color='#272121'>Length of personalized signature should be between 1 and 300 characters. Please enter again.</font>"));
 
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
@@ -392,8 +394,8 @@ public class RegisterInformationActivity extends AppCompatActivity {
 
     public void failedByInternet(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterInformationActivity.this).create();
-        alertDialog.setTitle("Register Fail");
-        alertDialog.setMessage("Internet is busy, email is failed to be sent. Please try again.");
+        alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Register Fail</font>"));
+        alertDialog.setMessage(Html.fromHtml("<font color='#272121'>Internet is busy, email is failed to be sent. Please try again.</font>"));
 
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {

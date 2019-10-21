@@ -10,11 +10,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.homesweethome.UI.LoginPage;
@@ -66,6 +68,13 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.activity_background_dialog);
         dialogButton = (Button) dialog.findViewById(R.id.button_ok);
+        TextView title = (TextView) dialog.findViewById(R.id.title);
+        title.setText("Register Success!");
+        title.setTextSize(20);
+        TextView text = (TextView) dialog.findViewById(R.id.text);
+        text.setText("An email is sent to the email for verification. Please reset your password by your email.");
+        text.setTextSize(17);
+
         dialog.show();
 
         // add button listener
@@ -177,8 +186,8 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
 
     public void failedByInvalidEmail(){
         AlertDialog alertDialog = new AlertDialog.Builder(RetrievePasswordActivity.this).create();
-        alertDialog.setTitle("Invalid Email");
-        alertDialog.setMessage("Input email is invalid, please enter again.");
+        alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Invalid Email</font>"));
+        alertDialog.setMessage(Html.fromHtml("<font color='#272121'>Input email is invalid, please enter again.</font>"));
 
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
@@ -191,11 +200,9 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
 
     public void failedByNotRegistered(){
         AlertDialog.Builder builder = new AlertDialog.Builder(RetrievePasswordActivity.this);
+        builder.setTitle(Html.fromHtml("<font color='#af0404'>Email Not Registered</font>"));
+        builder.setMessage(Html.fromHtml("<font color='#272121'>Input email is not registered yet, please choose to enter again or to register.</font>"));
 
-        builder.setTitle("Email Not Registered");
-
-        builder.setMessage("Input email is not registered yet, please choose to enter again " +
-                "or to register.");
         builder.setPositiveButton("Enter Again", null);
         builder.setNegativeButton("Register", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {

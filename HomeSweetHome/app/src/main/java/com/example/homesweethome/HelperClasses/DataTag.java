@@ -24,6 +24,13 @@ public enum DataTag {
             return "edit";
         }
     },
+    CREATE {
+        @NonNull
+        @Override
+        public String toString() {
+            return "create";
+        }
+    },
     INPUT_TEXT {
         @NonNull
         @Override
@@ -118,6 +125,13 @@ public enum DataTag {
         @Override
         public String toString() {
             return "EditUserInfo";
+        }
+    },
+    SINGLE_ARTIFACT{
+        @NonNull
+        @Override
+        public String toString() {
+            return "visit_single_artifact";
         }
     }
 }
