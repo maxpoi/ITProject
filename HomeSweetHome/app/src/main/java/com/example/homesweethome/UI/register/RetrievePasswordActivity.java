@@ -48,6 +48,14 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
             @Override
             public void onClick(View view) {
 
+                FirebaseAuth.getInstance().sendPasswordResetEmail(mTextEmail.getText().toString()).addOnCompleteListener(RetrievePasswordActivity.this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            emailSentSuccess();
+                        }
+                    }
+                });
 
                 // TODO: send email to user email; call emailSentSuccess if success
             }
