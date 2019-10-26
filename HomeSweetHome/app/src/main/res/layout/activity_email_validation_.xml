@@ -17,6 +17,8 @@
         android:layout_marginTop="-50dp"
         android:autofillHints=""
         android:hint="@string/register_email"
+        android:textColor="@color/editTextColor"
+
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true" />
 
