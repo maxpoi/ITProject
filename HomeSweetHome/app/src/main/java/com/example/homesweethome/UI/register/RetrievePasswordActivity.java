@@ -47,10 +47,7 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
         mButtonValidation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-<<<<<<< HEAD
-=======
                 emailSentSuccess();
->>>>>>> 4e3aa9b8bbed827f8dd22041614a45befa718138
                 FirebaseAuth.getInstance().sendPasswordResetEmail(mTextEmail.getText().toString()).addOnCompleteListener(RetrievePasswordActivity.this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
