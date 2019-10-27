@@ -47,12 +47,17 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
         mButtonValidation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+<<<<<<< HEAD
+=======
+                emailSentSuccess();
+>>>>>>> 4e3aa9b8bbed827f8dd22041614a45befa718138
                 FirebaseAuth.getInstance().sendPasswordResetEmail(mTextEmail.getText().toString()).addOnCompleteListener(RetrievePasswordActivity.this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             emailSentSuccess();
-                        }
+                        }else{
+                            emailSentNotSuccess();}
                     }
                 });
             }
@@ -65,7 +70,7 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
         dialog.setContentView(R.layout.activity_background_dialog);
         dialogButton = (Button) dialog.findViewById(R.id.button_ok);
         TextView title = (TextView) dialog.findViewById(R.id.title);
-        title.setText("Retrieving Success!");
+        title.setText("Email is Sent!");
         title.setTextSize(20);
         TextView text = (TextView) dialog.findViewById(R.id.text);
         text.setText("An email is sent to the email for verification. Please reset your password by your email.");
@@ -81,6 +86,31 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
                 Intent MessageIntent = new Intent(RetrievePasswordActivity.this, LoginPage.class);
                 startActivity(MessageIntent);
 
+            }
+        });
+    }
+
+    public void emailSentNotSuccess(){
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.activity_background_dialog);
+        dialogButton = (Button) dialog.findViewById(R.id.button_ok);
+        TextView title = (TextView) dialog.findViewById(R.id.title);
+        title.setText("Email Sent Fail!");
+        title.setTextSize(20);
+        TextView text = (TextView) dialog.findViewById(R.id.text);
+        text.setText("Email does not exist. Please try agian.");
+        text.setTextSize(17);
+
+        dialog.show();
+
+        // add button listener
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                //Intent MessageIntent = new Intent(RetrievePasswordActivity.this, LoginPage.class);
+                //startActivity(MessageIntent);
+                dialog.dismiss();
             }
         });
     }
