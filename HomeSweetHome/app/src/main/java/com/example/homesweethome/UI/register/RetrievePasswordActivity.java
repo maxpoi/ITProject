@@ -27,8 +27,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RetrievePasswordActivity extends AppCompatActivity implements View.OnClickListener{
 
-    EditText mTextEmail;
-    Button mButtonValidation;
+    private EditText mTextEmail;
+    private Button mButtonValidation;
     private Button dialogButton;
     final Context context = this;
 
@@ -44,12 +44,9 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
         mButtonValidation = (Button) findViewById(R.id.button_retrieve);
 
         mTextEmail.addTextChangedListener(afterTextChangedListener);
-
-        //mButtonValidation.setOnClickListener(this);
         mButtonValidation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 FirebaseAuth.getInstance().sendPasswordResetEmail(mTextEmail.getText().toString()).addOnCompleteListener(RetrievePasswordActivity.this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -58,18 +55,17 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
                         }
                     }
                 });
-
-                // TODO: send email to user email; call emailSentSuccess if success
             }
         });
     }
 
+    // a function showing dialog to the user saying that the email is sent successfully
     public void emailSentSuccess(){
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.activity_background_dialog);
         dialogButton = (Button) dialog.findViewById(R.id.button_ok);
         TextView title = (TextView) dialog.findViewById(R.id.title);
-        title.setText("Register Success!");
+        title.setText("Retrieving Success!");
         title.setTextSize(20);
         TextView text = (TextView) dialog.findViewById(R.id.text);
         text.setText("An email is sent to the email for verification. Please reset your password by your email.");
@@ -149,8 +145,6 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
                             }
                         }
                     });
-//                    Intent registerIntent = new Intent(RetrievePasswordActivity.this, ResetPasswordActivity.class);
-//                    startActivity(registerIntent);
                 }
                 break;
             default:
@@ -170,11 +164,10 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
         }
         else {
             return false;
-            //return !email.trim().isEmpty();
         }
     }
 
-    public boolean emailNotRegistered(String email){
+    private boolean emailNotRegistered(String email){
         //TODO: check if the email is registered
 
         // Have records
@@ -184,7 +177,7 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
         //return true;
     }
 
-    public void failedByInvalidEmail(){
+    private void failedByInvalidEmail(){
         AlertDialog alertDialog = new AlertDialog.Builder(RetrievePasswordActivity.this).create();
         alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Invalid Email</font>"));
         alertDialog.setMessage(Html.fromHtml("<font color='#272121'>Input email is invalid, please enter again.</font>"));
@@ -198,7 +191,7 @@ public class RetrievePasswordActivity extends AppCompatActivity implements View.
         alertDialog.show();
     }
 
-    public void failedByNotRegistered(){
+    private void failedByNotRegistered(){
         AlertDialog.Builder builder = new AlertDialog.Builder(RetrievePasswordActivity.this);
         builder.setTitle(Html.fromHtml("<font color='#af0404'>Email Not Registered</font>"));
         builder.setMessage(Html.fromHtml("<font color='#272121'>Input email is not registered yet, please choose to enter again or to register.</font>"));

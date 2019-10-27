@@ -35,8 +35,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterActivity extends AppCompatActivity {
-    private MutableLiveData<RegisterFormState> mRegisterFormState = new MutableLiveData<>();
-    //private RegisterFormState registerFormState = new RegisterFormState(null, null, null);
     EditText mTextEmail;
     EditText mTextPassword;
     EditText mTextCnfPassword;
@@ -52,19 +50,6 @@ public class RegisterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Register");
 
-/*
-        // Find the activity_toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the activity_toolbar exists in the activity and is not null
-        setSupportActionBar(toolbar);
-
-
-
-        // Display icon in the activity_toolbar
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);*/
 
         mTextEmail = (EditText) findViewById(R.id.email);
         mTextPassword = (EditText) findViewById(R.id.register_password);
@@ -107,11 +92,13 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    // jump to login page
     private void openLoginPage() {
         Intent intent = new Intent(getApplicationContext(), LoginPage.class);
         startActivity(intent);
     }
 
+    // jump to user information page
     private void openRegisterInformationActivity(String email, String password) {
         String action = "create";
         Intent intent = new Intent(getApplicationContext(), RegisterInformationActivity.class);
@@ -138,8 +125,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            //check validity
-            registerDataChanged((mTextEmail.getText().toString()), mTextPassword.getText().toString(), mTextCnfPassword.getText().toString());
         }
     };
 
@@ -148,9 +133,6 @@ public class RegisterActivity extends AppCompatActivity {
         if (email == null) {
             return false;
         }
-
-        //TODO: if the email is registered already
-        //TODO: if email exists
 
         if (email.contains("@")) {
             return true;
@@ -185,46 +167,7 @@ public class RegisterActivity extends AppCompatActivity {
         return password.equals(repassword) && password != null && repassword != null;
     }
 
-
-    public void registerDataChanged(String email, String password, String repassword) {
-        if (!isEmailAddressValid(email)) {
-            //registerValid = false;
-            mRegisterFormState.setValue(new RegisterFormState(R.string.invalid_register_email, null, null));
-        } else if (!isPasswordValid(password)) {
-            //registerValid = false;
-            mRegisterFormState.setValue(new RegisterFormState(null, R.string.invalid_register_password, null));
-        } else if (!isCnfPasswordValid(password, repassword)) {
-            //registerValid = false;
-            mRegisterFormState.setValue(new RegisterFormState(null, null, R.string.invalid_register_cnf_password));
-        } else {
-            //registerValid = true;
-            mRegisterFormState.setValue(new RegisterFormState(true));
-        }
-    }
-
-    public void register(View view){
-        Intent MessageIntent = new Intent(RegisterActivity.this, RegisterSuccessActivity.class);
-        startActivity(MessageIntent);
-    }
-
-    private void showLoginFailed(@StringRes Integer errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
-    }
-
-    public void failedByInternet(){
-        AlertDialog alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
-        alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Register Fail</font>"));
-        alertDialog.setMessage(Html.fromHtml("<font color='#272121'>Internet is busy, email is failed to be sent. Please try again.</font>"));
-
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        alertDialog.show();
-    }
-
+    // dialog failed by email
     public void failedByEmail(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
         alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Invalid Email</font>"));
@@ -239,6 +182,7 @@ public class RegisterActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    // dialog failed by password
     public void failedByPassword(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
         alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Invalid Password</font>"));
@@ -253,6 +197,7 @@ public class RegisterActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    // dialog falied by confirming password
     public void failedByCnfPassword(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterActivity.this).create();
         alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Unmatched Password</font>"));

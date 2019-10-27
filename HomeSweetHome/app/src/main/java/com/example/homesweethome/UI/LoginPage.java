@@ -144,15 +144,11 @@ public class LoginPage extends AppCompatActivity {
             return false;
         }
 
-        //TODO: if the email is registered already
-        //TODO: if email exists
-
         if (email.contains("@")) {
             return true;
         }
         else {
             return false;
-            //return !email.trim().isEmpty();
         }
     }
 

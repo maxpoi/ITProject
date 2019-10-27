@@ -177,6 +177,10 @@ public class SingleArtifactPage extends AppCompatActivity{
         String tag = getIntent().getStringExtra(DataTag.SINGLE_ARTIFACT.toString());
         switch (item.getItemId()) {
             case android.R.id.home:
+                if (tag==null){
+                    openHomePage();
+                    return true;
+                }
                 if (tag.equals(DataTag.SINGLE_ARTIFACT.toString()))
                     openTimelinePage();
                 else

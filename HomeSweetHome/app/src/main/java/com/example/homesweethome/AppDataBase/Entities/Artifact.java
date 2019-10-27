@@ -3,8 +3,10 @@ package com.example.homesweethome.AppDataBase.Entities;
 import androidx.annotation.Nullable;
 import androidx.room.*;
 
+import java.util.ArrayList;
+
 @Entity(tableName = "Artifacts")
-public class Artifact {
+public class Artifact implements Comparable<Artifact>{
 
     @PrimaryKey
     private int id;
@@ -96,5 +98,10 @@ public class Artifact {
 
         Artifact artifact = (Artifact) obj;
         return artifact.id == this.id;
+    }
+
+    @Override
+    public int compareTo(Artifact t) {
+        return this.date.substring(0,4).compareTo(t.date.substring(0,4));
     }
 }

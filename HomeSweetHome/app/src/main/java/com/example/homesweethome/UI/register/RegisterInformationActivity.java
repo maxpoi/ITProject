@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -32,10 +31,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
-import com.example.homesweethome.AppDataBase.Entities.Artifact;
 import com.example.homesweethome.AppDataBase.Entities.Image;
 import com.example.homesweethome.AppDataBase.Entities.User;
-import com.example.homesweethome.AppRepository;
 import com.example.homesweethome.HelperClasses.DataTag;
 import com.example.homesweethome.HelperClasses.HomeSweetHome;
 import com.example.homesweethome.HelperClasses.ImageProcessor;
@@ -43,7 +40,6 @@ import com.example.homesweethome.HelperClasses.SynchronizeHandler;
 import com.example.homesweethome.R;
 import com.example.homesweethome.UI.HomePage;
 import com.example.homesweethome.UI.LoginPage;
-import com.example.homesweethome.ViewModels.ArtifactViewModel;
 import com.example.homesweethome.ViewModels.UserViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -117,12 +113,7 @@ public class RegisterInformationActivity extends AppCompatActivity {
                         name.setText(user.getUserName());
                         gender.setText(user.getGender());
                         intro.setText(user.getDesc());
-                    /*
-                    if (user.getPortraitImagePath()!=null){
-                        head_protrait.setVisibility(View.VISIBLE);
-                        Glide.with(getApplicationContext()).load(user.getPortraitImagePath()).into(head_protrait);
-                        findViewById(R.id.head_portrait).setVisibility(View.INVISIBLE);
-                    }*/
+
 
                     }
                 }
@@ -145,7 +136,6 @@ public class RegisterInformationActivity extends AppCompatActivity {
             }
         });
 
-        //findViewById(R.id.add_page_video_background).setVisibility(View.INVISIBLE);
 
 
 
@@ -171,8 +161,6 @@ public class RegisterInformationActivity extends AppCompatActivity {
                     failedByIntro();
                 }else{
                     // store input register data into database
-                    //TODO: store input register data into database
-
                     String tag = getIntent().getStringExtra(DataTag.TAG.toString());
                     if(tag!=null && tag.equals(DataTag.EDIT.toString())) {
                         saveToDatabase(email_, name_, dob_year_,
@@ -236,8 +224,6 @@ public class RegisterInformationActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-
-
                 }
             }
         });
@@ -262,8 +248,6 @@ public class RegisterInformationActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            //check validity
-            //registerDataChanged((mTextEmail.getText().toString()), mTextPassword.getText().toString(), mTextCnfPassword.getText().toString());
         }
     };
 
@@ -289,19 +273,19 @@ public class RegisterInformationActivity extends AppCompatActivity {
     }
 
 
-    public boolean isNameValid(String name){
+    private boolean isNameValid(String name){
         return (name.length() <= 50 && name.length() >= 1);
     }
 
-    public boolean isYearValid(String year){
+    private boolean isYearValid(String year){
         return year.length()==4;
     }
 
-    public boolean isMonthValid(String month){
+    private boolean isMonthValid(String month){
         return Integer.parseInt(month)>=1&&Integer.parseInt(month)<=12;
     }
 
-    public boolean isDayValid(String month_, String day_){
+    private boolean isDayValid(String month_, String day_){
         int month = Integer.parseInt(month_);
         int day = Integer.parseInt(day_);
         ArrayList<Integer> months_30 = new ArrayList<Integer>();
@@ -325,18 +309,18 @@ public class RegisterInformationActivity extends AppCompatActivity {
         else{return true;}
     }
 
-    public boolean isGenderValid(String gender){
+    private boolean isGenderValid(String gender){
         if (gender.equals("Female")||gender.equals("Male")){
             return true;
         }
         else{return false;}
     }
 
-    public boolean isIntroValid(String intro){
+    private boolean isIntroValid(String intro){
         return (intro.length()>=0&&intro.length()<=150);
     }
 
-    public void failedByName(){
+    private void failedByName(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterInformationActivity.this).create();
         alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Name Invalid</font>"));
         alertDialog.setMessage(Html.fromHtml("<font color='#272121'>Name should be between 1 and 50 characters. Please enter again.</font>"));
@@ -350,7 +334,7 @@ public class RegisterInformationActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void failedByGender(){
+    private void failedByGender(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterInformationActivity.this).create();
         alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Gender Invalid</font>"));
         alertDialog.setMessage(Html.fromHtml("<font color='#272121'>Gender should be one of 'Male' and 'Female'. Please enter again.</font>"));
@@ -364,7 +348,7 @@ public class RegisterInformationActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void failedByDate(){
+    private void failedByDate(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterInformationActivity.this).create();
         alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Date of Birth Invalid</font>"));
         alertDialog.setMessage(Html.fromHtml("<font color='#272121'>Date of birth is entered inappropriately. (Form should be YYYY-MM-DD). Please enter again.</font>"));
@@ -378,7 +362,7 @@ public class RegisterInformationActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void failedByIntro(){
+    private void failedByIntro(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterInformationActivity.this).create();
         alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Personalized Signature Invalid</font>"));
         alertDialog.setMessage(Html.fromHtml("<font color='#272121'>Length of personalized signature should be between 1 and 300 characters. Please enter again.</font>"));
@@ -392,7 +376,7 @@ public class RegisterInformationActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void failedByInternet(){
+    private void failedByInternet(){
         AlertDialog alertDialog = new AlertDialog.Builder(RegisterInformationActivity.this).create();
         alertDialog.setTitle(Html.fromHtml("<font color='#af0404'>Register Fail</font>"));
         alertDialog.setMessage(Html.fromHtml("<font color='#272121'>Internet is busy, email is failed to be sent. Please try again.</font>"));
@@ -404,11 +388,6 @@ public class RegisterInformationActivity extends AppCompatActivity {
                     }
                 });
         alertDialog.show();
-    }
-
-    public void register(View view){
-        Intent MessageIntent = new Intent(RegisterInformationActivity.this, RegisterSuccessActivity.class);
-        startActivity(MessageIntent);
     }
 
 
@@ -450,14 +429,14 @@ public class RegisterInformationActivity extends AppCompatActivity {
         return true;
     }
 
-    public void saveToDatabase(String email_, String username, String dob_year_, String dob_month_, String dob_day_, String gender_, String intro_){
+    private void saveToDatabase(String email_, String username, String dob_year_, String dob_month_, String dob_day_, String gender_, String intro_){
 
         String imagePath = ImageProcessor.PARENT_FOLDER_PATH +
         ImageProcessor.PORTRAIT_IMAGE +
         ImageProcessor.PORTRAIT_NAME +
         ImageProcessor.IMAGE_TYPE;
 
-        System.out.println("saving to database");
+        //System.out.println("saving to database");
 
 
         // https://androidclarified.com/pick-image-gallery-camera-android/
